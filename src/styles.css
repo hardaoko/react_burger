@@ -1,0 +1,35 @@
+
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+}
+
+:root {
+  --p-1: "text text_type_main-default";
+
+  --color-bg: #1f1f38;
+  --color-bg-variant: #2c2c6c;
+  --color-bg-gradient: rgba(31, 31, 56, 0.93);
+  --color-primary: #4db5ff;
+  --color-primary-variant: rgba(77, 181, 255, 0.4);
+  --color-white: #fff;
+  --color-light: rgba(255, 255, 255, 0.6);
+  --transition: all 400ms ease;
+  --container-width-lg: 75%;
+  --container-width-md: 86%;
+  --container-width-sm: 90%;
+}
+
+.main{
+  margin: 0 auto;
+  display:flex;
+  flex-direction: row;
+  max-width: 1200px;
+  gap: 40px
+}
