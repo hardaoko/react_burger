@@ -1,8 +1,19 @@
 .container{
+  width: 100%;
+  max-width: 600px;
+  border: 1px dashed #4C4CFF;
+}
 
-  width: 600px;
-  height: 912px;
-  top: 88px;
-  background: #131316;
-  border: 2px solid #4C4CFF;
+.title {
+  margin: 40px 0 0;
+  border: 1px dashed #4C4CFF;
+}
+
+.ingredients_container {
+  margin: 40px 0 0;
+  border: 1px dashed #4C4CFF;
+}
+
+.ingridients_container {
+  border: 1px dashed #4C4CFF;
 }

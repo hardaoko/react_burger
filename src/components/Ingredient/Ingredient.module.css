@@ -1,0 +1,18 @@
+.item {
+  position: relative;
+  box-sizing: border-box;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+}
+.price {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
