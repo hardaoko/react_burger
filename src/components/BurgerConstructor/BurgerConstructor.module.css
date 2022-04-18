@@ -1,0 +1,40 @@
+.container{
+  width: 100%;
+  max-width: 600px;
+  border: 1px dashed #4C4CFF;
+}
+
+.list{
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 500px;
+  scrollbar-width: thin;
+}
+
+.list::-webkit-scrollbar {
+	width: 12px;
+}
+.list::-webkit-scrollbar-track {
+	background: #2F2F37;
+}
+.list::-webkit-scrollbar-thumb {
+	background: #8585AD;
+	border: 3px solid #2F2F37;
+	border-radius: 6px;
+}
+
+.item{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+.button_container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
