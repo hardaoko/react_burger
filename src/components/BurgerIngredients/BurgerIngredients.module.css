@@ -1,6 +1,7 @@
 .container{
   width: 100%;
   max-width: 600px;
+  
   border: 1px dashed #4C4CFF;
 }
 
@@ -9,9 +10,23 @@
   border: 1px dashed #4C4CFF;
 }
 
+.type_title{
+  display: block;
+}
+
 .ingredients_container {
   margin: 40px 0 0;
   border: 1px dashed #4C4CFF;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: center;
+  align-content: center;
+  grid-gap: 32px 24px;
+  margin: 0;
+  list-style: none;
 }
 
 .ingridients_container {

@@ -3,6 +3,7 @@ import "./styles.css";
 import AppHeader from "./components/AppHeader/AppHeader";
 import BurgerConstructor from "./components/BurgerConstructor/BurgerConstructor";
 import BurgerIngredients from "./components/BurgerIngredients/BurgerIngredients";
+import burgerData from "./utils/data";
 
 export default class App extends React.Component {
   state = {};
@@ -14,8 +15,8 @@ export default class App extends React.Component {
           <AppHeader />
         </header>
         <div className="main">
-          <BurgerIngredients />
-          <BurgerConstructor />
+          <BurgerIngredients burgerData={burgerData}/>
+          <BurgerConstructor burgerData={burgerData}/>
         </div>
       </div>
     );

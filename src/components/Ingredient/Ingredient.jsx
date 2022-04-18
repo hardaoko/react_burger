@@ -3,7 +3,7 @@ import { CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components"
 import clsx from "clsx";
 
 const Ingredient = (props) => {
-  const {image, price, name} = props;
+  const {image, price, name} = props.item;
 
   return (
     <li className={styles.item}>
