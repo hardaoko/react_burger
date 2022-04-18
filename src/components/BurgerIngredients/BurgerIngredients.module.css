@@ -1,7 +1,7 @@
 .container{
   width: 100%;
   max-width: 600px;
-  
+
   border: 1px dashed #4C4CFF;
 }
 
@@ -15,8 +15,24 @@
 }
 
 .ingredients_container {
-  margin: 40px 0 0;
-  border: 1px dashed #4C4CFF;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 660px;
+  scrollbar-width: thin;
+}
+
+.ingredients_container::-webkit-scrollbar {
+  width: 12px;
+}
+
+.ingredients_container::-webkit-scrollbar-thumb {
+  background: #2F2F37;
+}
+
+.ingredients_container::-webkit-scrollbar-thumb:hover {
+  background: #8585AD;
+	border: 3px solid #2F2F37;
+	border-radius: 6px;
 }
 
 .list {
@@ -29,6 +45,4 @@
   list-style: none;
 }
 
-.ingridients_container {
-  border: 1px dashed #4C4CFF;
-}
+

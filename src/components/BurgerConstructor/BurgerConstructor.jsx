@@ -1,21 +1,24 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styles from "./BurgerConstructor.module.css";
-import { ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import { ConstructorElement, DragIcon, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
 const BurgerConstructor = props => {
   return (
     <div className={styles.container}>
-      <ul className={`${styles.list} mt-25 pr-4 pl-4`}>
-        <li className={`${styles.item} mt-5 pl-8`}>
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text={`${props.burgerData[0].name} (верх)`}
-            price={props.burgerData[0].price}
-            thumbnail={props.burgerData[0].image}
-          />
-        </li>
+
+      <div className={`${styles.item} mt-25 pl-8`}>
+        <ConstructorElement
+          type="top"
+          isLocked={true}
+          text={`${props.burgerData[0].name} (верх)`}
+          price={props.burgerData[0].price}
+          thumbnail={props.burgerData[0].image}
+        />
+      </div>
+
+      <ul className={`${styles.list} pr-4 pl-4`}>
+
         <li className={`${styles.item} mt-5`}>
           <DragIcon type="primary" />
           <ConstructorElement
@@ -39,7 +42,7 @@ const BurgerConstructor = props => {
             price={props.burgerData[7].price}
             thumbnail={props.burgerData[7].image}
           />
-        </li>  
+        </li>
         <li className={`${styles.item} mt-5`}>
           <DragIcon type="primary" />
           <ConstructorElement
@@ -47,7 +50,7 @@ const BurgerConstructor = props => {
             price={props.burgerData[8].price}
             thumbnail={props.burgerData[8].image}
           />
-        </li>  
+        </li>
         <li className={`${styles.item} mt-5`}>
           <DragIcon type="primary" />
           <ConstructorElement
@@ -55,17 +58,34 @@ const BurgerConstructor = props => {
             price={props.burgerData[8].price}
             thumbnail={props.burgerData[8].image}
           />
-        </li>          
-        <li className={`${styles.item} mt-5 pl-8`}>
+        </li>
+        <li className={`${styles.item} mt-5`}>
+          <DragIcon type="primary" />
           <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text={`${props.burgerData[0].name} (низ)`}
-            price={props.burgerData[0].price}
-            thumbnail={props.burgerData[0].image}
+            text={props.burgerData[11].name}
+            price={props.burgerData[11].price}
+            thumbnail={props.burgerData[11].image}
           />
         </li>
       </ul>
+
+      <div className={`${styles.item} mt-5 pl-8`}>
+        <ConstructorElement
+          type="bottom"
+          isLocked={true}
+          text={`${props.burgerData[0].name} (низ)`}
+          price={props.burgerData[0].price}
+          thumbnail={props.burgerData[0].image}
+        />
+      </div>
+
+      <div className={`${styles.button_container} pt-5 pr-5`}>
+        <div className="mr-10">
+          <span className="text text_type_digits-medium mr-2">{3800}</span>
+          <CurrencyIcon type="primary"/>
+        </div>
+          <Button type="primary" size="medium">Оформить заказ</Button>
+      </div>
     </div>
   )
 }

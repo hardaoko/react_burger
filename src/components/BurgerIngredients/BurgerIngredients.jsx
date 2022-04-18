@@ -7,7 +7,7 @@ import Ingredient from "../Ingredient/Ingredient";
 
 const BurgerIngredients = (props) => {
   const [current, setCurrent] = React.useState("one");
-  
+
   return (
     <div className={styles.container}>
       <h1 className="mt-10 mb-5 text text_type_main-large">Соберите бургер</h1>
@@ -22,7 +22,7 @@ const BurgerIngredients = (props) => {
           Начинки
         </Tab>
       </div>
-      <div className={styles.ingredients_container}>
+      <div className={`${styles.ingredients_container} mt-10`}>
         <h2 id="bun" className="mb-6 text text_type_main-medium">
           Булки
         </h2>

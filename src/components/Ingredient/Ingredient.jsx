@@ -9,13 +9,13 @@ const Ingredient = (props) => {
     <li className={styles.item}>
       <div className={styles.link} >
         <img alt={name} src={image} className={clsx(styles.image, "ml-4", "mr-4")}/>
-        <div className={clsx(styles.price, "mt-4", "mb-4")}>
+        <div className={clsx(styles.price, "mt-1", "mb-1")}>
           <span className="text text_type_digits-default mr-2">{price}</span>
           <CurrencyIcon type="primary"/>
         </div>
-        <h3 className={clsx(styles.text, "text", "text_type_main-default")}>
+        <span className={clsx(styles.text, "text", "text_type_main-default")}>
           {name}
-        </h3>
+        </span>
       </div>
     </li>
   );
