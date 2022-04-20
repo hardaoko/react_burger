@@ -5,7 +5,6 @@
 
 .title {
   margin: 40px 0 0;
-
 }
 
 .type_title{
@@ -17,6 +16,7 @@
   overflow-x: hidden;
   max-height: 660px;
   scrollbar-width: thin;
+  padding-right: 5px;
 }
 
 .ingredients_container::-webkit-scrollbar {
