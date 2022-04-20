@@ -1,13 +1,11 @@
 .container{
   width: 100%;
   max-width: 600px;
-
-  border: 1px dashed #4C4CFF;
 }
 
 .title {
   margin: 40px 0 0;
-  border: 1px dashed #4C4CFF;
+
 }
 
 .type_title{

@@ -22,20 +22,20 @@ const BurgerIngredients = (props) => {
           Начинки
         </Tab>
       </div>
-      <div className={`${styles.ingredients_container} mt-10`}>
-        <h2 id="bun" className="mb-6 text text_type_main-medium">
+      <div className={`${styles.ingredients_container} `}>
+        <h2 id="bun" className="mb-6 mt-10 text text_type_main-medium">
           Булки
         </h2>
         <ul className={styles.list}>
           {props.burgerData.map(item=> item.type === 'bun' && <Ingredient key={item._id} item={item} />)}
         </ul>
-        <h2 id="sauce" className="mb-6 text text_type_main-medium">
+        <h2 id="sauce" className="mb-6 mt-10 text text_type_main-medium">
           Соусы
         </h2>
         <ul className={styles.list}>
           {props.burgerData.map(item=> item.type === 'sauce' && <Ingredient key={item._id} item={item} />)}
         </ul>
-        <h2 id="main" className="mb-6 text text_type_main-medium">
+        <h2 id="main" className="mb-6 mt-10 text text_type_main-medium">
           Начинки
         </h2>
         <ul className={styles.list}>

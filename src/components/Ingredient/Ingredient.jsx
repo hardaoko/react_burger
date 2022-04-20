@@ -1,5 +1,5 @@
 import styles from "./Ingredient.module.css";
-import { CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import clsx from "clsx";
 
 const Ingredient = (props) => {
@@ -16,6 +16,7 @@ const Ingredient = (props) => {
         <span className={clsx(styles.text, "text", "text_type_main-default")}>
           {name}
         </span>
+        <Counter count={4} size="default"/>
       </div>
     </li>
   );

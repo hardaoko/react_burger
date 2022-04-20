@@ -1,24 +1,37 @@
-import React from "react";
+import {useEffect, useState} from "react";
 import "./styles.css";
 import AppHeader from "./components/AppHeader/AppHeader";
 import BurgerConstructor from "./components/BurgerConstructor/BurgerConstructor";
 import BurgerIngredients from "./components/BurgerIngredients/BurgerIngredients";
-import burgerData from "./utils/data";
 
-export default class App extends React.Component {
-  state = {};
+const App = () => {
+  const [data, setData] = useState({})
+  const [isLoaded, setIsLoaded] = useState(false)
 
-  render() {
-    return (
-      <div className="App">
-        <header>
-          <AppHeader />
-        </header>
+  useEffect(() => {
+    const getData = async () => {
+      const res = await fetch("https://norma.nomoreparties.space/api/ingredients");
+      const data = await res.json();
+      await setData(data.data)
+      setIsLoaded(true)
+    }
+    getData()
+  },[])
+
+  return (
+    <div className="App">
+      <header>
+        <AppHeader />
+      </header>
+      {
+        isLoaded &&
         <div className="main">
-          <BurgerIngredients burgerData={burgerData}/>
-          <BurgerConstructor burgerData={burgerData}/>
+          <BurgerIngredients burgerData={data}/>
+          <BurgerConstructor burgerData={data}/>
         </div>
-      </div>
-    );
-  }
+      }
+    </div>
+  );
 }
+
+export default App
