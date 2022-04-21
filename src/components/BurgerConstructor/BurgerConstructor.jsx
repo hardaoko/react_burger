@@ -1,12 +1,31 @@
-import React from 'react'
+import {useState} from 'react'
 import PropTypes from 'prop-types'
 import styles from "./BurgerConstructor.module.css";
 import { ConstructorElement, DragIcon, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import Modal from '../Modal/Modal'
+import OrderDetails from '../OrderDetails/OrderDetails'
 
 const BurgerConstructor = props => {
+
+  const [isVisible, setIsVisible] = useState(false)
+
+  const openModal = () => {
+    setIsVisible(true)
+  }
+
+  const CloseModal = () => {
+    setIsVisible(false)
+  }
+
+  const modal = (
+    <Modal onClose={CloseModal}>
+      <OrderDetails/>
+    </Modal>
+  );
+
   return (
     <div className={styles.container}>
-
+      {isVisible && modal}
       <div className={`${styles.item} mt-25 pl-8`}>
         <ConstructorElement
           type="top"
@@ -84,7 +103,7 @@ const BurgerConstructor = props => {
           <span className="text text_type_digits-medium mr-2">{3800}</span>
           <CurrencyIcon type="primary"/>
         </div>
-          <Button type="primary" size="medium">Оформить заказ</Button>
+          <Button type="primary" size="medium" onClick={openModal}>Оформить заказ</Button>
       </div>
     </div>
   )
