@@ -10,11 +10,11 @@ const AppHeader = () => {
       <div className={styles.container}>
         <div className={styles.content}>
           <button className={`${styles.link} p-4`}>
-            <BurgerIcon type="secondary" />
+            <BurgerIcon type="secondary" className={styles.icon}/>
             <p className={`${styles.link_text} text text_type_main-default`}>Конструктор</p>
           </button>
           <button className={`${styles.link} p-4`}>
-            <ListIcon type="secondary" />
+            <ListIcon type="secondary" className={styles.icon}/>
             <p className={`${styles.link_text} text text_type_main-default`}>
               Лента заказов</p>
           </button>
@@ -25,7 +25,7 @@ const AppHeader = () => {
         </div>
 
         <button className={`${styles.link} ${styles.account} p-4`}>
-          <ProfileIcon type="secondary" />
+          <ProfileIcon type="secondary" className={styles.icon}/>
           <p className={`${styles.link_text} text text_type_main-default`}>
             Личный кабинет</p>
         </button>

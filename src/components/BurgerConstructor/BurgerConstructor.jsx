@@ -5,6 +5,22 @@ import { ConstructorElement, DragIcon, Button, CurrencyIcon} from "@ya.praktikum
 import Modal from '../Modal/Modal'
 import OrderDetails from '../OrderDetails/OrderDetails'
 
+const burgerDataType = PropTypes.shape({
+  calories: PropTypes.number,
+  carbohydrates: PropTypes.number,
+  fat: PropTypes.number,
+  image: PropTypes.string,
+  image_large: PropTypes.string,
+  image_mobile: PropTypes.string,
+  name: PropTypes.string,
+  price: PropTypes.number,
+  proteins: PropTypes.number,
+  type: PropTypes.string,
+  uuid: PropTypes.string,
+  __v: PropTypes.number,
+  _id: PropTypes.string
+})
+
 const BurgerConstructor = props => {
 
   const [isVisible, setIsVisible] = useState(false)
@@ -26,7 +42,7 @@ const BurgerConstructor = props => {
   return (
     <div className={styles.container}>
       {isVisible && modal}
-      <div className={`${styles.item} mt-25 pl-8`}>
+      <div className={`${styles.item} mt-25 ml-10`}>
         <ConstructorElement
           type="top"
           isLocked={true}
@@ -88,7 +104,7 @@ const BurgerConstructor = props => {
         </li>
       </ul>
 
-      <div className={`${styles.item} mt-5 pl-8`}>
+      <div className={`${styles.item} mt-5 ml-10`}>
         <ConstructorElement
           type="bottom"
           isLocked={true}
@@ -109,6 +125,8 @@ const BurgerConstructor = props => {
   )
 }
 
-BurgerConstructor.propTypes = {}
+BurgerConstructor.propTypes = {
+  burgerData: PropTypes.arrayOf(burgerDataType)
+};
 
 export default BurgerConstructor

@@ -29,10 +29,8 @@
     background: #1C1C21;
     border-radius: 40px;
     box-sizing: border-box;
-}
-
-.link_text {
     color: #8585AD;
+    cursor: pointer;
 }
 
 .content {
@@ -47,8 +45,8 @@
 
 .logo {
     justify-self: center;
-
 }
+
 
 
 

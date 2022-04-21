@@ -1,10 +1,11 @@
+import PropTypes from 'prop-types'
 import styles from "./Ingredient.module.css";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import {useState} from 'react'
 import Modal from '../Modal/Modal'
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 
-const Ingredient = (props) => {
+const Ingredient = props => {
   const {image, price, name} = props.item;
   const [isVisible, setIsVisible] = useState(false)
 
@@ -38,6 +39,24 @@ const Ingredient = (props) => {
       </div>
     </li>
   );
+};
+
+Ingredient.propTypes = {
+  item: PropTypes.shape({
+    calories: PropTypes.number,
+    carbohydrates: PropTypes.number,
+    fat: PropTypes.number,
+    image: PropTypes.string,
+    image_large: PropTypes.string,
+    image_mobile: PropTypes.string,
+    name: PropTypes.string,
+    price: PropTypes.number,
+    proteins: PropTypes.number,
+    type: PropTypes.string,
+    uuid: PropTypes.string,
+    __v: PropTypes.number,
+    _id: PropTypes.string
+  })
 };
 
 export default Ingredient;

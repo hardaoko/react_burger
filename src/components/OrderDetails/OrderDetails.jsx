@@ -1,7 +1,7 @@
 import styles from "./OrderDetails.module.css";
 import CheckIcon from '../../images/done.svg'
 
-const IngredientDetails = () => {
+const OrderDetails = () => {
 
   return (
     <div className={styles.container}>
@@ -15,8 +15,7 @@ const IngredientDetails = () => {
         Дождитесь готовности на орбитальной станции
       </p>
     </div>
-
   );
 };
 
-export default IngredientDetails;
+export default OrderDetails;

@@ -1,7 +1,8 @@
+import PropTypes from 'prop-types'
 import styles from "./IngredientDetails.module.css";
 
 
-const IngredientDetails = (props) => {
+const IngredientDetails = props => {
   const {image_large, carbohydrates, name, calories, proteins, fat} = props.item;
   return (
     <div className={styles.container}>
@@ -28,6 +29,24 @@ const IngredientDetails = (props) => {
     </div>
 
   );
+};
+
+IngredientDetails.propTypes = {
+  item: PropTypes.shape({
+    calories: PropTypes.number,
+    carbohydrates: PropTypes.number,
+    fat: PropTypes.number,
+    image: PropTypes.string,
+    image_large: PropTypes.string,
+    image_mobile: PropTypes.string,
+    name: PropTypes.string,
+    price: PropTypes.number,
+    proteins: PropTypes.number,
+    type: PropTypes.string,
+    uuid: PropTypes.string,
+    __v: PropTypes.number,
+    _id: PropTypes.string
+  })
 };
 
 export default IngredientDetails;
