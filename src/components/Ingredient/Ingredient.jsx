@@ -1,33 +1,13 @@
-import PropTypes from 'prop-types'
 import styles from "./Ingredient.module.css";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
-import {useState} from 'react'
-import Modal from '../Modal/Modal'
-import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { burgerDataType } from '../../utils/types';
 
 const Ingredient = props => {
   const {image, price, name} = props.item;
-  const [isVisible, setIsVisible] = useState(false)
-
-  const openModal = () => {
-    setIsVisible(true)
-  }
-
-  const closeModal = () => {
-    setIsVisible(false)
-  }
-
-  const modal = (
-    <Modal onClose={closeModal} title='Детали ингредиента'>
-      <IngredientDetails item={props.item}/>
-    </Modal>
-  );
 
   return (
     <li className={styles.item}>
-      {isVisible && modal}
-      <div className={styles.link} onClick={openModal}>
+      <div className={styles.link} onClick={props.onOpen}>
         <img alt={name} src={image} className={`${styles.image} ml-4 mr-4`}/>
         <div className={`${styles.price} mt-1 mb-1`}>
           <span className="text text_type_digits-default mr-2">{price}</span>
