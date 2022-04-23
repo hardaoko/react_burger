@@ -1,13 +1,10 @@
 .container{
   width: 100%;
   max-width: 600px;
-
-  border: 1px dashed #4C4CFF;
 }
 
 .title {
   margin: 40px 0 0;
-  border: 1px dashed #4C4CFF;
 }
 
 .type_title{
@@ -19,6 +16,7 @@
   overflow-x: hidden;
   max-height: 660px;
   scrollbar-width: thin;
+  padding-right: 5px;
 }
 
 .ingredients_container::-webkit-scrollbar {
@@ -45,4 +43,7 @@
   list-style: none;
 }
 
+.tab_container{
+  display:flex
+}
 

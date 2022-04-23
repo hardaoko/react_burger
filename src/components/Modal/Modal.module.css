@@ -1,0 +1,42 @@
+.container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 40px;
+  background-color: #1c1c21;
+  z-index: 1000;
+  min-height: 300px;
+}
+
+.title {
+  margin-right: auto;
+}
+
+.modal_header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+
+.closeButton {
+  width: 24px;
+  height: 24px;
+  transition: all 0.2s ease;
+  background-color: transparent;
+  border: 0;
+}
+
+.closeButton:hover {
+  opacity: .8;
+  cursor: pointer;
+}
+
+.closeButton:active {
+  transform: scale(0.9);
+}

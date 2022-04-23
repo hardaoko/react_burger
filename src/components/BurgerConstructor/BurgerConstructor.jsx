@@ -1,13 +1,33 @@
-import React from 'react'
+import {useState} from 'react'
 import PropTypes from 'prop-types'
 import styles from "./BurgerConstructor.module.css";
 import { ConstructorElement, DragIcon, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import Modal from '../Modal/Modal'
+import OrderDetails from '../OrderDetails/OrderDetails'
+import { burgerDataType } from '../../utils/types';
 
 const BurgerConstructor = props => {
+
+  const [isVisible, setIsVisible] = useState(false)
+
+  const openModal = () => {
+    setIsVisible(true)
+  }
+
+  const closeModal = () => {
+    setIsVisible(false)
+  }
+
+  const modal = (
+    <Modal onClose={closeModal}>
+      <OrderDetails/>
+    </Modal>
+  );
+
   return (
     <div className={styles.container}>
-
-      <div className={`${styles.item} mt-25 pl-8`}>
+      {isVisible && modal}
+      <div className={`${styles.item} mt-25 ml-10`}>
         <ConstructorElement
           type="top"
           isLocked={true}
@@ -69,7 +89,7 @@ const BurgerConstructor = props => {
         </li>
       </ul>
 
-      <div className={`${styles.item} mt-5 pl-8`}>
+      <div className={`${styles.item} mt-5 ml-10`}>
         <ConstructorElement
           type="bottom"
           isLocked={true}
@@ -84,12 +104,14 @@ const BurgerConstructor = props => {
           <span className="text text_type_digits-medium mr-2">{3800}</span>
           <CurrencyIcon type="primary"/>
         </div>
-          <Button type="primary" size="medium">Оформить заказ</Button>
+          <Button type="primary" size="medium" onClick={openModal}>Оформить заказ</Button>
       </div>
     </div>
   )
 }
 
-BurgerConstructor.propTypes = {}
+BurgerConstructor.propTypes = {
+  burgerData: PropTypes.arrayOf(burgerDataType).isRequired
+};
 
 export default BurgerConstructor
