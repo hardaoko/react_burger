@@ -5,7 +5,7 @@ const ModalOverlay = props =>
   <div onClick={props.onClose} className={styles.overlay}></div>;
 
 ModalOverlay.propTypes = {
-  onClose: PropTypes.func
+  onClose: PropTypes.func.isRequired
 };
 
 export default ModalOverlay

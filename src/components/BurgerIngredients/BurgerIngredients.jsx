@@ -3,22 +3,7 @@ import PropTypes from 'prop-types'
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredients.module.css";
 import Ingredient from "../Ingredient/Ingredient";
-
-const burgerDataType = PropTypes.shape({
-  calories: PropTypes.number,
-  carbohydrates: PropTypes.number,
-  fat: PropTypes.number,
-  image: PropTypes.string,
-  image_large: PropTypes.string,
-  image_mobile: PropTypes.string,
-  name: PropTypes.string,
-  price: PropTypes.number,
-  proteins: PropTypes.number,
-  type: PropTypes.string,
-  uuid: PropTypes.string,
-  __v: PropTypes.number,
-  _id: PropTypes.string
-})
+import { burgerDataType } from '../../utils/types';
 
 const BurgerIngredients = props => {
   const [current, setCurrent] = React.useState("one");
@@ -26,7 +11,7 @@ const BurgerIngredients = props => {
   return (
     <div className={styles.container}>
       <h1 className="mt-10 mb-5 text text_type_main-large">Соберите бургер</h1>
-      <div style={{ display: "flex" }}>
+      <div className = {styles.tab_container}>
         <Tab value="bun" active={current === "bun"} onClick={setCurrent}>
           Булки
         </Tab>
@@ -62,7 +47,7 @@ const BurgerIngredients = props => {
 };
 
 BurgerIngredients.propTypes = {
-  burgerData: PropTypes.arrayOf(burgerDataType)
+  burgerData: PropTypes.arrayOf(burgerDataType).isRequired
 };
 
 export default BurgerIngredients;

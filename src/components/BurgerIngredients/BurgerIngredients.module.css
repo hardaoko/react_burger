@@ -43,4 +43,7 @@
   list-style: none;
 }
 
+.tab_container{
+  display:flex
+}
 

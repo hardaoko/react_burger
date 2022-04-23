@@ -4,6 +4,7 @@ import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-c
 import {useState} from 'react'
 import Modal from '../Modal/Modal'
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
+import { burgerDataType } from '../../utils/types';
 
 const Ingredient = props => {
   const {image, price, name} = props.item;
@@ -13,12 +14,12 @@ const Ingredient = props => {
     setIsVisible(true)
   }
 
-  const CloseModal = () => {
+  const closeModal = () => {
     setIsVisible(false)
   }
 
   const modal = (
-    <Modal onClose={CloseModal} title='Детали ингредиента'>
+    <Modal onClose={closeModal} title='Детали ингредиента'>
       <IngredientDetails item={props.item}/>
     </Modal>
   );
@@ -42,21 +43,7 @@ const Ingredient = props => {
 };
 
 Ingredient.propTypes = {
-  item: PropTypes.shape({
-    calories: PropTypes.number,
-    carbohydrates: PropTypes.number,
-    fat: PropTypes.number,
-    image: PropTypes.string,
-    image_large: PropTypes.string,
-    image_mobile: PropTypes.string,
-    name: PropTypes.string,
-    price: PropTypes.number,
-    proteins: PropTypes.number,
-    type: PropTypes.string,
-    uuid: PropTypes.string,
-    __v: PropTypes.number,
-    _id: PropTypes.string
-  })
+  item: burgerDataType.isRequired
 };
 
 export default Ingredient;

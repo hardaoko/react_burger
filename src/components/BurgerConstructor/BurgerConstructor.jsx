@@ -4,22 +4,7 @@ import styles from "./BurgerConstructor.module.css";
 import { ConstructorElement, DragIcon, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from '../Modal/Modal'
 import OrderDetails from '../OrderDetails/OrderDetails'
-
-const burgerDataType = PropTypes.shape({
-  calories: PropTypes.number,
-  carbohydrates: PropTypes.number,
-  fat: PropTypes.number,
-  image: PropTypes.string,
-  image_large: PropTypes.string,
-  image_mobile: PropTypes.string,
-  name: PropTypes.string,
-  price: PropTypes.number,
-  proteins: PropTypes.number,
-  type: PropTypes.string,
-  uuid: PropTypes.string,
-  __v: PropTypes.number,
-  _id: PropTypes.string
-})
+import { burgerDataType } from '../../utils/types';
 
 const BurgerConstructor = props => {
 
@@ -29,12 +14,12 @@ const BurgerConstructor = props => {
     setIsVisible(true)
   }
 
-  const CloseModal = () => {
+  const closeModal = () => {
     setIsVisible(false)
   }
 
   const modal = (
-    <Modal onClose={CloseModal}>
+    <Modal onClose={closeModal}>
       <OrderDetails/>
     </Modal>
   );
@@ -126,7 +111,7 @@ const BurgerConstructor = props => {
 }
 
 BurgerConstructor.propTypes = {
-  burgerData: PropTypes.arrayOf(burgerDataType)
+  burgerData: PropTypes.arrayOf(burgerDataType).isRequired
 };
 
 export default BurgerConstructor

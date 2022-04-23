@@ -27,7 +27,7 @@ const Modal = props => {
   return createPortal(
     <>
       <div className={`${styles.container} pt-15 pr-10 pl-10 pb-15`}>
-        <header className={styles.header}>
+        <div className={styles.modal_header}>
           {title &&
           <h2 className={`${styles.title} text text_type_main-large ml-10`}>
             {title}
@@ -35,7 +35,7 @@ const Modal = props => {
           <button onClick={onClose} className={styles.closeButton}>
             <CloseIcon type="primary"/>
           </button>
-        </header>
+        </div>
         {props.children}
       </div>
       <ModalOverlay onClose={onClose}/>
@@ -45,7 +45,7 @@ const Modal = props => {
 };
 
 Modal.propTypes = {
-  onClose: PropTypes.func,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default Modal;

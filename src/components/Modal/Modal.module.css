@@ -17,7 +17,7 @@
   margin-right: auto;
 }
 
-.header {
+.modal_header {
   display: flex;
   justify-content: flex-end;
   align-items: center;
