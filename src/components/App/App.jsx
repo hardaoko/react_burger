@@ -13,11 +13,19 @@ const App = () => {
     const getData = async () => {
       try{
         const res = await fetch("https://norma.nomoreparties.space/api/ingredients");
+        if (!res.ok) {
+          throw new Error("Response is not ok");
+        }
         const data = await res.json();
-        await setData(data.data)
-        setIsLoaded(true)
+        if (data && data.success === true){
+          setData(data.data)
+          setIsLoaded(true)
+        } else {
+          throw new Error("Data error");
+        }
       }
       catch(e){
+        console.log(e)
         setError(e)
       }
     }
