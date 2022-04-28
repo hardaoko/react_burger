@@ -1,11 +1,11 @@
 import {useEffect, useState} from "react";
-import styles from './App.module.css';
+import './App.module.css';
 import AppHeader from "../AppHeader/AppHeader";
-import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
-import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
+import Main from "../Main/Main";
+import { BurgerContext } from "../../utils/BurgerContext";
 
 const App = () => {
-  const [data, setData] = useState({})
+  const [burgerData, setBurgerData] = useState({})
   const [isLoaded, setIsLoaded] = useState(false)
   const [error, setError] = useState('')
 
@@ -16,7 +16,7 @@ const App = () => {
         if (res.ok) {
           const data = await res.json();
           if (data && data.success === true) {
-            setData(data.data)
+            setBurgerData(data.data)
             setIsLoaded(true)
           } else {
             throw new Error("Data error");
@@ -36,17 +36,9 @@ const App = () => {
   return (
     <div className="App">
       <AppHeader />
-      <main className={styles.main}>
-        {
-          error === '' ?
-          isLoaded &&
-          <>
-            <BurgerIngredients burgerData={data}/>
-            <BurgerConstructor burgerData={data}/>
-          </> :
-          <span className={`${styles.error} text text_type_main-default text_color_inactive`}>Ошибка при загрузке данных</span>
-        }
-      </main>
+      <BurgerContext.Provider value={burgerData}>
+        <Main error={error} isLoaded={isLoaded} burgerData={burgerData} />
+      </BurgerContext.Provider>
     </div>
   );
 }

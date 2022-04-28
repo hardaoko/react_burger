@@ -1,11 +1,11 @@
 import styles from "./OrderDetails.module.css";
 import checkIcon from '../../images/done.svg'
 
-const OrderDetails = () => {
+const OrderDetails = ({order}) => {
 
   return (
     <div className={styles.container}>
-      <p className={`${styles.number} text text_type_digits-large`}>123456</p>
+      <p className={`${styles.number} text text_type_digits-large`}>{order}</p>
       <p className="text text_type_main-medium mt-8">
         идентификатор заказа
       </p>
