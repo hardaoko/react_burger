@@ -8,7 +8,7 @@ import { BurgerContext } from '../../utils/BurgerContext';
 const BurgerConstructor = () => {
 
   const [isVisible, setIsVisible] = useState(false)
-  const [orderData, setOrderData] = useState(null)
+  const [orderData, setOrderData] = useState(0)
   const burgerData = useContext(BurgerContext)
 
   const bun = useMemo(()=>{

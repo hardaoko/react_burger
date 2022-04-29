@@ -26,7 +26,7 @@ const Ingredient = props => {
 
 Ingredient.propTypes = {
   item: burgerDataType.isRequired,
-  number: PropTypes.number
+  number: PropTypes.number.isRequired
 };
 
 export default Ingredient;

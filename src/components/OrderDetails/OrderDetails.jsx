@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import styles from "./OrderDetails.module.css";
 import checkIcon from '../../images/done.svg'
 
@@ -16,6 +17,10 @@ const OrderDetails = ({order}) => {
       </p>
     </div>
   );
+};
+
+OrderDetails.propTypes = {
+  order: PropTypes.number.isRequired
 };
 
 export default OrderDetails;

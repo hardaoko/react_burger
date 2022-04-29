@@ -3,15 +3,15 @@ import styles from './Main.module.css'
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor'
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients'
 
-const Main = ({error, isLoaded, burgerData}) => {
+const Main = ({error, isLoaded}) => {
   return (
     <main className={styles.main}>
       {
         error === '' ?
         isLoaded &&
         <>
-          <BurgerIngredients burgerData={burgerData}/>
-          <BurgerConstructor burgerData={burgerData}/>
+          <BurgerIngredients/>
+          <BurgerConstructor/>
         </> :
         <span className={`${styles.error} text text_type_main-default text_color_inactive`}>Ошибка при загрузке данных</span>
       }

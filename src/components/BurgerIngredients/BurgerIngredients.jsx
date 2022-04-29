@@ -1,16 +1,16 @@
-import {useState} from "react";
-import PropTypes from 'prop-types'
+import {useContext, useState} from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredients.module.css";
 import Ingredient from "../Ingredient/Ingredient";
 import Modal from '../Modal/Modal'
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
-import { burgerDataType } from '../../utils/types';
+import { BurgerContext } from "../../utils/BurgerContext";
 
-const BurgerIngredients = props => {
+const BurgerIngredients = () => {
   const [current, setCurrent] = useState("one");
   const [modalVisible, setModalVisible] = useState(false);
   const [itemDetails, setItemDetails] = useState({})
+  const burgerData = useContext(BurgerContext)
 
   const closeModal = () => {
     setModalVisible(false)
@@ -42,8 +42,8 @@ const BurgerIngredients = props => {
           Булки
         </h2>
         <ul className={styles.list}>
-          {props.burgerData.map(item=> item.type === 'bun' &&
-          <Ingredient key={item._id} item={item} onOpen={()=> {
+          {burgerData.map(item=> item.type === 'bun' &&
+          <Ingredient key={item._id} item={item} number={0} onOpen={()=> {
             setModalVisible(true);
             setItemDetails(item)}}/>
           )}
@@ -52,8 +52,8 @@ const BurgerIngredients = props => {
           Соусы
         </h2>
         <ul className={styles.list}>
-          {props.burgerData.map(item=> item.type === 'sauce' &&
-          <Ingredient key={item._id} item={item} onOpen={()=> {
+          {burgerData.map(item=> item.type === 'sauce' &&
+          <Ingredient key={item._id} item={item} number={1} onOpen={()=> {
             setModalVisible(true);
             setItemDetails(item)}}/>
           )}
@@ -62,8 +62,8 @@ const BurgerIngredients = props => {
           Начинки
         </h2>
         <ul className={styles.list}>
-          {props.burgerData.map(item=> item.type === 'main' &&
-          <Ingredient key={item._id} item={item} onOpen={()=> {
+          {burgerData.map(item=> item.type === 'main' &&
+          <Ingredient key={item._id} item={item} number={2} onOpen={()=> {
             setModalVisible(true);
             setItemDetails(item)}}/>
          )}
@@ -71,10 +71,6 @@ const BurgerIngredients = props => {
       </div>
     </div>
   );
-};
-
-BurgerIngredients.propTypes = {
-  burgerData: PropTypes.arrayOf(burgerDataType).isRequired
 };
 
 export default BurgerIngredients;

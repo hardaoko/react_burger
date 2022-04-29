@@ -37,7 +37,7 @@ const App = () => {
     <div className="App">
       <AppHeader />
       <BurgerContext.Provider value={burgerData}>
-        <Main error={error} isLoaded={isLoaded} burgerData={burgerData} />
+        <Main error={error} isLoaded={isLoaded} />
       </BurgerContext.Provider>
     </div>
   );
