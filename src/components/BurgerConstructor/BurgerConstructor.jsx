@@ -4,6 +4,8 @@ import { ConstructorElement, DragIcon, Button, CurrencyIcon} from "@ya.praktikum
 import Modal from '../Modal/Modal'
 import OrderDetails from '../OrderDetails/OrderDetails'
 import { BurgerContext } from '../../utils/BurgerContext';
+import { baseUrl } from '../../utils/constants';
+import { checkResponse } from '../App/App';
 
 const BurgerConstructor = () => {
 
@@ -25,29 +27,28 @@ const BurgerConstructor = () => {
     }, 0) + bun.price * 2
   }, [ingredients, bun])
 
+
   const createOrder = async () => {
     let requestData = [];
     ingredients.map((item) => {return requestData.push(item._id)});
     requestData.push(bun._id);
     try {
-      const url = 'https://norma.nomoreparties.space/api/orders';
+      const url = baseUrl + "orders";
       const res = await fetch(url, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body:  JSON.stringify({ingredients: requestData})
       });
-      if (!res.ok) {
-        throw new Error("response is not ok");
+
+      checkResponse(res)
+
+      const data = await res.json();
+      if (data && data.success === true) {
+        setOrderData(data.order.number);
       } else {
-        console.log(res)
-        const data = await res.json();
-        console.log(data)
-        if (data && data.success === true) {
-          setOrderData(data.order.number);
-        } else {
-            throw new Error("DataConfirmError");
-        }
+          throw new Error("DataConfirmError");
       }
+
     }
     catch (e) {
       console.log(e)
@@ -71,10 +72,10 @@ const BurgerConstructor = () => {
 
   const IngredientSection = useCallback(() => {
     return (
-      <ul className={`${styles.list} pr-4 pl-4`}>
+      <ul className={`${styles.list} pr-4 pl-4 mt-5`}>
         {ingredients.map(item => {
           return (
-            <li className={`${styles.item} mt-5`} key={item._id}>
+            <li className={`${styles.item} mb-5`} key={item._id}>
             <DragIcon type="primary" />
             <ConstructorElement
               text={item.name}
@@ -102,7 +103,7 @@ const BurgerConstructor = () => {
 
       <IngredientSection />
 
-      <div className={`${styles.item} mt-5 ml-10`}>
+      <div className={`${styles.item} mt-3 ml-10`}>
         <ConstructorElement
           type="bottom"
           isLocked={true}

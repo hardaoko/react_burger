@@ -1,4 +1,4 @@
-import React from 'react'
+import PropType from 'prop-types'
 import styles from './Main.module.css'
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor'
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients'
@@ -7,7 +7,7 @@ const Main = ({error, isLoaded}) => {
   return (
     <main className={styles.main}>
       {
-        error === '' ?
+        !error ?
         isLoaded &&
         <>
           <BurgerIngredients/>
@@ -17,6 +17,11 @@ const Main = ({error, isLoaded}) => {
       }
     </main>
   )
+}
+
+Main.propType = {
+  error: PropType.bool.isRequired,
+  isLoaded: PropType.bool.isRequired
 }
 
 export default Main

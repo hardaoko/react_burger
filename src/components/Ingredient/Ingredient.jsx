@@ -17,7 +17,7 @@ const Ingredient = props => {
         <span className={`${styles.text} text text_type_main-default`}>
           {name}
         </span>
-        { props.number &&
+        { props.number !== 0 &&
           <Counter count={props.number} size="default"/>}
       </div>
     </li>
