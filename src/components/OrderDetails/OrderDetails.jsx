@@ -1,12 +1,13 @@
 import PropTypes from "prop-types";
 import styles from "./OrderDetails.module.css";
 import checkIcon from '../../images/done.svg'
+import { useSelector } from 'react-redux';
 
-const OrderDetails = ({order}) => {
-
+const OrderDetails = () => {
+  const {orderData} = useSelector(state => state.orderData)
   return (
     <div className={styles.container}>
-      <p className={`${styles.number} text text_type_digits-large`}>{order}</p>
+      <p className={`${styles.number} text text_type_digits-large`}>{orderData}</p>
       <p className="text text_type_main-medium mt-8">
         идентификатор заказа
       </p>
@@ -17,10 +18,6 @@ const OrderDetails = ({order}) => {
       </p>
     </div>
   );
-};
-
-OrderDetails.propTypes = {
-  order: PropTypes.number.isRequired
 };
 
 export default OrderDetails;

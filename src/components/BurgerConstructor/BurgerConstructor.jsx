@@ -4,18 +4,21 @@ import { ConstructorElement, DragIcon, Button, CurrencyIcon} from "@ya.praktikum
 import Modal from '../Modal/Modal'
 import OrderDetails from '../OrderDetails/OrderDetails'
 import { baseUrl } from '../../utils/constants';
-import { checkResponse } from '../App/App';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { getOrder } from '../../services/actions';
 
 const BurgerConstructor = () => {
 
   const [isVisible, setIsVisible] = useState(false)
-  const [orderData, setOrderData] = useState(0)
+  //const [orderData, setOrderData] = useState(0)
 
   const {chosenIngredients} = useSelector(state => state.ingredients )
+  const {orderData} = useSelector(state => state.orderData)
+
+  const dispatch = useDispatch()
 
   const bun = useMemo(()=>{
-    return (chosenIngredients.length === 0 ? undefined :  chosenIngredients.find(item => item.type === "bun"))
+    return (chosenIngredients.length === 0 ? undefined : chosenIngredients.find(item => item.type === "bun"))
   }, [chosenIngredients])
 
   const ingredients = useMemo(() => {
@@ -31,6 +34,7 @@ const BurgerConstructor = () => {
   }, [chosenIngredients, ingredients, bun])
 
   const createOrder = async () => {
+    dispatch(getOrder(chosenIngredients))
     let requestData = [];
     ingredients.map((item) => {return requestData.push(item._id)});
     requestData.push(bun._id);
@@ -46,7 +50,7 @@ const BurgerConstructor = () => {
 
       const data = await res.json();
       if (data && data.success === true) {
-        setOrderData(data.order.number);
+        //setOrderData(data.order.number);
       } else {
           throw new Error("DataConfirmError");
       }
@@ -110,7 +114,7 @@ const BurgerConstructor = () => {
       { isVisible && modal }
 
       { bun !== undefined ? <BunElement bun={bun} side="top"/> :
-        <div className={`mt-25 mb-15 ml-10 text text_type_main-large`}>Выберите булку</div>}
+        <div className={`${styles.tip} mt-25 mb-15 ml-10 text text_type_main-large`}>Выберите булку</div>}
 
       { bun !== undefined && <IngredientSection /> }
 
@@ -121,7 +125,7 @@ const BurgerConstructor = () => {
           <span className="text text_type_digits-medium mr-2">{finalCost}</span>
           <CurrencyIcon type="primary"/>
         </div>
-          <Button type="primary" size="medium" onClick={openModal}>Оформить заказ</Button>
+          <Button type="primary" size="medium" onClick={openModal} disabled={bun===undefined}>Оформить заказ</Button>
       </div>
     </div>
   )

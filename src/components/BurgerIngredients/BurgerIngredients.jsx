@@ -20,7 +20,7 @@ const BurgerIngredients = () => {
     <Modal onClose={closeModal} title='Детали ингредиента'>
       <IngredientDetails item={itemDetails}/>
     </Modal>
-  );
+  ); 
 
   return (
     <div className={styles.container}>

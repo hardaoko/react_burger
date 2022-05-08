@@ -9,5 +9,15 @@ export function checkResponse(response) {
 }
 
 export const getIngredientsRequest = () => {
-  return fetch(`${baseUrl}/ingredients`).then((res) => checkResponse(res));
+  return fetch(`${baseUrl}ingredients`).then((res) => checkResponse(res));
+};
+
+export const getOrderRequest = (ingredients) => {
+  let requestData = [];
+  ingredients.map((item) => {return requestData.push(item._id)});
+  return fetch(`${baseUrl}orders`, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body:  JSON.stringify({ingredients: requestData})
+  }).then((res) => checkResponse(res));
 };
