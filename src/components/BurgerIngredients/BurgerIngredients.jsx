@@ -1,16 +1,16 @@
-import {useContext, useState} from "react";
+import {useState} from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredients.module.css";
 import Ingredient from "../Ingredient/Ingredient";
 import Modal from '../Modal/Modal'
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
-import { BurgerContext } from "../../utils/BurgerContext";
+import { useSelector } from "react-redux";
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState("one");
   const [modalVisible, setModalVisible] = useState(false);
   const [itemDetails, setItemDetails] = useState({})
-  const burgerData = useContext(BurgerContext)
+  const {ingredients} = useSelector(state => state.ingredients)
 
   const closeModal = () => {
     setModalVisible(false)
@@ -42,7 +42,7 @@ const BurgerIngredients = () => {
           Булки
         </h2>
         <ul className={styles.list}>
-          {burgerData.map(item=> item.type === 'bun' &&
+          {ingredients.map(item=> item.type === 'bun' &&
           <Ingredient key={item._id} item={item} number={0} onOpen={()=> {
             setModalVisible(true);
             setItemDetails(item)}}/>
@@ -52,7 +52,7 @@ const BurgerIngredients = () => {
           Соусы
         </h2>
         <ul className={styles.list}>
-          {burgerData.map(item=> item.type === 'sauce' &&
+          {ingredients.map(item=> item.type === 'sauce' &&
           <Ingredient key={item._id} item={item} number={1} onOpen={()=> {
             setModalVisible(true);
             setItemDetails(item)}}/>
@@ -62,7 +62,7 @@ const BurgerIngredients = () => {
           Начинки
         </h2>
         <ul className={styles.list}>
-          {burgerData.map(item=> item.type === 'main' &&
+          {ingredients.map(item=> item.type === 'main' &&
           <Ingredient key={item._id} item={item} number={2} onOpen={()=> {
             setModalVisible(true);
             setItemDetails(item)}}/>

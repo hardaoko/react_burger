@@ -1,14 +1,16 @@
-import PropType from 'prop-types'
 import styles from './Main.module.css'
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor'
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients'
+import { useSelector } from 'react-redux'
 
-const Main = ({error, isLoaded}) => {
+const Main = () => {
+  const {ingredientsRequest, ingredientsFailed} = useSelector(state => state.ingredients)
+
   return (
     <main className={styles.main}>
       {
-        !error ?
-        isLoaded &&
+        !ingredientsFailed ?
+        !ingredientsRequest &&
         <>
           <BurgerIngredients/>
           <BurgerConstructor/>
@@ -19,9 +21,6 @@ const Main = ({error, isLoaded}) => {
   )
 }
 
-Main.propType = {
-  error: PropType.bool.isRequired,
-  isLoaded: PropType.bool.isRequired
-}
+
 
 export default Main

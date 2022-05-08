@@ -1,32 +1,35 @@
-import {useCallback, useContext, useMemo, useState} from 'react'
+import {useCallback, useMemo, useState} from 'react'
 import styles from "./BurgerConstructor.module.css";
 import { ConstructorElement, DragIcon, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from '../Modal/Modal'
 import OrderDetails from '../OrderDetails/OrderDetails'
-import { BurgerContext } from '../../utils/BurgerContext';
 import { baseUrl } from '../../utils/constants';
 import { checkResponse } from '../App/App';
+import { useSelector } from 'react-redux';
 
 const BurgerConstructor = () => {
 
   const [isVisible, setIsVisible] = useState(false)
   const [orderData, setOrderData] = useState(0)
-  const burgerData = useContext(BurgerContext)
+
+  const {chosenIngredients} = useSelector(state => state.ingredients )
+  console.log('burgerData', chosenIngredients)
 
   const bun = useMemo(()=>{
-    return burgerData.filter(item => item.type === "bun")
-  }, [burgerData])[1]
+    return (chosenIngredients.length === 0 ? undefined :  chosenIngredients.find(item => item.type === "bun"))
+  }, [chosenIngredients])
 
   const ingredients = useMemo(() => {
-    return burgerData.filter(item => item.type !== "bun");
-  }, [burgerData])
+    return (chosenIngredients.length === 0 ? undefined : chosenIngredients.filter(item => item.type !== "bun"))
+  }, [chosenIngredients])
 
   const finalCost = useMemo(() => {
-    return ingredients.reduce((prev, next) => {
-        return prev + next.price
-    }, 0) + bun.price * 2
-  }, [ingredients, bun])
-
+    return (chosenIngredients.length === 0 ?
+      0 :
+      ingredients.reduce((prev, next) => {
+          return prev + next.price
+      }, 0) + bun.price * 2)
+  }, [chosenIngredients, ingredients, bun])
 
   const createOrder = async () => {
     let requestData = [];
@@ -40,7 +43,7 @@ const BurgerConstructor = () => {
         body:  JSON.stringify({ingredients: requestData})
       });
 
-      checkResponse(res)
+      //checkResponse(res)
 
       const data = await res.json();
       if (data && data.success === true) {
@@ -88,30 +91,31 @@ const BurgerConstructor = () => {
     )
   }, [ingredients])
 
+  const BunElement = ({bun, side}) => {
+    return (
+      <div className={`${styles.item}  ${side==="top" ? "mt-25 ml-10" : "mt-3 ml-10"}`}>
+        <ConstructorElement
+          type={side}
+          isLocked={true}
+          text={`${bun.name} ${side==="top" ? "(верх)" : "(низ)"}`}
+          price={bun.price}
+          thumbnail={bun.image}
+        />
+      </div>
+    )
+  }
+
+
   return (
     <div className={styles.container}>
-      {isVisible && modal}
-      <div className={`${styles.item} mt-25 ml-10`}>
-        <ConstructorElement
-          type="top"
-          isLocked={true}
-          text={`${bun.name} (верх)`}
-          price={bun.price}
-          thumbnail={bun.image}
-        />
-      </div>
+      { isVisible && modal }
 
-      <IngredientSection />
+      { bun !== undefined ? <BunElement bun={bun} side="top"/> :
+        <div className={`mt-25 mb-15 ml-10 text text_type_main-large`}>Выберите булку</div>}
 
-      <div className={`${styles.item} mt-3 ml-10`}>
-        <ConstructorElement
-          type="bottom"
-          isLocked={true}
-          text={`${bun.name} (низ)`}
-          price={bun.price}
-          thumbnail={bun.image}
-        />
-      </div>
+      { bun !== undefined && <IngredientSection /> }
+
+      { bun !== undefined && <BunElement bun={bun} side="bottom"/> }
 
       <div className={`${styles.button_container} pt-5 pr-5`}>
         <div className="mr-10">
