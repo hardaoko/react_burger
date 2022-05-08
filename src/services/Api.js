@@ -2,10 +2,12 @@ import { baseUrl } from "../utils/constants";
 
 export function checkResponse(response) {
   if (!response.ok) {
-    throw new Error("response is not ok");
+    Promise.reject(new Error());
+  } else {
+    return response.json();
   }
 }
 
 export const getIngredientsRequest = () => {
-  return fetch(`${baseUrl}ingredients`);
+  return fetch(`${baseUrl}/ingredients`).then((res) => checkResponse(res));
 };

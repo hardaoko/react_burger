@@ -13,7 +13,6 @@ const BurgerConstructor = () => {
   const [orderData, setOrderData] = useState(0)
 
   const {chosenIngredients} = useSelector(state => state.ingredients )
-  console.log('burgerData', chosenIngredients)
 
   const bun = useMemo(()=>{
     return (chosenIngredients.length === 0 ? undefined :  chosenIngredients.find(item => item.type === "bun"))

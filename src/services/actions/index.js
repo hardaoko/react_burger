@@ -12,10 +12,9 @@ export function getIngredients() {
     dispatch({
       type: GET_INGREDIENTS_REQUEST,
     });
-    getIngredientsRequest().then((res) => {
-      res.json().then((data) => {
-        console.log(data);
-        if (res) {
+    try {
+      getIngredientsRequest().then((data) => {
+        if (data) {
           dispatch({
             type: GET_INGREDIENTS_SUCCESS,
             ingredients: data.data,
@@ -26,6 +25,11 @@ export function getIngredients() {
           });
         }
       });
-    });
+    } catch (e) {
+      dispatch({
+        type: GET_INGREDIENTS_FAILED,
+      });
+      console.error("Ошибка при передаче ингридиентов", e);
+    }
   };
 }
