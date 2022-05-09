@@ -4,34 +4,34 @@ import { ConstructorElement, DragIcon, Button, CurrencyIcon} from "@ya.praktikum
 import Modal from '../Modal/Modal'
 import OrderDetails from '../OrderDetails/OrderDetails'
 import { useSelector, useDispatch } from 'react-redux';
-import { addBun, addIngredients, getOrder } from '../../services/actions';
+import { addBun, addIngredients, deleteIngredients, getOrder } from '../../services/actions';
 import { useDrop } from 'react-dnd';
 
 const BurgerConstructor = () => {
 
   const [isVisible, setIsVisible] = useState(false)
 
-  const {chosenIngredients, orderData} = useSelector(store => store.ingredients )
+  const orderData = useSelector(store => store.ingredients.orderData)
+  const chosenIngredients = useSelector(store => store.ingredients.chosenIngredients)
 
   const dispatch = useDispatch()
 
   const bun = useMemo(()=>{
-    return (chosenIngredients.length === 0 ? undefined : chosenIngredients.find(item => item.type === "bun"))
-  }, [chosenIngredients.length])
+    return (chosenIngredients.find(item => item.type === "bun"))
+  }, [chosenIngredients[0]])
 
   const ingredients = useMemo(() => {
-    return (chosenIngredients.length === 0 ? undefined : chosenIngredients.filter(item => item.type !== "bun"))
+    return (chosenIngredients.filter(item => item.type !== "bun"))
   }, [chosenIngredients.length])
 
   const finalCost = useMemo(() => {
-    return (chosenIngredients.length === 0 ?
-      0 :
+    return ( bun === undefined ? 0 :
       ingredients.reduce((prev, next) => {
           return prev + next.price
       }, 0) + bun.price * 2)
   }, [chosenIngredients.length, ingredients, bun])
 
-  const createOrder = async () => {
+  const createOrder = () => {
     dispatch(getOrder(chosenIngredients))
   }
 
@@ -54,26 +54,29 @@ const BurgerConstructor = () => {
   const [{isHover}, dropTarget] = useDrop({
     accept: "ingredients",
     drop(item){
-      // item.type = "bun" ?
-      // dispatch(addBun(chosenIngredients, item)) :
-      dispatch(addIngredients(chosenIngredients, item));
+      item.type === "bun" ?
+      dispatch(addBun(chosenIngredients, item)) :
+      chosenIngredients.length > 0 && dispatch(addIngredients(chosenIngredients, item));
     },
     collect: monitor => ({
         isHover: monitor.isOver(),
     })
   });
 
+  const highlightTarget = isHover ? styles.highlight : "" ;
+
   const IngredientSection = useCallback(() => {
     return (
       <ul className={`${styles.list} pr-4 pl-4 mt-5`}>
-        {ingredients.map(item => {
+        {ingredients.map((item, index) => {
           return (
-            <li className={`${styles.item} mb-5`} key={item._id}>
+            <li className={`${styles.item} mb-5`} key={item._id + index}>
             <DragIcon type="primary" />
             <ConstructorElement
               text={item.name}
               price={item.price}
               thumbnail={item.image}
+              handleClose={() => {dispatch(deleteIngredients(chosenIngredients, index+1))}}
             />
           </li>
         )})}
@@ -82,9 +85,8 @@ const BurgerConstructor = () => {
   }, [ingredients])
 
   const BunElement = ({bun, side}) => {
-    console.log('chsn', chosenIngredients);
     return (
-      <div className={`${styles.item}  ${side==="top" ? "mt-25 ml-10" : "mt-3 ml-10"}`}>
+      <div className={`${styles.item}  ${side==="top" ? " ml-10" : "mt-3 ml-10"}`}>
         <ConstructorElement
           type={side}
           isLocked={true}
@@ -98,11 +100,11 @@ const BurgerConstructor = () => {
 
 
   return (
-    <div className={styles.container} ref={dropTarget}>
+    <div className={`${styles.container} ${highlightTarget} mt-25`} ref={dropTarget}>
       {  isVisible && modal }
 
       { bun !== undefined ? <BunElement bun={bun} side="top"/> :
-        <div className={`${styles.tip} mt-25 mb-15 ml-10 text text_type_main-large`}>Выберите булку</div>}
+        <div className={`${styles.tip} mb-15 mr-5 mt-5 text text_type_main-large`}>Выберите булку</div>}
       { bun !== undefined && <IngredientSection /> }
 
       { bun !== undefined && <BunElement bun={bun} side="bottom"/> }

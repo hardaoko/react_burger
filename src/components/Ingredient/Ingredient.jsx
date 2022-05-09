@@ -1,11 +1,13 @@
 import styles from "./Ingredient.module.css";
-import PropTypes from "prop-types";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { burgerDataType } from '../../utils/types';
 import { useDrag } from "react-dnd";
+import { useSelector } from "react-redux";
 
-const Ingredient = ({item, onOpen, number}) => {
-  const {image, price, name} = item;
+const Ingredient = ({item, onOpen}) => {
+  const {image, price, name, _id} = item;
+  const {chosenIngredients} = useSelector(store => store.ingredients)
+  const number = chosenIngredients.filter(item => item._id===_id).length
 
   const [, dragRef] = useDrag({
     type: "ingredients",
@@ -13,8 +15,8 @@ const Ingredient = ({item, onOpen, number}) => {
   });
 
   return (
-    <li className={styles.item} ref={dragRef}>
-      <div className={styles.link} onClick={onOpen}>
+    <li className={styles.item} >
+      <div className={styles.link} onClick={onOpen} ref={dragRef}>
         <img alt={name} src={image} className={`${styles.image} ml-4 mr-4`}/>
         <div className={`${styles.price} mt-1 mb-1`}>
           <span className="text text_type_digits-default mr-2">{price}</span>
@@ -23,16 +25,16 @@ const Ingredient = ({item, onOpen, number}) => {
         <span className={`${styles.text} text text_type_main-default`}>
           {name}
         </span>
-        { number !== 0 &&
-          <Counter count={number} size="default"/>}
+
       </div>
+      { number !== 0 &&
+          <Counter count={number} size="default"/>}
     </li>
   );
 };
 
 Ingredient.propTypes = {
   item: burgerDataType.isRequired,
-  number: PropTypes.number.isRequired
 };
 
 export default Ingredient;

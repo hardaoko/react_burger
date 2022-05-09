@@ -1,13 +1,12 @@
 import { combineReducers } from "redux";
 import {
-  ADD_INGREDIENT,
-  DELETE_INGREDIENT,
   GET_INGREDIENTS_FAILED,
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
   GET_ORDER_FAILED,
   GET_ORDER_REQUEST,
   GET_ORDER_SUCCESS,
+  UPGRADE_ORDER_LIST,
 } from "../actions";
 
 const initialState = {
@@ -53,13 +52,8 @@ export const ingredientsReducer = (state = initialState, action) => {
     case GET_ORDER_FAILED: {
       return { ...state, orderFailed: true, orderRequest: false };
     }
-    case ADD_INGREDIENT: {
-      return {
-        ...state,
-        chosenIngredients: action.payload,
-      };
-    }
-    case DELETE_INGREDIENT: {
+
+    case UPGRADE_ORDER_LIST: {
       return {
         ...state,
         chosenIngredients: action.payload,
@@ -87,18 +81,7 @@ export const orderReducer = (state = initialState, action) => {
     case GET_ORDER_FAILED: {
       return { ...state, orderFailed: true, orderRequest: false };
     }
-    case ADD_INGREDIENT: {
-      return {
-        ...state,
-        chosenIngredients: action.payload,
-      };
-    }
-    case DELETE_INGREDIENT: {
-      return {
-        ...state,
-        chosenIngredients: action.payload,
-      };
-    }
+
     default: {
       return state;
     }

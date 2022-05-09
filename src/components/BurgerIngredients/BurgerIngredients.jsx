@@ -5,7 +5,6 @@ import Ingredient from "../Ingredient/Ingredient";
 import Modal from '../Modal/Modal'
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { useSelector } from "react-redux";
-import { useDrag } from "react-dnd";
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState("one");
@@ -44,7 +43,7 @@ const BurgerIngredients = () => {
         </h2>
         <ul className={styles.list}>
           {ingredients.map(item=> item.type === 'bun' &&
-          <Ingredient key={item._id} item={item} number={0} onOpen={()=> {
+          <Ingredient key={item._id} item={item} onOpen={()=> {
             setModalVisible(true);
             setItemDetails(item)}
           }/>
@@ -55,7 +54,7 @@ const BurgerIngredients = () => {
         </h2>
         <ul className={styles.list}>
           {ingredients.map(item=> item.type === 'sauce' &&
-          <Ingredient key={item._id} item={item} number={1} onOpen={()=> {
+          <Ingredient key={item._id} item={item} onOpen={()=> {
             setModalVisible(true);
             setItemDetails(item)}}/>
           )}
@@ -65,7 +64,7 @@ const BurgerIngredients = () => {
         </h2>
         <ul className={styles.list}>
           {ingredients.map(item=> item.type === 'main' &&
-          <Ingredient key={item._id} item={item} number={2} onOpen={()=> {
+          <Ingredient key={item._id} item={item} onOpen={()=> {
             setModalVisible(true);
             setItemDetails(item)}}/>
          )}

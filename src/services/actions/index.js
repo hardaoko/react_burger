@@ -8,9 +8,7 @@ export const GET_ORDER_REQUEST = "GET_ORDER_REQUEST";
 export const GET_ORDER_SUCCESS = "GET_ORDER_SUCCESS";
 export const GET_ORDER_FAILED = "GET_ORDER_FAILED";
 
-export const ADD_INGREDIENT = "ADD_INGREDIENT";
-export const DELETE_INGREDIENT = "DELETE_INGREDIENT";
-export const ADD_BUN = "ADD_BUN";
+export const UPGRADE_ORDER_LIST = "UPGRADE_ORDER_LIST";
 
 export function getIngredients() {
   return function (dispatch) {
@@ -71,7 +69,17 @@ export function addIngredients(chosenIngredients, ingredient) {
   return function (dispatch) {
     chosenIngredients.push(ingredient);
     dispatch({
-      type: ADD_INGREDIENT,
+      type: UPGRADE_ORDER_LIST,
+      payload: chosenIngredients,
+    });
+  };
+}
+
+export function deleteIngredients(chosenIngredients, index) {
+  return function (dispatch) {
+    chosenIngredients.splice(index, 1);
+    dispatch({
+      type: UPGRADE_ORDER_LIST,
       payload: chosenIngredients,
     });
   };
@@ -81,7 +89,7 @@ export function addBun(chosenIngredients, bun) {
   return function (dispatch) {
     chosenIngredients.splice(0, 1, bun);
     dispatch({
-      type: ADD_INGREDIENT,
+      type: UPGRADE_ORDER_LIST,
       payload: chosenIngredients,
     });
   };
