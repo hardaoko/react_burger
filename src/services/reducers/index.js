@@ -7,7 +7,8 @@ import {
   GET_ORDER_REQUEST,
   GET_ORDER_SUCCESS,
   MODAL_CLOSE,
-  MODAL_OPEN,
+  MODAL_DETAILS_OPEN,
+  MODAL_ORDER_OPEN,
   UPGRADE_ORDER_LIST,
 } from "../actions";
 
@@ -22,7 +23,9 @@ const initialState = {
   orderRequest: false,
   orderFailed: false,
 
-  modalVisible: false,
+  modalDetailsVisible: false,
+  modalOrderVisible: false,
+  ingredientDetails: {},
 };
 
 export const ingredientsReducer = (state = initialState, action) => {
@@ -62,16 +65,24 @@ export const ingredientsReducer = (state = initialState, action) => {
         chosenIngredients: action.payload,
       };
     }
-    case MODAL_OPEN: {
+    case MODAL_DETAILS_OPEN: {
       return {
         ...state,
-        modalVisible: true,
+        modalDetailsVisible: true,
+        ingredientDetails: action.item,
+      };
+    }
+    case MODAL_ORDER_OPEN: {
+      return {
+        ...state,
+        modalOrderVisible: true,
       };
     }
     case MODAL_CLOSE: {
       return {
         ...state,
-        modalVisible: false,
+        modalOrderVisible: false,
+        modalDetailsVisible: false,
       };
     }
 

@@ -10,8 +10,9 @@ export const GET_ORDER_FAILED = "GET_ORDER_FAILED";
 
 export const UPGRADE_ORDER_LIST = "UPGRADE_ORDER_LIST";
 
-export const MODAL_OPEN = "MODAL_OPEN"
-export const MODAL_CLOSE = "MODAL_CLOSE"
+export const MODAL_DETAILS_OPEN = "MODAL_DETAILS_OPEN";
+export const MODAL_ORDER_OPEN = "MODAL_DETAILS_CLOSE";
+export const MODAL_CLOSE = "MODAL_CLOSE";
 
 export function getIngredients() {
   return function (dispatch) {
@@ -47,7 +48,6 @@ export function getOrder(chosenIngredients) {
     });
     try {
       getOrderRequest(chosenIngredients).then((data) => {
-        console.log(data);
         if (data) {
           dispatch({
             type: GET_ORDER_SUCCESS,

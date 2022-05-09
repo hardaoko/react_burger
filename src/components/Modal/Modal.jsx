@@ -1,5 +1,4 @@
 import {useEffect} from 'react';
-
 import styles from './Modal.module.css';
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {createPortal} from 'react-dom';

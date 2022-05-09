@@ -4,21 +4,22 @@ import styles from "./BurgerIngredients.module.css";
 import Ingredient from "../Ingredient/Ingredient";
 import Modal from '../Modal/Modal'
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { MODAL_DETAILS_OPEN } from "../../services/actions";
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState("one");
-  const [mVisible, setMVisible] = useState(false);
-  const [itemDetails, setItemDetails] = useState({})
-  const {ingredients, modalVisible} = useSelector(state => state.ingredients)
+  const {ingredients, modalDetailsVisible} = useSelector(state => state.ingredients)
 
   const refBun = useRef(null);
   const refSauce = useRef(null);
   const refMain = useRef(null);
 
+  const dispatch = useDispatch()
+
   const modal = (
     <Modal title='Детали ингредиента'>
-      <IngredientDetails item={itemDetails}/>
+      <IngredientDetails />
     </Modal>
   );
 
@@ -38,7 +39,7 @@ const BurgerIngredients = () => {
 
   return (
     <div className={styles.container}>
-      {mVisible && modal}
+      {modalDetailsVisible && modal}
       <h1 className="mt-10 mb-5 text text_type_main-large">Соберите бургер</h1>
       <div className = {styles.tab_container}>
         <Tab value="bun" active={current === "bun"} onClick={setCurrent}>
@@ -58,9 +59,7 @@ const BurgerIngredients = () => {
         <ul className={styles.list}>
           {ingredients.map(item=> item.type === 'bun' &&
           <Ingredient key={item._id} item={item} onOpen={()=> {
-            setMVisible(true);
-            setItemDetails(item)}
-          }/>
+            dispatch({type: MODAL_DETAILS_OPEN, item: item});}}/>
           )}
         </ul>
         <h2 id="sauce" className="mb-6 mt-10 text text_type_main-medium" ref={refSauce}>
@@ -69,8 +68,7 @@ const BurgerIngredients = () => {
         <ul className={styles.list}>
           {ingredients.map(item=> item.type === 'sauce' &&
           <Ingredient key={item._id} item={item} onOpen={()=> {
-            setMVisible(true);
-            setItemDetails(item)}}/>
+            dispatch({type: MODAL_DETAILS_OPEN, item: item});}}/>
           )}
         </ul>
         <h2 id="main" className="mb-6 mt-10 text text_type_main-medium"ref={refMain}>
@@ -79,8 +77,7 @@ const BurgerIngredients = () => {
         <ul className={styles.list}>
           {ingredients.map(item=> item.type === 'main' &&
           <Ingredient key={item._id} item={item} onOpen={()=> {
-            setMVisible(true);
-            setItemDetails(item)}}/>
+            dispatch({type: MODAL_DETAILS_OPEN, item: item});}}/>
          )}
         </ul>
       </div>

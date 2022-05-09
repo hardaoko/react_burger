@@ -1,15 +1,15 @@
-import {useCallback, useMemo, useState} from 'react'
+import {useCallback, useMemo} from 'react'
 import styles from "./BurgerConstructor.module.css";
 import { ConstructorElement, DragIcon, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from '../Modal/Modal'
 import OrderDetails from '../OrderDetails/OrderDetails'
 import { useSelector, useDispatch } from 'react-redux';
-import { addBun, addIngredients, deleteIngredients, getOrder, MODAL_OPEN } from '../../services/actions';
+import { addBun, addIngredients, deleteIngredients, getOrder, MODAL_ORDER_OPEN } from '../../services/actions';
 import { useDrop } from 'react-dnd';
 
 const BurgerConstructor = () => {
 
-  const {orderData, chosenIngredients, modalVisible} = useSelector(store => store.ingredients)
+  const {orderData, chosenIngredients, modalOrderVisible} = useSelector(store => store.ingredients)
 
   const dispatch = useDispatch()
 
@@ -34,7 +34,7 @@ const BurgerConstructor = () => {
 
   const openModal = async () => {
     await createOrder()
-    dispatch({type: MODAL_OPEN})
+    dispatch({type: MODAL_ORDER_OPEN})
   }
 
   const modal = (
@@ -43,7 +43,6 @@ const BurgerConstructor = () => {
     </Modal>
   );
 
-  /** Обработка броска карточки */
   const [{isHover}, dropTarget] = useDrop({
     accept: "ingredients",
     drop(item){
@@ -63,7 +62,7 @@ const BurgerConstructor = () => {
       <ul className={`${styles.list} pr-4 pl-4 mt-5`}>
         {ingredients.map((item, index) => {
           return (
-            <li className={`${styles.item} mb-5`} key={item._id + index}>
+            <li className={`${styles.item} mb-5`} key={item._id + index} >
             <DragIcon type="primary" />
             <ConstructorElement
               text={item.name}
@@ -94,7 +93,7 @@ const BurgerConstructor = () => {
 
   return (
     <div className={`${styles.container} ${highlightTarget} mt-25 p-1`} ref={dropTarget}>
-      {  modalVisible && modal }
+      {  modalOrderVisible && modal }
 
       { bun !== undefined ? <BunElement bun={bun} side="top"/> :
         <div className={`${styles.tip} mb-15 mr-5 mt-5 text text_type_main-large`}>Выберите булку</div>}

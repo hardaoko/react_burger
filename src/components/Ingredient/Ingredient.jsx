@@ -5,9 +5,9 @@ import { useDrag } from "react-dnd";
 import { useSelector } from "react-redux";
 
 const Ingredient = ({item, onOpen}) => {
-  const {image, price, name, _id} = item;
+  const {image, price, name, _id, type} = item;
   const {chosenIngredients} = useSelector(store => store.ingredients)
-  const number = chosenIngredients.filter(item => item._id===_id).length
+  const number = chosenIngredients.filter(item => item._id===_id).length * (type === "bun" ? 2 : 1)
 
   const [, dragRef] = useDrag({
     type: "ingredients",
