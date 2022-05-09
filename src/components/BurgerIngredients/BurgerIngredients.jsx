@@ -5,6 +5,7 @@ import Ingredient from "../Ingredient/Ingredient";
 import Modal from '../Modal/Modal'
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { useSelector } from "react-redux";
+import { useDrag } from "react-dnd";
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState("one");
@@ -20,7 +21,7 @@ const BurgerIngredients = () => {
     <Modal onClose={closeModal} title='Детали ингредиента'>
       <IngredientDetails item={itemDetails}/>
     </Modal>
-  ); 
+  );
 
   return (
     <div className={styles.container}>
@@ -45,7 +46,8 @@ const BurgerIngredients = () => {
           {ingredients.map(item=> item.type === 'bun' &&
           <Ingredient key={item._id} item={item} number={0} onOpen={()=> {
             setModalVisible(true);
-            setItemDetails(item)}}/>
+            setItemDetails(item)}
+          }/>
           )}
         </ul>
         <h2 id="sauce" className="mb-6 mt-10 text text_type_main-medium">

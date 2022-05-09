@@ -3,27 +3,25 @@ import styles from "./BurgerConstructor.module.css";
 import { ConstructorElement, DragIcon, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from '../Modal/Modal'
 import OrderDetails from '../OrderDetails/OrderDetails'
-import { baseUrl } from '../../utils/constants';
 import { useSelector, useDispatch } from 'react-redux';
-import { getOrder } from '../../services/actions';
+import { addBun, addIngredients, getOrder } from '../../services/actions';
+import { useDrop } from 'react-dnd';
 
 const BurgerConstructor = () => {
 
   const [isVisible, setIsVisible] = useState(false)
-  //const [orderData, setOrderData] = useState(0)
 
-  const {chosenIngredients} = useSelector(state => state.ingredients )
-  const {orderData} = useSelector(state => state.orderData)
+  const {chosenIngredients, orderData} = useSelector(store => store.ingredients )
 
   const dispatch = useDispatch()
 
   const bun = useMemo(()=>{
     return (chosenIngredients.length === 0 ? undefined : chosenIngredients.find(item => item.type === "bun"))
-  }, [chosenIngredients])
+  }, [chosenIngredients.length])
 
   const ingredients = useMemo(() => {
     return (chosenIngredients.length === 0 ? undefined : chosenIngredients.filter(item => item.type !== "bun"))
-  }, [chosenIngredients])
+  }, [chosenIngredients.length])
 
   const finalCost = useMemo(() => {
     return (chosenIngredients.length === 0 ?
@@ -31,34 +29,10 @@ const BurgerConstructor = () => {
       ingredients.reduce((prev, next) => {
           return prev + next.price
       }, 0) + bun.price * 2)
-  }, [chosenIngredients, ingredients, bun])
+  }, [chosenIngredients.length, ingredients, bun])
 
   const createOrder = async () => {
     dispatch(getOrder(chosenIngredients))
-    let requestData = [];
-    ingredients.map((item) => {return requestData.push(item._id)});
-    requestData.push(bun._id);
-    try {
-      const url = baseUrl + "orders";
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body:  JSON.stringify({ingredients: requestData})
-      });
-
-      //checkResponse(res)
-
-      const data = await res.json();
-      if (data && data.success === true) {
-        //setOrderData(data.order.number);
-      } else {
-          throw new Error("DataConfirmError");
-      }
-
-    }
-    catch (e) {
-      console.log(e)
-    }
   }
 
   const openModal = async () => {
@@ -75,6 +49,19 @@ const BurgerConstructor = () => {
       <OrderDetails order={orderData}/>
     </Modal>
   );
+
+  /** Обработка броска карточки */
+  const [{isHover}, dropTarget] = useDrop({
+    accept: "ingredients",
+    drop(item){
+      // item.type = "bun" ?
+      // dispatch(addBun(chosenIngredients, item)) :
+      dispatch(addIngredients(chosenIngredients, item));
+    },
+    collect: monitor => ({
+        isHover: monitor.isOver(),
+    })
+  });
 
   const IngredientSection = useCallback(() => {
     return (
@@ -95,6 +82,7 @@ const BurgerConstructor = () => {
   }, [ingredients])
 
   const BunElement = ({bun, side}) => {
+    console.log('chsn', chosenIngredients);
     return (
       <div className={`${styles.item}  ${side==="top" ? "mt-25 ml-10" : "mt-3 ml-10"}`}>
         <ConstructorElement
@@ -110,12 +98,11 @@ const BurgerConstructor = () => {
 
 
   return (
-    <div className={styles.container}>
-      { isVisible && modal }
+    <div className={styles.container} ref={dropTarget}>
+      {  isVisible && modal }
 
       { bun !== undefined ? <BunElement bun={bun} side="top"/> :
         <div className={`${styles.tip} mt-25 mb-15 ml-10 text text_type_main-large`}>Выберите булку</div>}
-
       { bun !== undefined && <IngredientSection /> }
 
       { bun !== undefined && <BunElement bun={bun} side="bottom"/> }

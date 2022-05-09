@@ -10,6 +10,7 @@ export const GET_ORDER_FAILED = "GET_ORDER_FAILED";
 
 export const ADD_INGREDIENT = "ADD_INGREDIENT";
 export const DELETE_INGREDIENT = "DELETE_INGREDIENT";
+export const ADD_BUN = "ADD_BUN";
 
 export function getIngredients() {
   return function (dispatch) {
@@ -45,7 +46,7 @@ export function getOrder(chosenIngredients) {
     });
     try {
       getOrderRequest(chosenIngredients).then((data) => {
-        console.log(data)
+        console.log(data);
         if (data) {
           dispatch({
             type: GET_ORDER_SUCCESS,
@@ -63,5 +64,25 @@ export function getOrder(chosenIngredients) {
       });
       console.error("Ошибка формирования заказа", e);
     }
+  };
+}
+
+export function addIngredients(chosenIngredients, ingredient) {
+  return function (dispatch) {
+    chosenIngredients.push(ingredient);
+    dispatch({
+      type: ADD_INGREDIENT,
+      payload: chosenIngredients,
+    });
+  };
+}
+
+export function addBun(chosenIngredients, bun) {
+  return function (dispatch) {
+    chosenIngredients.splice(0, 1, bun);
+    dispatch({
+      type: ADD_INGREDIENT,
+      payload: chosenIngredients,
+    });
   };
 }

@@ -1,10 +1,9 @@
-import PropTypes from "prop-types";
 import styles from "./OrderDetails.module.css";
 import checkIcon from '../../images/done.svg'
 import { useSelector } from 'react-redux';
 
 const OrderDetails = () => {
-  const {orderData} = useSelector(state => state.orderData)
+  const orderData = useSelector(state => state.ingredients.orderData)
   return (
     <div className={styles.container}>
       <p className={`${styles.number} text text_type_digits-large`}>{orderData}</p>
