@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useRef, useState} from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredients.module.css";
 import Ingredient from "../Ingredient/Ingredient";
@@ -12,6 +12,10 @@ const BurgerIngredients = () => {
   const [itemDetails, setItemDetails] = useState({})
   const {ingredients} = useSelector(state => state.ingredients)
 
+  const refBun = useRef(null);
+  const refSauce = useRef(null);
+  const refMain = useRef(null);
+
   const closeModal = () => {
     setModalVisible(false)
   }
@@ -21,6 +25,24 @@ const BurgerIngredients = () => {
       <IngredientDetails item={itemDetails}/>
     </Modal>
   );
+
+  const scrollPosition = (e) => {
+    console.log('e.target.scrollTop', e.target.scrollTop)
+    console.log('refBun.current.offsetTop', refBun.current)
+    console.log('refSauce.current.offsetTop', refSauce.current)
+    console.log('refMain.current.offsetTop', refSauce.current.offsetBottom)
+    if (e.target.scrollTop < refBun.current.offsetTop) {
+        setCurrent('bun');
+    }
+
+    if (e.target.scrollTop > refBun.current.offsetTop) {
+        setCurrent('sauce');
+    }
+
+    if (e.target.scrollTop > refSauce.current.offsetTop) {
+        setCurrent('main');
+    }
+}
 
   return (
     <div className={styles.container}>
@@ -37,8 +59,8 @@ const BurgerIngredients = () => {
           Начинки
         </Tab>
       </div>
-      <div className={`${styles.ingredients_container} `}>
-        <h2 id="bun" className="mb-6 mt-10 text text_type_main-medium">
+      <div className={`${styles.ingredients_container} `} onScroll={scrollPosition}>
+        <h2 id="bun" className="mb-6 mt-10 text text_type_main-medium" ref={refBun}>
           Булки
         </h2>
         <ul className={styles.list}>
@@ -49,7 +71,7 @@ const BurgerIngredients = () => {
           }/>
           )}
         </ul>
-        <h2 id="sauce" className="mb-6 mt-10 text text_type_main-medium">
+        <h2 id="sauce" className="mb-6 mt-10 text text_type_main-medium" ref={refSauce}>
           Соусы
         </h2>
         <ul className={styles.list}>
@@ -59,7 +81,7 @@ const BurgerIngredients = () => {
             setItemDetails(item)}}/>
           )}
         </ul>
-        <h2 id="main" className="mb-6 mt-10 text text_type_main-medium">
+        <h2 id="main" className="mb-6 mt-10 text text_type_main-medium"ref={refMain}>
           Начинки
         </h2>
         <ul className={styles.list}>

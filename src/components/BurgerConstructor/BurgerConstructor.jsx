@@ -100,7 +100,7 @@ const BurgerConstructor = () => {
 
 
   return (
-    <div className={`${styles.container} ${highlightTarget} mt-25`} ref={dropTarget}>
+    <div className={`${styles.container} ${highlightTarget} mt-25 p-1`} ref={dropTarget}>
       {  isVisible && modal }
 
       { bun !== undefined ? <BunElement bun={bun} side="top"/> :
