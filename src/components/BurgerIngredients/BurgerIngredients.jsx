@@ -8,45 +8,37 @@ import { useSelector } from "react-redux";
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState("one");
-  const [modalVisible, setModalVisible] = useState(false);
+  const [mVisible, setMVisible] = useState(false);
   const [itemDetails, setItemDetails] = useState({})
-  const {ingredients} = useSelector(state => state.ingredients)
+  const {ingredients, modalVisible} = useSelector(state => state.ingredients)
 
   const refBun = useRef(null);
   const refSauce = useRef(null);
   const refMain = useRef(null);
 
-  const closeModal = () => {
-    setModalVisible(false)
-  }
-
   const modal = (
-    <Modal onClose={closeModal} title='Детали ингредиента'>
+    <Modal title='Детали ингредиента'>
       <IngredientDetails item={itemDetails}/>
     </Modal>
   );
 
   const scrollPosition = (e) => {
-    console.log('e.target.scrollTop', e.target.scrollTop)
-    console.log('refBun.current.offsetTop', refBun.current)
-    console.log('refSauce.current.offsetTop', refSauce.current)
-    console.log('refMain.current.offsetTop', refSauce.current.offsetBottom)
-    if (e.target.scrollTop < refBun.current.offsetTop) {
+    if ((e.target.scrollTop + refBun.current.offsetTop) < refSauce.current.offsetTop) {
         setCurrent('bun');
+        return
     }
 
-    if (e.target.scrollTop > refBun.current.offsetTop) {
+    if ((e.target.scrollTop + refBun.current.offsetTop) < refMain.current.offsetTop) {
         setCurrent('sauce');
+        return
     }
+    setCurrent('main');
 
-    if (e.target.scrollTop > refSauce.current.offsetTop) {
-        setCurrent('main');
-    }
 }
 
   return (
     <div className={styles.container}>
-      {modalVisible && modal}
+      {mVisible && modal}
       <h1 className="mt-10 mb-5 text text_type_main-large">Соберите бургер</h1>
       <div className = {styles.tab_container}>
         <Tab value="bun" active={current === "bun"} onClick={setCurrent}>
@@ -66,7 +58,7 @@ const BurgerIngredients = () => {
         <ul className={styles.list}>
           {ingredients.map(item=> item.type === 'bun' &&
           <Ingredient key={item._id} item={item} onOpen={()=> {
-            setModalVisible(true);
+            setMVisible(true);
             setItemDetails(item)}
           }/>
           )}
@@ -77,7 +69,7 @@ const BurgerIngredients = () => {
         <ul className={styles.list}>
           {ingredients.map(item=> item.type === 'sauce' &&
           <Ingredient key={item._id} item={item} onOpen={()=> {
-            setModalVisible(true);
+            setMVisible(true);
             setItemDetails(item)}}/>
           )}
         </ul>
@@ -87,7 +79,7 @@ const BurgerIngredients = () => {
         <ul className={styles.list}>
           {ingredients.map(item=> item.type === 'main' &&
           <Ingredient key={item._id} item={item} onOpen={()=> {
-            setModalVisible(true);
+            setMVisible(true);
             setItemDetails(item)}}/>
          )}
         </ul>

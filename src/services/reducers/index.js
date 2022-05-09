@@ -6,6 +6,8 @@ import {
   GET_ORDER_FAILED,
   GET_ORDER_REQUEST,
   GET_ORDER_SUCCESS,
+  MODAL_CLOSE,
+  MODAL_OPEN,
   UPGRADE_ORDER_LIST,
 } from "../actions";
 
@@ -19,6 +21,8 @@ const initialState = {
   orderData: null,
   orderRequest: false,
   orderFailed: false,
+
+  modalVisible: false,
 };
 
 export const ingredientsReducer = (state = initialState, action) => {
@@ -31,7 +35,6 @@ export const ingredientsReducer = (state = initialState, action) => {
         ...state,
         ingredientsFailed: false,
         ingredients: action.ingredients,
-        //chosenIngredients: action.ingredients,
         ingredientsRequest: false,
       };
     }
@@ -59,27 +62,17 @@ export const ingredientsReducer = (state = initialState, action) => {
         chosenIngredients: action.payload,
       };
     }
-    default: {
-      return state;
-    }
-  }
-};
-
-export const orderReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case GET_ORDER_REQUEST: {
-      return { ...state, orderRequest: true };
-    }
-    case GET_ORDER_SUCCESS: {
+    case MODAL_OPEN: {
       return {
         ...state,
-        orderFailed: false,
-        orderData: action.orderData,
-        orderRequest: false,
+        modalVisible: true,
       };
     }
-    case GET_ORDER_FAILED: {
-      return { ...state, orderFailed: true, orderRequest: false };
+    case MODAL_CLOSE: {
+      return {
+        ...state,
+        modalVisible: false,
+      };
     }
 
     default: {

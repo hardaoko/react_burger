@@ -10,6 +10,9 @@ export const GET_ORDER_FAILED = "GET_ORDER_FAILED";
 
 export const UPGRADE_ORDER_LIST = "UPGRADE_ORDER_LIST";
 
+export const MODAL_OPEN = "MODAL_OPEN"
+export const MODAL_CLOSE = "MODAL_CLOSE"
+
 export function getIngredients() {
   return function (dispatch) {
     dispatch({

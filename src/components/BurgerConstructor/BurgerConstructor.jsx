@@ -4,15 +4,12 @@ import { ConstructorElement, DragIcon, Button, CurrencyIcon} from "@ya.praktikum
 import Modal from '../Modal/Modal'
 import OrderDetails from '../OrderDetails/OrderDetails'
 import { useSelector, useDispatch } from 'react-redux';
-import { addBun, addIngredients, deleteIngredients, getOrder } from '../../services/actions';
+import { addBun, addIngredients, deleteIngredients, getOrder, MODAL_OPEN } from '../../services/actions';
 import { useDrop } from 'react-dnd';
 
 const BurgerConstructor = () => {
 
-  const [isVisible, setIsVisible] = useState(false)
-
-  const orderData = useSelector(store => store.ingredients.orderData)
-  const chosenIngredients = useSelector(store => store.ingredients.chosenIngredients)
+  const {orderData, chosenIngredients, modalVisible} = useSelector(store => store.ingredients)
 
   const dispatch = useDispatch()
 
@@ -37,15 +34,11 @@ const BurgerConstructor = () => {
 
   const openModal = async () => {
     await createOrder()
-    setIsVisible(true)
-  }
-
-  const closeModal = () => {
-    setIsVisible(false)
+    dispatch({type: MODAL_OPEN})
   }
 
   const modal = (
-    <Modal onClose={closeModal}>
+    <Modal>
       <OrderDetails order={orderData}/>
     </Modal>
   );
@@ -101,7 +94,7 @@ const BurgerConstructor = () => {
 
   return (
     <div className={`${styles.container} ${highlightTarget} mt-25 p-1`} ref={dropTarget}>
-      {  isVisible && modal }
+      {  modalVisible && modal }
 
       { bun !== undefined ? <BunElement bun={bun} side="top"/> :
         <div className={`${styles.tip} mb-15 mr-5 mt-5 text text_type_main-large`}>Выберите булку</div>}
