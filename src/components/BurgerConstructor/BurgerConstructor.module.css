@@ -29,6 +29,7 @@
   flex-direction: row;
   align-items: center;
   gap: 12px;
+  transition: padding 0.3s;
 }
 
 .button_container {
@@ -49,4 +50,12 @@
 .itemCard {
   flex-grow: 1;
   display: flex;
+}
+
+.draggedItem{
+  display:none
+}
+
+.dropItem{
+  padding-top: 120px;
 }

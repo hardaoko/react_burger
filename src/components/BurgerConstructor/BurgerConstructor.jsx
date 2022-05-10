@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import styles from "./BurgerConstructor.module.css";
 import {
   ConstructorElement,
@@ -56,6 +56,9 @@ const BurgerConstructor = () => {
 
   const highlightTarget = isHover ? styles.highlight : "";
 
+  let targetIndex;
+  let startIndex;
+
   const DraggableItem = ({ item }) => {
     const dispatch = useDispatch();
     const { chosenIngredients } = useSelector((store) => store.ingredients);
@@ -64,24 +67,28 @@ const BurgerConstructor = () => {
       item: { item },
     });
 
-    let startIndex;
-    let endIndex;
-
     const [, dropRef] = useDrop({
       accept: "orderList",
       drop() {
-        dispatch(replaceIngredients(chosenIngredients, startIndex, endIndex));
+        dispatch(
+          replaceIngredients(chosenIngredients, startIndex, targetIndex)
+        );
       },
       hover(dragItem) {
-        endIndex = item.index;
+        targetIndex = item.index;
         startIndex = dragItem.item.index;
       },
+      collect: (monitor) => ({
+        sortHover: monitor.isOver(),
+      }),
     });
 
     return (
       <li
-        className={`${styles.item} pb-5`}
         ref={(item) => dragRef(dropRef(item))}
+        className={`${styles.item} pt-5
+          ${targetIndex === item.index ? styles.dropItem : ""}
+          ${startIndex === item.index ? styles.draggedItem : ""}`}
       >
         <DragIcon type="primary" />
         <div className={styles.itemCard}>
@@ -100,7 +107,7 @@ const BurgerConstructor = () => {
 
   const IngredientSection = useCallback(() => {
     return (
-      <ul className={`${styles.list} pr-4 pl-4 mt-5`}>
+      <ul className={`${styles.list} pr-4 pl-4  `}>
         {ingredients.map((item, index) => {
           return (
             <DraggableItem
@@ -118,7 +125,7 @@ const BurgerConstructor = () => {
     return (
       <div
         className={`${styles.item}  ${
-          side === "top" ? " ml-10" : "mt-3 ml-10"
+          side === "top" ? " ml-10" : "mt-5 ml-10"
         }`}
       >
         <ConstructorElement
