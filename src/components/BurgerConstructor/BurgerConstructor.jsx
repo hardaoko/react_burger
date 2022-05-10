@@ -1,116 +1,173 @@
-import {useCallback, useMemo} from 'react'
+import { useCallback, useMemo } from "react";
 import styles from "./BurgerConstructor.module.css";
-import { ConstructorElement, DragIcon, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import Modal from '../Modal/Modal'
-import OrderDetails from '../OrderDetails/OrderDetails'
-import { useSelector, useDispatch } from 'react-redux';
-import { addBun, addIngredients, deleteIngredients, getOrder, MODAL_ORDER_OPEN } from '../../services/actions';
-import { useDrop } from 'react-dnd';
+import {
+  ConstructorElement,
+  DragIcon,
+  Button,
+  CurrencyIcon,
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import Modal from "../Modal/Modal";
+import OrderDetails from "../OrderDetails/OrderDetails";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  addBun,
+  addIngredients,
+  deleteIngredients,
+  getOrder,
+  MODAL_ORDER_OPEN,
+  replaceIngredients,
+} from "../../services/actions";
+import { useDrag, useDrop } from "react-dnd";
 
 const BurgerConstructor = () => {
+  const { orderData, chosenIngredients, modalOrderVisible, bun, finalCost } =
+    useSelector((store) => store.ingredients);
+  const ingredients = useSelector((store) => store.ingredients.ingredientsList);
 
-  const {orderData, chosenIngredients, modalOrderVisible} = useSelector(store => store.ingredients)
-
-  const dispatch = useDispatch()
-
-  const bun = useMemo(()=>{
-    return (chosenIngredients.find(item => item.type === "bun"))
-  }, [chosenIngredients[0]])
-
-  const ingredients = useMemo(() => {
-    return (chosenIngredients.filter(item => item.type !== "bun"))
-  }, [chosenIngredients.length])
-
-  const finalCost = useMemo(() => {
-    return ( bun === undefined ? 0 :
-      ingredients.reduce((prev, next) => {
-          return prev + next.price
-      }, 0) + bun.price * 2)
-  }, [chosenIngredients.length, ingredients, bun])
+  const dispatch = useDispatch();
 
   const createOrder = () => {
-    dispatch(getOrder(chosenIngredients))
-  }
+    dispatch(getOrder(chosenIngredients));
+  };
 
-  const openModal = async () => {
-    await createOrder()
-    dispatch({type: MODAL_ORDER_OPEN})
-  }
+  const openModal = () => {
+    createOrder();
+    dispatch({ type: MODAL_ORDER_OPEN });
+  };
 
   const modal = (
     <Modal>
-      <OrderDetails order={orderData}/>
+      <OrderDetails order={orderData} />
     </Modal>
   );
 
-  const [{isHover}, dropTarget] = useDrop({
+  const [{ isHover }, dropTarget] = useDrop({
     accept: "ingredients",
-    drop(item){
-      item.type === "bun" ?
-      dispatch(addBun(chosenIngredients, item)) :
-      chosenIngredients.length > 0 && dispatch(addIngredients(chosenIngredients, item));
+    drop(item) {
+      item.type === "bun"
+        ? dispatch(addBun(chosenIngredients, item))
+        : chosenIngredients.length > 0 &&
+          dispatch(addIngredients(chosenIngredients, item));
     },
-    collect: monitor => ({
-        isHover: monitor.isOver(),
-    })
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
   });
 
-  const highlightTarget = isHover ? styles.highlight : "" ;
+  const highlightTarget = isHover ? styles.highlight : "";
+
+  const DraggableItem = ({ item }) => {
+    const dispatch = useDispatch();
+    const { chosenIngredients } = useSelector((store) => store.ingredients);
+    const [, dragRef] = useDrag({
+      type: "orderList",
+      item: { item },
+    });
+
+    let startIndex;
+    let endIndex;
+
+    const [, dropRef] = useDrop({
+      accept: "orderList",
+      drop() {
+        dispatch(replaceIngredients(chosenIngredients, startIndex, endIndex));
+      },
+      hover(dragItem) {
+        endIndex = item.index;
+        startIndex = dragItem.item.index;
+      },
+    });
+
+    return (
+      <li
+        className={`${styles.item} pb-5`}
+        ref={(item) => dragRef(dropRef(item))}
+      >
+        <DragIcon type="primary" />
+        <div className={styles.itemCard}>
+          <ConstructorElement
+            text={item.element.name}
+            price={item.element.price}
+            thumbnail={item.element.image}
+            handleClose={() => {
+              dispatch(deleteIngredients(chosenIngredients, item.index));
+            }}
+          />
+        </div>
+      </li>
+    );
+  };
 
   const IngredientSection = useCallback(() => {
     return (
       <ul className={`${styles.list} pr-4 pl-4 mt-5`}>
         {ingredients.map((item, index) => {
           return (
-            <li className={`${styles.item} mb-5`} key={item._id + index} >
-            <DragIcon type="primary" />
-            <ConstructorElement
-              text={item.name}
-              price={item.price}
-              thumbnail={item.image}
-              handleClose={() => {dispatch(deleteIngredients(chosenIngredients, index+1))}}
+            <DraggableItem
+              item={item}
+              index={index + 1}
+              key={item.element._id + index}
             />
-          </li>
-        )})}
+          );
+        })}
       </ul>
-    )
-  }, [ingredients])
+    );
+  }, [ingredients]);
 
-  const BunElement = ({bun, side}) => {
+  const BunElement = ({ bun, side }) => {
     return (
-      <div className={`${styles.item}  ${side==="top" ? " ml-10" : "mt-3 ml-10"}`}>
+      <div
+        className={`${styles.item}  ${
+          side === "top" ? " ml-10" : "mt-3 ml-10"
+        }`}
+      >
         <ConstructorElement
           type={side}
           isLocked={true}
-          text={`${bun.name} ${side==="top" ? "(верх)" : "(низ)"}`}
-          price={bun.price}
-          thumbnail={bun.image}
+          text={`${bun.element.name} ${side === "top" ? "(верх)" : "(низ)"}`}
+          price={bun.element.price}
+          thumbnail={bun.element.image}
         />
       </div>
-    )
-  }
-
+    );
+  };
 
   return (
-    <div className={`${styles.container} ${highlightTarget} mt-25 p-1`} ref={dropTarget}>
-      {  modalOrderVisible && modal }
+    <div
+      className={`${styles.container} ${highlightTarget} mt-25 p-1`}
+      ref={dropTarget}
+    >
+      {modalOrderVisible && modal}
 
-      { bun !== undefined ? <BunElement bun={bun} side="top"/> :
-        <div className={`${styles.tip} mb-15 mr-5 mt-5 text text_type_main-large`}>Выберите булку</div>}
-      { bun !== undefined && <IngredientSection /> }
+      {bun !== null ? (
+        <BunElement bun={bun} side="top" />
+      ) : (
+        <div
+          className={`${styles.tip} mb-15 mr-5 mt-5 text text_type_main-large`}
+        >
+          Выберите булку
+        </div>
+      )}
+      {bun !== null && <IngredientSection />}
 
-      { bun !== undefined && <BunElement bun={bun} side="bottom"/> }
+      {bun !== null && <BunElement bun={bun} side="bottom" />}
 
       <div className={`${styles.button_container} pt-5 pr-5`}>
         <div className="mr-10">
           <span className="text text_type_digits-medium mr-2">{finalCost}</span>
-          <CurrencyIcon type="primary"/>
+          <CurrencyIcon type="primary" />
         </div>
-          <Button type="primary" size="medium" onClick={openModal} disabled={bun===undefined}>Оформить заказ</Button>
+        <Button
+          type="primary"
+          size="medium"
+          onClick={openModal}
+          disabled={bun === undefined}
+        >
+          Оформить заказ
+        </Button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-
-export default BurgerConstructor
+export default BurgerConstructor;

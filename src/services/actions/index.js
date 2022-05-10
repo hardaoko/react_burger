@@ -9,6 +9,7 @@ export const GET_ORDER_SUCCESS = "GET_ORDER_SUCCESS";
 export const GET_ORDER_FAILED = "GET_ORDER_FAILED";
 
 export const UPGRADE_ORDER_LIST = "UPGRADE_ORDER_LIST";
+export const SORT_ORDER = "SORT_ORDER";
 
 export const MODAL_DETAILS_OPEN = "MODAL_DETAILS_OPEN";
 export const MODAL_ORDER_OPEN = "MODAL_DETAILS_CLOSE";
@@ -70,7 +71,10 @@ export function getOrder(chosenIngredients) {
 
 export function addIngredients(chosenIngredients, ingredient) {
   return function (dispatch) {
-    chosenIngredients.push(ingredient);
+    chosenIngredients.push({
+      element: ingredient,
+      index: chosenIngredients.length,
+    });
     dispatch({
       type: UPGRADE_ORDER_LIST,
       payload: chosenIngredients,
@@ -80,17 +84,40 @@ export function addIngredients(chosenIngredients, ingredient) {
 
 export function deleteIngredients(chosenIngredients, index) {
   return function (dispatch) {
-    chosenIngredients.splice(index, 1);
+    let arr = [...chosenIngredients];
+    arr.splice(index, 1);
+    arr = arr.map((item, i) => ({ ...item, index: i }));
     dispatch({
       type: UPGRADE_ORDER_LIST,
-      payload: chosenIngredients,
+      payload: arr,
+    });
+  };
+}
+
+export function replaceIngredients(chosenIngredients, start, end) {
+  return function (dispatch) {
+    let arr = [...chosenIngredients];
+    if (start === end) return;
+    if (start < end) {
+      arr.splice(end, 0, arr[start]);
+      arr.splice(start, 1);
+    } else {
+      const a = arr.splice(start, 1);
+      arr.splice(end, 0, a[0]);
+    }
+
+    arr = arr.map((item, i) => ({ ...item, index: i }));
+
+    dispatch({
+      type: UPGRADE_ORDER_LIST,
+      payload: arr,
     });
   };
 }
 
 export function addBun(chosenIngredients, bun) {
   return function (dispatch) {
-    chosenIngredients.splice(0, 1, bun);
+    chosenIngredients.splice(0, 1, { element: bun, index: 0 });
     dispatch({
       type: UPGRADE_ORDER_LIST,
       payload: chosenIngredients,

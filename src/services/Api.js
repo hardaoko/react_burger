@@ -14,10 +14,12 @@ export const getIngredientsRequest = () => {
 
 export const getOrderRequest = (ingredients) => {
   let requestData = [];
-  ingredients.map((item) => {return requestData.push(item._id)});
+  ingredients.map((item) => {
+    return requestData.push(item.element._id);
+  });
   return fetch(`${baseUrl}orders`, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body:  JSON.stringify({ingredients: requestData})
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ingredients: requestData }),
   }).then((res) => checkResponse(res));
 };

@@ -18,6 +18,8 @@ const initialState = {
   ingredientsFailed: false,
 
   chosenIngredients: [],
+  ingredientsList: [],
+  bun: null,
 
   orderData: null,
   orderRequest: false,
@@ -26,6 +28,8 @@ const initialState = {
   modalDetailsVisible: false,
   modalOrderVisible: false,
   ingredientDetails: {},
+
+  finalCost: 0,
 };
 
 export const ingredientsReducer = (state = initialState, action) => {
@@ -63,6 +67,13 @@ export const ingredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         chosenIngredients: action.payload,
+        ingredientsList: action.payload.filter(
+          (item) => item.element.type !== "bun"
+        ),
+        bun: action.payload[0],
+        finalCost: action.payload.reduce((prev, next) => {
+          return prev + next.element.price;
+        }, action.payload[0].element.price),
       };
     }
     case MODAL_DETAILS_OPEN: {
