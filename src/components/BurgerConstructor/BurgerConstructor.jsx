@@ -26,10 +26,12 @@ const BurgerConstructor = () => {
 
   const dispatch = useDispatch();
 
+  //  Формирование номера заказа
   const createOrder = () => {
     dispatch(getOrder(chosenIngredients));
   };
 
+  //  Открытие модального окна
   const openModal = () => {
     createOrder();
     dispatch({ type: MODAL_ORDER_OPEN });
@@ -41,6 +43,7 @@ const BurgerConstructor = () => {
     </Modal>
   );
 
+  //  useDrop при добавлении ингредиента
   const [{ isHover }, dropTarget] = useDrop({
     accept: "ingredients",
     drop(item) {
@@ -54,6 +57,7 @@ const BurgerConstructor = () => {
     }),
   });
 
+  //  Подсветка дроп-контейнера
   const highlightTarget = isHover ? styles.highlight : "";
 
   let targetIndex;
@@ -67,6 +71,7 @@ const BurgerConstructor = () => {
       item: { item },
     });
 
+    //  useDrop для переноса ингредиентов
     const [, dropRef] = useDrop({
       accept: "orderList",
       drop() {
@@ -121,23 +126,26 @@ const BurgerConstructor = () => {
     );
   }, [ingredients]);
 
-  const BunElement = ({ bun, side }) => {
-    return (
-      <div
-        className={`${styles.item}  ${
-          side === "top" ? " ml-10" : "mt-5 ml-10"
-        }`}
-      >
-        <ConstructorElement
-          type={side}
-          isLocked={true}
-          text={`${bun.element.name} ${side === "top" ? "(верх)" : "(низ)"}`}
-          price={bun.element.price}
-          thumbnail={bun.element.image}
-        />
-      </div>
-    );
-  };
+  const BunElement = useCallback(
+    ({ side }) => {
+      return (
+        <div
+          className={`${styles.item}  ${
+            side === "top" ? " ml-10" : "mt-5 ml-10"
+          }`}
+        >
+          <ConstructorElement
+            type={side}
+            isLocked={true}
+            text={`${bun.element.name} ${side === "top" ? "(верх)" : "(низ)"}`}
+            price={bun.element.price}
+            thumbnail={bun.element.image}
+          />
+        </div>
+      );
+    },
+    [bun]
+  );
 
   return (
     <div
@@ -147,7 +155,7 @@ const BurgerConstructor = () => {
       {modalOrderVisible && modal}
 
       {bun !== null ? (
-        <BunElement bun={bun} side="top" />
+        <BunElement side="top" />
       ) : (
         <div
           className={`${styles.tip} mb-15 mr-5 mt-5 text text_type_main-large`}
@@ -157,7 +165,7 @@ const BurgerConstructor = () => {
       )}
       {bun !== null && <IngredientSection />}
 
-      {bun !== null && <BunElement bun={bun} side="bottom" />}
+      {bun !== null && <BunElement side="bottom" />}
 
       <div className={`${styles.button_container} pt-5 pr-5`}>
         <div className="mr-10">
