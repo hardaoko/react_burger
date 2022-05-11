@@ -21,8 +21,14 @@ import {
 import { useDrag, useDrop } from "react-dnd";
 
 const BurgerConstructor = () => {
-  const { orderData, chosenIngredients, modalOrderVisible, bun, finalCost } =
-    useSelector((store) => store.ingredients);
+  const {
+    orderData,
+    chosenIngredients,
+    modalOrderVisible,
+    bun,
+    finalCost,
+    orderRequest,
+  } = useSelector((store) => store.ingredients);
   const ingredients = useSelector((store) => store.ingredients.ingredientsList);
 
   const dispatch = useDispatch();
@@ -120,11 +126,7 @@ const BurgerConstructor = () => {
       <ul className={`${styles.list} pr-4 pl-4  `}>
         {ingredients.map((item, index) => {
           return (
-            <DraggableItem
-              item={item}
-              index={index + 1}
-              key={item.element._id + index}
-            />
+            <DraggableItem item={item} index={index + 1} key={item.uuid} />
           );
         })}
       </ul>
@@ -132,7 +134,7 @@ const BurgerConstructor = () => {
   }, [ingredients]);
 
   const BunElement = useCallback(
-    ({ side }) => {
+    ({ side, bun }) => {
       return (
         <div
           className={`${styles.item}  ${
@@ -157,10 +159,10 @@ const BurgerConstructor = () => {
       className={`${styles.container} ${highlightTarget} mt-25 p-1`}
       ref={dropTarget}
     >
-      {modalOrderVisible && modal}
+      {modalOrderVisible && !orderRequest && modal}
 
       {bun !== null ? (
-        <BunElement side="top" />
+        <BunElement side="top" bun={bun} />
       ) : (
         <div
           className={`${styles.tip} mb-15 mr-5 mt-5 text text_type_main-large`}
@@ -170,7 +172,7 @@ const BurgerConstructor = () => {
       )}
       {bun !== null && <IngredientSection />}
 
-      {bun !== null && <BunElement side="bottom" />}
+      {bun !== null && <BunElement side="bottom" bun={bun} />}
 
       <div className={`${styles.button_container} pt-5 pr-5`}>
         <div className="mr-10">
@@ -183,7 +185,7 @@ const BurgerConstructor = () => {
           onClick={openModal}
           disabled={bun === null}
         >
-          Оформить заказ
+          {orderRequest ? "Загрузка" : "Оформить заказ"}
         </Button>
       </div>
     </div>

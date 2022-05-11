@@ -1,4 +1,5 @@
 import { getIngredientsRequest, getOrderRequest } from "../Api";
+import { v4 as uuidv4 } from "uuid";
 
 export const GET_INGREDIENTS_REQUEST = "GET_INGREDIENTS_REQUEST";
 export const GET_INGREDIENTS_SUCCESS = "GET_INGREDIENTS_SUCCESS";
@@ -8,8 +9,8 @@ export const GET_ORDER_REQUEST = "GET_ORDER_REQUEST";
 export const GET_ORDER_SUCCESS = "GET_ORDER_SUCCESS";
 export const GET_ORDER_FAILED = "GET_ORDER_FAILED";
 
+export const DELETE_ORDER_LIST = "DELETE_ORDER_LIST";
 export const UPGRADE_ORDER_LIST = "UPGRADE_ORDER_LIST";
-export const SORT_ORDER = "SORT_ORDER";
 
 export const MODAL_DETAILS_OPEN = "MODAL_DETAILS_OPEN";
 export const MODAL_ORDER_OPEN = "MODAL_DETAILS_CLOSE";
@@ -58,6 +59,9 @@ export function getOrder(chosenIngredients) {
             type: GET_ORDER_SUCCESS,
             orderData: data.order.number,
           });
+          dispatch({
+            type: DELETE_ORDER_LIST,
+          });
         } else {
           dispatch(getOrderFailed());
         }
@@ -73,7 +77,9 @@ export function addIngredients(chosenIngredients, ingredient) {
   chosenIngredients.push({
     element: ingredient,
     index: chosenIngredients.length,
+    uuid: uuidv4(),
   });
+  console.log(chosenIngredients);
   return {
     type: UPGRADE_ORDER_LIST,
     payload: chosenIngredients,
@@ -110,7 +116,7 @@ export function replaceIngredients(chosenIngredients, start, end) {
 }
 
 export function addBun(chosenIngredients, bun) {
-  chosenIngredients.splice(0, 1, { element: bun, index: 0 });
+  chosenIngredients.splice(0, 1, { element: bun, index: 0, uuid: uuidv4() });
   return {
     type: UPGRADE_ORDER_LIST,
     payload: chosenIngredients,

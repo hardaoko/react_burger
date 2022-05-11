@@ -1,17 +1,14 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
+import PropTypes from "prop-types";
 import styles from "./Modal.module.css";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { createPortal } from "react-dom";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
-import { useDispatch } from "react-redux";
-import { MODAL_CLOSE } from "../../services/actions";
 
 const Modal = (props) => {
   const modalRoot = document.getElementById("react-modals");
 
   const { title, onClose } = props;
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     const handleEscapeClose = (evt) => {
@@ -45,6 +42,12 @@ const Modal = (props) => {
     </>,
     modalRoot
   );
+};
+
+Modal.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  children: PropTypes.element.isRequired,
+  title: PropTypes.string,
 };
 
 export default Modal;

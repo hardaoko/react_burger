@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import {
+  DELETE_ORDER_LIST,
   GET_INGREDIENTS_FAILED,
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
@@ -74,6 +75,15 @@ export const ingredientsReducer = (state = initialState, action) => {
         finalCost: action.payload.reduce((prev, next) => {
           return prev + next.element.price;
         }, action.payload[0].element.price),
+      };
+    }
+    case DELETE_ORDER_LIST: {
+      return {
+        ...state,
+        chosenIngredients: [],
+        ingredientsList: [],
+        bun: null,
+        finalCost: 0,
       };
     }
     case MODAL_DETAILS_OPEN: {
