@@ -14,6 +14,7 @@ import {
   addIngredients,
   deleteIngredients,
   getOrder,
+  MODAL_CLOSE,
   MODAL_ORDER_OPEN,
   replaceIngredients,
 } from "../../services/actions";
@@ -37,8 +38,12 @@ const BurgerConstructor = () => {
     dispatch({ type: MODAL_ORDER_OPEN });
   };
 
+  const closeModal = () => {
+    dispatch({ type: MODAL_CLOSE });
+  };
+
   const modal = (
-    <Modal>
+    <Modal onClose={closeModal}>
       <OrderDetails order={orderData} />
     </Modal>
   );
@@ -176,7 +181,7 @@ const BurgerConstructor = () => {
           type="primary"
           size="medium"
           onClick={openModal}
-          disabled={bun === undefined}
+          disabled={bun === null}
         >
           Оформить заказ
         </Button>

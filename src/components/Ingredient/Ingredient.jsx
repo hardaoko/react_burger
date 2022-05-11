@@ -1,4 +1,6 @@
 import styles from "./Ingredient.module.css";
+import PropTypes from "prop-types";
+
 import {
   CurrencyIcon,
   Counter,
@@ -38,6 +40,7 @@ const Ingredient = ({ item, onOpen }) => {
 
 Ingredient.propTypes = {
   item: burgerDataType.isRequired,
+  onOpen: PropTypes.func.isRequired,
 };
 
 export default Ingredient;

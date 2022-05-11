@@ -13,7 +13,7 @@ export const getIngredientsRequest = () => {
 };
 
 export const getOrderRequest = (ingredients) => {
-  let requestData = [];
+  const requestData = [];
   ingredients.map((item) => {
     return requestData.push(item.element._id);
   });

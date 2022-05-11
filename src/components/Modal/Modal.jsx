@@ -9,18 +9,14 @@ import { MODAL_CLOSE } from "../../services/actions";
 const Modal = (props) => {
   const modalRoot = document.getElementById("react-modals");
 
-  const { title } = props;
+  const { title, onClose } = props;
 
   const dispatch = useDispatch();
-
-  const closeModal = useCallback(() => {
-    dispatch({ type: MODAL_CLOSE });
-  }, [dispatch]);
 
   useEffect(() => {
     const handleEscapeClose = (evt) => {
       if (evt.key === "Escape") {
-        closeModal();
+        onClose();
       }
     };
 
@@ -28,7 +24,7 @@ const Modal = (props) => {
     return () => {
       document.removeEventListener("keyup", handleEscapeClose);
     };
-  }, [closeModal]);
+  }, [onClose]);
 
   return createPortal(
     <>
@@ -39,13 +35,13 @@ const Modal = (props) => {
               {title}
             </h2>
           )}
-          <button onClick={closeModal} className={styles.closeButton}>
+          <button onClick={onClose} className={styles.closeButton}>
             <CloseIcon type="primary" />
           </button>
         </div>
         {props.children}
       </div>
-      <ModalOverlay onClose={closeModal} />
+      <ModalOverlay onClose={onClose} />
     </>,
     modalRoot
   );
