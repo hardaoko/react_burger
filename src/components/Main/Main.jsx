@@ -1,17 +1,23 @@
-import PropType from 'prop-types'
 import styles from './Main.module.css'
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor'
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients'
+import { useSelector } from 'react-redux'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
-const Main = ({error, isLoaded}) => {
+const Main = () => {
+  const {ingredientsRequest, ingredientsFailed} = useSelector(state => state.ingredients)
+
   return (
     <main className={styles.main}>
       {
-        !error ?
-        isLoaded &&
+        !ingredientsFailed ?
+        !ingredientsRequest &&
         <>
-          <BurgerIngredients/>
-          <BurgerConstructor/>
+          <DndProvider backend={HTML5Backend}>
+            <BurgerIngredients/>
+            <BurgerConstructor/>
+          </DndProvider>
         </> :
         <span className={`${styles.error} text text_type_main-default text_color_inactive`}>Ошибка при загрузке данных</span>
       }
@@ -19,9 +25,6 @@ const Main = ({error, isLoaded}) => {
   )
 }
 
-Main.propType = {
-  error: PropType.bool.isRequired,
-  isLoaded: PropType.bool.isRequired
-}
+
 
 export default Main
