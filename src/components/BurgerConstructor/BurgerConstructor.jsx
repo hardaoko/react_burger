@@ -134,7 +134,7 @@ const BurgerConstructor = () => {
   }, [ingredients]);
 
   const BunElement = useCallback(
-    ({ side, bun }) => {
+    ({ side }) => {
       return (
         <div
           className={`${styles.item}  ${
@@ -162,7 +162,7 @@ const BurgerConstructor = () => {
       {modalOrderVisible && !orderRequest && modal}
 
       {bun !== null ? (
-        <BunElement side="top" bun={bun} />
+        <BunElement side="top" />
       ) : (
         <div
           className={`${styles.tip} mb-15 mr-5 mt-5 text text_type_main-large`}
@@ -172,7 +172,7 @@ const BurgerConstructor = () => {
       )}
       {bun !== null && <IngredientSection />}
 
-      {bun !== null && <BunElement side="bottom" bun={bun} />}
+      {bun !== null && <BunElement side="bottom" />}
 
       <div className={`${styles.button_container} pt-5 pr-5`}>
         <div className="mr-10">

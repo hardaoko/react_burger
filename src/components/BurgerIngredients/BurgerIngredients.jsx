@@ -48,18 +48,30 @@ const BurgerIngredients = () => {
     setCurrent("main");
   };
 
+  const scrollToBun = () => {
+    refBun.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const scrollToSauce = () => {
+    refSauce.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const scrollToMain = () => {
+    refMain.current.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <div className={styles.container}>
       {modalDetailsVisible && modal}
       <h1 className="mt-10 mb-5 text text_type_main-large">Соберите бургер</h1>
       <div className={styles.tab_container}>
-        <Tab value="bun" active={current === "bun"} onClick={setCurrent}>
+        <Tab value="bun" active={current === "bun"} onClick={scrollToBun}>
           Булки
         </Tab>
-        <Tab value="sauce" active={current === "sauce"} onClick={setCurrent}>
+        <Tab value="sauce" active={current === "sauce"} onClick={scrollToSauce}>
           Соусы
         </Tab>
-        <Tab value="main" active={current === "main"} onClick={setCurrent}>
+        <Tab value="main" active={current === "main"} onClick={scrollToMain}>
           Начинки
         </Tab>
       </div>
