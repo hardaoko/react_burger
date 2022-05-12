@@ -1,3 +1,13 @@
+@keyframes slide-from-top {
+  from {
+    top: -100%;
+    animation-timing-function: ease-out;
+  }
+  to {
+    top: 50%;
+  }
+}
+
 .container {
   position: fixed;
   top: 50%;
@@ -11,6 +21,8 @@
   background-color: #1c1c21;
   z-index: 1000;
   min-height: 300px;
+  animation-name: slide-from-top;
+  animation-duration: 0.2s;
 }
 
 .title {

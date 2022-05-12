@@ -31,7 +31,13 @@
     box-sizing: border-box;
     color: #8585AD;
     cursor: pointer;
+    transition: all 0.2s
 }
+
+.link:hover{
+    transform: translateY(2px);
+}
+
 
 .content {
     display: flex;
