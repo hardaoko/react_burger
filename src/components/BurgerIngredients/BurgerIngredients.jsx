@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { MODAL_CLOSE, MODAL_DETAILS_OPEN } from "../../services/actions";
 
 const BurgerIngredients = () => {
-  const [current, setCurrent] = useState("one");
+  const [current, setCurrent] = useState("bun");
   const { ingredients, modalDetailsVisible } = useSelector(
     (state) => state.ingredients
   );
