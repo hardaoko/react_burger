@@ -38,6 +38,14 @@
     transform: translateY(2px);
 }
 
+.link_active {
+    color: white;
+}
+
+.link_active svg {
+    fill: white;
+}
+
 
 .content {
     display: flex;

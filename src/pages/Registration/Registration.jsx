@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Registration.module.css";
+import { Link } from "react-router-dom";
 import {
   Input,
   PasswordInput,
@@ -7,43 +8,55 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 const Registration = () => {
-  const [email, setEmail] = React.useState("bob@example.com");
-  const [password, setPassword] = React.useState("password");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   const onChangeEmail = (e) => {
     setEmail(e.target.value);
   };
   const onChangePassword = (e) => {
     setPassword(e.target.value);
   };
+  const onChangeName = (e) => {
+    setName(e.target.value);
+  };
 
   return (
     <div className={styles.container}>
       <form className={styles.form}>
-        <h1 className="text text_type_main-medium">Вход</h1>
+        <h1 className="text text_type_main-medium">Регистрация</h1>
         <div className="mt-6 mb-6">
-          <Input onChange={onChangeEmail} placeholder="e-mail" name={"email"} />
+          <Input
+            onChange={onChangeName}
+            placeholder="Имя"
+            value={name}
+            name={"name"}
+          />
         </div>
         <div className="mb-6">
-          <Input onChange={onChangeEmail} placeholder="Имя" name={"email"} />
+          <Input
+            onChange={onChangeEmail}
+            placeholder="E-mail"
+            value={email}
+            name={"email"}
+          />
         </div>
         <div className="mb-6">
-          <PasswordInput onChange={onChangePassword} name={"password"} />
+          <PasswordInput
+            onChange={onChangePassword}
+            value={password}
+            name={"password"}
+          />
         </div>
         <Button type="primary" size="medium">
-          Войти
+          Зарегистрироваться
         </Button>
       </form>
       <p className="text text_type_main-default text_color_inactive">
-        {"Вы — новый пользователь? "}
-        <a href="" className={styles.link}>
-          Зарегистрироваться
-        </a>
-      </p>
-      <p className="text text_type_main-default text_color_inactive mt-4">
-        {"Забыли пароль? "}
-        <a href="" className={styles.link}>
-          Восстановить пароль
-        </a>
+        {"Уже зарегистрированы? "}
+        <Link to="/login" className={styles.link}>
+          Войти
+        </Link>
       </p>
     </div>
   );
