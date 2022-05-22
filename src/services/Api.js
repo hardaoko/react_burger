@@ -23,3 +23,11 @@ export const getOrderRequest = (ingredients) => {
     body: JSON.stringify({ ingredients: requestData }),
   }).then((res) => checkResponse(res));
 };
+
+export const getEmailCodeRequest = (emailRequest) => {
+  return fetch(`${baseUrl}password-reset`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email: emailRequest }),
+  }).then((res) => checkResponse(res));
+};

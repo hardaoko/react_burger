@@ -13,7 +13,7 @@ import {
   UPGRADE_ORDER_LIST,
 } from "../actions";
 
-const initialState = {
+const initialIngredients = {
   ingredients: [],
   ingredientsRequest: false,
   ingredientsFailed: false,
@@ -33,7 +33,7 @@ const initialState = {
   finalCost: 0,
 };
 
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (state = initialIngredients, action) => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return { ...state, ingredientsRequest: true };

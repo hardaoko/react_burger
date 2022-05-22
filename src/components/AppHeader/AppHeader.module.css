@@ -39,11 +39,11 @@
 }
 
 .link_active {
-    color: white;
+    color: #F2F2F3;
 }
 
 .link_active svg {
-    fill: white;
+    fill: #F2F2F3;
 }
 
 

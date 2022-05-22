@@ -1,9 +1,17 @@
-import { getIngredientsRequest, getOrderRequest } from "../Api";
+import {
+  getEmailCodeRequest,
+  getIngredientsRequest,
+  getOrderRequest,
+} from "../Api";
 import { v4 as uuidv4 } from "uuid";
 
 export const GET_INGREDIENTS_REQUEST = "GET_INGREDIENTS_REQUEST";
 export const GET_INGREDIENTS_SUCCESS = "GET_INGREDIENTS_SUCCESS";
 export const GET_INGREDIENTS_FAILED = "GET_INGREDIENTS_FAILED";
+
+export const GET_PASSWORD_RESET_REQUEST = "GET_INGREDIENTS_REQUEST";
+export const GET_PASSWORD_RESET_SUCCESS = "GET_INGREDIENTS_SUCCESS";
+export const GET_PASSWORD_RESET_FAILED = "GET_INGREDIENTS_FAILED";
 
 export const GET_ORDER_REQUEST = "GET_ORDER_REQUEST";
 export const GET_ORDER_SUCCESS = "GET_ORDER_SUCCESS";
@@ -22,6 +30,10 @@ function getIngredientsFailed() {
 
 function getOrderFailed() {
   return { type: GET_INGREDIENTS_FAILED };
+}
+
+function getPasswordResetFailed() {
+  return { type: GET_PASSWORD_RESET_FAILED };
 }
 
 export function getIngredients() {
@@ -120,5 +132,28 @@ export function addBun(chosenIngredients, bun) {
   return {
     type: UPGRADE_ORDER_LIST,
     payload: chosenIngredients,
+  };
+}
+
+export function getEmailCode() {
+  return function (dispatch) {
+    dispatch({
+      type: GET_PASSWORD_RESET_REQUEST,
+    });
+    try {
+      getEmailCodeRequest().then((data) => {
+        if (data) {
+          dispatch({
+            type: GET_PASSWORD_RESET_SUCCESS,
+            success: data.success,
+          });
+        } else {
+          dispatch(getPasswordResetFailed());
+        }
+      });
+    } catch (e) {
+      dispatch(getPasswordResetFailed());
+      console.error("Ошибка при передаче ингредиентов", e);
+    }
   };
 }
