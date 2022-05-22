@@ -1,12 +1,12 @@
 import React from "react";
-import styles from "./Login.module.css";
+import styles from "./Registration.module.css";
 import {
-  EmailInput,
+  Input,
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const Login = () => {
+const Registration = () => {
   const [email, setEmail] = React.useState("bob@example.com");
   const [password, setPassword] = React.useState("password");
   const onChangeEmail = (e) => {
@@ -21,14 +21,13 @@ const Login = () => {
       <form className={styles.form}>
         <h1 className="text text_type_main-medium">Вход</h1>
         <div className="mt-6 mb-6">
-          <EmailInput onChange={onChangeEmail} value={email} name={"email"} />
+          <Input onChange={onChangeEmail} placeholder="e-mail" name={"email"} />
         </div>
         <div className="mb-6">
-          <PasswordInput
-            onChange={onChangePassword}
-            value={password}
-            name={"password"}
-          />
+          <Input onChange={onChangeEmail} placeholder="Имя" name={"email"} />
+        </div>
+        <div className="mb-6">
+          <PasswordInput onChange={onChangePassword} name={"password"} />
         </div>
         <Button type="primary" size="medium">
           Войти
@@ -50,4 +49,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Registration;

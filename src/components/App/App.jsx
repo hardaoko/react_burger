@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import "./App.module.css";
-import AppHeader from "../AppHeader/AppHeader";
-import Main from "../Main/Main";
 import { useDispatch } from "react-redux";
 import { getIngredients } from "../../services/actions";
-import Login from "../Login/Login";
+import "./App.module.css";
+import AppHeader from "../AppHeader/AppHeader";
+import Login from "../../pages/Login/Login";
+import Main from "../../pages/Main/Main";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const App = () => {
     <div className="App">
       <AppHeader />
       <Login />
-      {/* <Main /> */}
+      <Main />
     </div>
   );
 };
