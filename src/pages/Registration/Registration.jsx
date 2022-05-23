@@ -1,16 +1,24 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./Registration.module.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   Input,
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDispatch, useSelector } from "react-redux";
+import { getRegistration } from "../../services/actions/profile";
 
 const Registration = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const { userName, userEmail, userPassword } = useSelector(
+    (store) => store.profile
+  );
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const onChangeEmail = (e) => {
     setEmail(e.target.value);
   };
@@ -21,9 +29,23 @@ const Registration = () => {
     setName(e.target.value);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!name || !email || !password) {
+      return;
+    }
+
+    dispatch(getRegistration(email, password, name));
+  };
+
+  useEffect(() => {
+    userEmail && userPassword && userName && history.push("/");
+  }, [userName, userEmail, userPassword, history]);
+
   return (
     <div className={styles.container}>
-      <form className={styles.form}>
+      <form onSubmit={handleSubmit} className={styles.form}>
         <h1 className="text text_type_main-medium">Регистрация</h1>
         <div className="mt-6 mb-6">
           <Input

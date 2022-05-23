@@ -5,7 +5,10 @@ import Ingredient from "../Ingredient/Ingredient";
 import Modal from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { useDispatch, useSelector } from "react-redux";
-import { MODAL_CLOSE, MODAL_DETAILS_OPEN } from "../../services/actions";
+import {
+  MODAL_CLOSE,
+  MODAL_DETAILS_OPEN,
+} from "../../services/actions/ingredients";
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState("bun");

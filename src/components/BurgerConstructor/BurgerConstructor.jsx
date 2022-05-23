@@ -17,7 +17,7 @@ import {
   MODAL_CLOSE,
   MODAL_ORDER_OPEN,
   replaceIngredients,
-} from "../../services/actions";
+} from "../../services/actions/ingredients";
 import { useDrag, useDrop } from "react-dnd";
 
 const BurgerConstructor = () => {

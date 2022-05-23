@@ -24,6 +24,22 @@ export const getOrderRequest = (ingredients) => {
   }).then((res) => checkResponse(res));
 };
 
+export const getRegistrationRequest = (
+  emailRequest,
+  passwordRequest,
+  nameRequest
+) => {
+  return fetch(`${baseUrl}auth/register`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email: emailRequest,
+      password: passwordRequest,
+      name: nameRequest,
+    }),
+  }).then((res) => checkResponse(res));
+};
+
 export const getEmailCodeRequest = (emailRequest) => {
   return fetch(`${baseUrl}password-reset`, {
     method: "POST",

@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getIngredients } from "../../services/actions";
+import { getIngredients } from "../../services/actions/ingredients";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
 import "./App.module.css";
 import AppHeader from "../AppHeader/AppHeader";
 import Login from "../../pages/Login/Login";
@@ -20,35 +22,37 @@ const App = () => {
 
   return (
     <div className="App">
-      <Router>
-        <AppHeader />
-        <Switch>
-          <Route path="/" exact={true}>
-            <Main />
-          </Route>
-          <Route path="/login" exact={true}>
-            <Login />
-          </Route>
-          <Route path="/register" exact={true}>
-            <Registration />
-          </Route>
-          <Route path="/forgot-password" exact={true}>
-            <ForgotPassword />
-          </Route>
-          <Route path="/reset-password" exact={true}>
-            <ResetPassword />
-          </Route>
-          <Route path="/profile" exact={true}>
-            <Login />
-          </Route>
-          <Route path="/ingredients/:id" exact={true}>
-            <Login />
-          </Route>
-          <Route path="/orders-list" exact={true}>
-            <OrdersList />
-          </Route>
-        </Switch>
-      </Router>
+      <DndProvider backend={HTML5Backend}>
+        <Router>
+          <AppHeader />
+          <Switch>
+            <Route path="/" exact={true}>
+              <Main />
+            </Route>
+            <Route path="/login" exact={true}>
+              <Login />
+            </Route>
+            <Route path="/register" exact={true}>
+              <Registration />
+            </Route>
+            <Route path="/forgot-password" exact={true}>
+              <ForgotPassword />
+            </Route>
+            <Route path="/reset-password" exact={true}>
+              <ResetPassword />
+            </Route>
+            <Route path="/profile" exact={true}>
+              <Login />
+            </Route>
+            <Route path="/ingredients/:id" exact={true}>
+              <Login />
+            </Route>
+            <Route path="/orders-list" exact={true}>
+              <OrdersList />
+            </Route>
+          </Switch>
+        </Router>
+      </DndProvider>
     </div>
   );
 };
