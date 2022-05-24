@@ -12,6 +12,7 @@ import Registration from "../../pages/Registration/Registration";
 import ResetPassword from "../../pages/ResetPassword/ResetPassword";
 import ForgotPassword from "../../pages/ForgotPassword/ForgotPassword";
 import OrdersList from "../../pages/OrdersList/OrdersList";
+import Profile from "../../pages/Profile/Profile";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ const App = () => {
               <ResetPassword />
             </Route>
             <Route path="/profile" exact={true}>
-              <Login />
+              <Profile />
             </Route>
             <Route path="/ingredients/:id" exact={true}>
               <Login />

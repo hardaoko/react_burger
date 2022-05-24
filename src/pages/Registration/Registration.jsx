@@ -13,8 +13,7 @@ const Registration = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const { userName, userEmail, userPassword, registrationSuccess } =
-    useSelector((store) => store.profile);
+  const { registrationSuccess } = useSelector((store) => store.profile);
   const dispatch = useDispatch();
   const history = useHistory();
 

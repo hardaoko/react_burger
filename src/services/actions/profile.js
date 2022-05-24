@@ -5,6 +5,10 @@ import {
   getRegistrationRequest,
 } from "../Api";
 
+export const CHANGE_NAME = "CHANGE_NAME";
+export const CHANGE_PASSWORD = "CHANGE_PASSWORD";
+export const CHANGE_EMAIL = "CHANGE_EMAIL";
+
 export const GET_EMAIL_CODE_REQUEST = "GET_EMAIL_CODE_REQUEST";
 export const GET_EMAIL_CODE_SUCCESS = "GET_EMAIL_CODE_SUCCESS";
 export const GET_EMAIL_CODE_FAILED = "GET_EMAIL_CODE_FAILED";
@@ -32,6 +36,16 @@ function getLoginFailed() {
 }
 function getPasswordResetFailed() {
   return { type: GET_PASSWORD_RESET_FAILED };
+}
+
+export function setUserName(name) {
+  return { type: CHANGE_NAME, name: name };
+}
+export function setUserPassword(password) {
+  return { type: CHANGE_PASSWORD, password: password };
+}
+export function setUserEmail(email) {
+  return { type: CHANGE_EMAIL, email: email };
 }
 
 export function getRegistration(email, password, name) {

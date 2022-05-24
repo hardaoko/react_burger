@@ -1,4 +1,7 @@
 import {
+  CHANGE_EMAIL,
+  CHANGE_NAME,
+  CHANGE_PASSWORD,
   GET_EMAIL_CODE_FAILED,
   GET_EMAIL_CODE_REQUEST,
   GET_EMAIL_CODE_SUCCESS,
@@ -75,6 +78,7 @@ export const profileReducer = (state = initialProfile, action) => {
         passwordResetRequest: false,
         passwordResetSuccess: true,
         passwordResetFailed: false,
+        userPassword: action.password,
       };
     }
     case GET_PASSWORD_RESET_FAILED: {
@@ -137,6 +141,25 @@ export const profileReducer = (state = initialProfile, action) => {
         loginRequest: false,
         loginSuccess: false,
         loginFailed: true,
+      };
+    }
+
+    case CHANGE_NAME: {
+      return {
+        ...state,
+        userName: action.name,
+      };
+    }
+    case CHANGE_EMAIL: {
+      return {
+        ...state,
+        userEmail: action.email,
+      };
+    }
+    case CHANGE_PASSWORD: {
+      return {
+        ...state,
+        userPassword: action.password,
       };
     }
 
