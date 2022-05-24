@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./ForgotPassword.module.css";
 import { Link, useHistory } from "react-router-dom";
 import {
@@ -21,16 +21,14 @@ const ForgotPassword = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!email) {
-      return;
-    }
-
-    dispatch(getEmailCode(email));
-    if (!emailCodeSuccess) {
-      setEmail("");
-      history.push("/reset-password");
+    if (email) {
+      dispatch(getEmailCode(email));
     }
   };
+
+  useEffect(() => {
+    emailCodeSuccess && history.push("/reset-password");
+  }, [emailCodeSuccess, history]);
 
   return (
     <div className={styles.container}>

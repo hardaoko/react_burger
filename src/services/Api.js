@@ -40,10 +40,32 @@ export const getRegistrationRequest = (
   }).then((res) => checkResponse(res));
 };
 
+export const getLoginRequest = (emailRequest, passwordRequest) => {
+  return fetch(`${baseUrl}auth/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email: emailRequest,
+      password: passwordRequest,
+    }),
+  }).then((res) => checkResponse(res));
+};
+
 export const getEmailCodeRequest = (emailRequest) => {
   return fetch(`${baseUrl}password-reset`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email: emailRequest }),
+  }).then((res) => checkResponse(res));
+};
+
+export const getPasswordResetRequest = (passwordRequest, tokenRequest) => {
+  return fetch(`${baseUrl}password-reset/reset`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      password: passwordRequest,
+      token: tokenRequest,
+    }),
   }).then((res) => checkResponse(res));
 };

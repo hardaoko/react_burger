@@ -2,6 +2,12 @@ import {
   GET_EMAIL_CODE_FAILED,
   GET_EMAIL_CODE_REQUEST,
   GET_EMAIL_CODE_SUCCESS,
+  GET_LOGIN_FAILED,
+  GET_LOGIN_REQUEST,
+  GET_LOGIN_SUCCESS,
+  GET_PASSWORD_RESET_FAILED,
+  GET_PASSWORD_RESET_REQUEST,
+  GET_PASSWORD_RESET_SUCCESS,
   GET_REGISTRATION_FAILED,
   GET_REGISTRATION_REQUEST,
   GET_REGISTRATION_SUCCESS,
@@ -12,9 +18,17 @@ const initialProfile = {
   emailCodeSuccess: false,
   emailCodeFailed: false,
 
+  passwordResetRequest: false,
+  passwordResetSuccess: false,
+  passwordResetFailed: false,
+
   registrationRequest: false,
   registrationSuccess: false,
   registrationFailed: false,
+
+  loginRequest: false,
+  loginSuccess: false,
+  loginFailed: false,
 
   userName: "",
   userEmail: "",
@@ -47,6 +61,30 @@ export const profileReducer = (state = initialProfile, action) => {
         emailCodeRequest: false,
       };
     }
+    case GET_PASSWORD_RESET_REQUEST: {
+      return {
+        ...state,
+        passwordResetRequest: true,
+        passwordResetSuccess: false,
+        passwordResetFailed: false,
+      };
+    }
+    case GET_PASSWORD_RESET_SUCCESS: {
+      return {
+        ...state,
+        passwordResetRequest: false,
+        passwordResetSuccess: true,
+        passwordResetFailed: false,
+      };
+    }
+    case GET_PASSWORD_RESET_FAILED: {
+      return {
+        ...state,
+        passwordResetRequest: false,
+        passwordResetSuccess: false,
+        passwordResetFailed: true,
+      };
+    }
     case GET_REGISTRATION_REQUEST: {
       return {
         ...state,
@@ -72,6 +110,33 @@ export const profileReducer = (state = initialProfile, action) => {
         registrationFailed: true,
         registrationSuccess: false,
         registrationRequest: false,
+      };
+    }
+    case GET_LOGIN_REQUEST: {
+      return {
+        ...state,
+        loginRequest: true,
+        loginSuccess: false,
+        loginFailed: false,
+      };
+    }
+    case GET_LOGIN_SUCCESS: {
+      return {
+        ...state,
+        loginRequest: false,
+        loginSuccess: true,
+        loginFailed: false,
+        userEmail: action.email,
+        userName: action.name,
+        userPassword: action.password,
+      };
+    }
+    case GET_LOGIN_FAILED: {
+      return {
+        ...state,
+        loginRequest: false,
+        loginSuccess: false,
+        loginFailed: true,
       };
     }
 

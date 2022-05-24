@@ -1,16 +1,21 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./ResetPassword.module.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDispatch, useSelector } from "react-redux";
+import { getPasswordReset } from "../../services/actions/profile";
 
 const ResetPassword = () => {
-  const [newPassword, setNewPassword] = useState("");
-  const [emailCode, setEmailCode] = useState("");
+  const [password, setPassword] = useState("");
+  const [token, setToken] = useState("");
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState(false);
+  const { passwordResetSuccess } = useSelector((store) => store.profile);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const inputRef = useRef(null);
 
@@ -36,39 +41,51 @@ const ResetPassword = () => {
     setVisible(false);
   };
 
-  const onChangeNewPassword = (e) => {
-    setNewPassword(e.target.value);
+  const onChangePassword = (e) => {
+    setPassword(e.target.value);
   };
-  const onChangeEmailCode = (e) => {
-    setEmailCode(e.target.value);
+  const onChangeToken = (e) => {
+    setToken(e.target.value);
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (token && password) {
+      dispatch(getPasswordReset(password, token));
+    }
+  };
+
+  useEffect(() => {
+    passwordResetSuccess && history.push("/login");
+  }, [passwordResetSuccess, history]);
 
   return (
     <div className={styles.container}>
-      <form className={styles.form}>
+      <form onSubmit={handleSubmit} className={styles.form}>
         <h1 className="text text_type_main-medium">Восстановление пароля</h1>
         <div className="mt-6 mb-6">
           <Input
             type={visible ? "text" : "password"}
             icon={visible ? "HideIcon" : "ShowIcon"}
             ref={inputRef}
-            onChange={onChangeNewPassword}
+            onChange={onChangePassword}
             onIconClick={onIconClick}
             onBlur={onBlur}
             onFocus={onFocus}
-            value={newPassword}
+            value={password}
             placeholder="Введите новый пароль"
-            name={"newPassword"}
+            name={"password"}
             error={error}
             errorText={"Некорректный пароль"}
           />
         </div>
         <div className="mb-6">
           <Input
-            onChange={onChangeEmailCode}
+            onChange={onChangeToken}
             placeholder="Введите код из письма"
-            value={emailCode}
-            name={"emailCode"}
+            value={token}
+            name={"token"}
           />
         </div>
         <Button type="primary" size="medium">

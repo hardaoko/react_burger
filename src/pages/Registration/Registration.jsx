@@ -13,9 +13,8 @@ const Registration = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const { userName, userEmail, userPassword } = useSelector(
-    (store) => store.profile
-  );
+  const { userName, userEmail, userPassword, registrationSuccess } =
+    useSelector((store) => store.profile);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -32,16 +31,14 @@ const Registration = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!name || !email || !password) {
-      return;
+    if (name && email && password) {
+      dispatch(getRegistration(email, password, name));
     }
-
-    dispatch(getRegistration(email, password, name));
   };
 
   useEffect(() => {
-    userEmail && userPassword && userName && history.push("/");
-  }, [userName, userEmail, userPassword, history]);
+    registrationSuccess && history.push("/");
+  }, [registrationSuccess, history]);
 
   return (
     <div className={styles.container}>

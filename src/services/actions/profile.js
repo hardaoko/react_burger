@@ -1,4 +1,9 @@
-import { getEmailCodeRequest, getRegistrationRequest } from "../Api";
+import {
+  getEmailCodeRequest,
+  getLoginRequest,
+  getPasswordResetRequest,
+  getRegistrationRequest,
+} from "../Api";
 
 export const GET_EMAIL_CODE_REQUEST = "GET_EMAIL_CODE_REQUEST";
 export const GET_EMAIL_CODE_SUCCESS = "GET_EMAIL_CODE_SUCCESS";
@@ -8,11 +13,25 @@ export const GET_REGISTRATION_REQUEST = "GET_REGISTRATION_REQUEST";
 export const GET_REGISTRATION_SUCCESS = "GET_REGISTRATION_SUCCESS";
 export const GET_REGISTRATION_FAILED = "GET_REGISTRATION_FAILED";
 
+export const GET_LOGIN_REQUEST = "GET_LOGIN_REQUEST";
+export const GET_LOGIN_SUCCESS = "GET_LOGIN_SUCCESS";
+export const GET_LOGIN_FAILED = "GET_LOGIN_FAILED";
+
+export const GET_PASSWORD_RESET_REQUEST = "GET_PASSWORD_RESET_REQUEST";
+export const GET_PASSWORD_RESET_SUCCESS = "GET_PASSWORD_RESET_SUCCESS";
+export const GET_PASSWORD_RESET_FAILED = "GET_PASSWORD_RESET_FAILED";
+
 function getRegistrationFailed() {
   return { type: GET_REGISTRATION_FAILED };
 }
 function getEmailCodeFailed() {
   return { type: GET_EMAIL_CODE_FAILED };
+}
+function getLoginFailed() {
+  return { type: GET_LOGIN_FAILED };
+}
+function getPasswordResetFailed() {
+  return { type: GET_PASSWORD_RESET_FAILED };
 }
 
 export function getRegistration(email, password, name) {
@@ -41,6 +60,32 @@ export function getRegistration(email, password, name) {
   };
 }
 
+export function getLogin(email, password) {
+  return function (dispatch) {
+    dispatch({
+      type: GET_LOGIN_REQUEST,
+    });
+    try {
+      getLoginRequest(email, password).then((data) => {
+        if (data) {
+          console.log("Login", data);
+          dispatch({
+            type: GET_LOGIN_SUCCESS,
+            email: email,
+            name: data.user.name,
+            password: password,
+          });
+        } else {
+          dispatch(getLoginFailed());
+        }
+      });
+    } catch (e) {
+      dispatch(getLoginFailed());
+      console.error("Ошибка при входе", e);
+    }
+  };
+}
+
 export function getEmailCode(email) {
   return function (dispatch) {
     dispatch({
@@ -59,6 +104,29 @@ export function getEmailCode(email) {
     } catch (e) {
       dispatch(getEmailCodeFailed());
       console.error("Ошибка при отправке кода на почту", e);
+    }
+  };
+}
+
+export function getPasswordReset(password, token) {
+  return function (dispatch) {
+    dispatch({
+      type: GET_PASSWORD_RESET_REQUEST,
+    });
+    try {
+      getPasswordResetRequest(password, token).then((data) => {
+        if (data) {
+          console.log("PasswordReset", data);
+          dispatch({
+            type: GET_PASSWORD_RESET_SUCCESS,
+          });
+        } else {
+          dispatch(getPasswordResetFailed());
+        }
+      });
+    } catch (e) {
+      dispatch(getPasswordResetFailed());
+      console.error("Ошибка при сбросе пароля", e);
     }
   };
 }
