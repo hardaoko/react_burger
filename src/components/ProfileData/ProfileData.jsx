@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import {
   Input,
   Button,
+  PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -13,9 +14,6 @@ import {
 
 const ProfileData = () => {
   const [isDataChanged, setIsDataChanged] = useState(false);
-  const [nameDisabled, setNameDisabled] = useState(true);
-  const [passwordDisabled, setPasswordDisabled] = useState(false);
-  const [emailDisabled, setEmailDisabled] = useState(false);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -29,10 +27,8 @@ const ProfileData = () => {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
 
-  const onNameClick = () => {
-    null !== nameRef.current && nameRef.current.focus();
-    setNameDisabled(false);
-  };
+  const onNameClick = () =>
+    null !== emailRef.current && nameRef.current.focus();
 
   const onEmailClick = () =>
     null !== emailRef.current && emailRef.current.focus();
@@ -40,60 +36,69 @@ const ProfileData = () => {
   const onPasswordClick = () =>
     null !== passwordRef.current && passwordRef.current.focus();
 
-  const onNameChange = (e) => {
-    dispatch(setUserName(e.target.value));
+  const onChangeName = (e) => {
+    setName(e.target.value);
   };
 
-  const onEmailChange = (e) => {
-    dispatch(setUserEmail(e.target.value));
+  const onChangeEmail = (e) => {
+    setEmail(e.target.value);
   };
 
-  const onPasswordChange = (e) => {
-    dispatch(setUserPassword(e.target.value));
+  const onChangePassword = (e) => {
+    setPassword(e.target.value);
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
+    dispatch(setUserName(name));
+    dispatch(setUserEmail(email));
+    dispatch(setUserPassword(password));
+    setIsDataChanged(false);
   };
 
-  const onCancelEditing = () => {};
+  const onCancelEditing = () => {
+    setEmail(userEmail);
+    setName(userName);
+    setPassword(userPassword);
+    setIsDataChanged(false);
+  };
+
+  useEffect(() => {
+    if (name !== userName || email !== userEmail || password !== userPassword)
+      setIsDataChanged(true);
+  }, [name, email, password]);
 
   useEffect(() => {
     setEmail(userEmail);
     setName(userName);
     setPassword(userPassword);
-  }, [userName, userEmail, userPassword]);
+  }, []);
 
   return (
     <form onSubmit={onSubmit} className={styles.form}>
       <Input
         placeholder={"Имя"}
-        onChange={onNameChange}
+        onChange={onChangeName}
         icon={"EditIcon"}
-        value={userName}
+        value={name}
         name={"name"}
         ref={nameRef}
-        disabled={nameDisabled}
+        disabled={false}
         onIconClick={onNameClick}
-        onBlur={() => setNameDisabled(true)}
       />
       <Input
         placeholder={"Логин"}
-        onChange={onEmailChange}
+        onChange={onChangeEmail}
         icon={"EditIcon"}
-        value={userEmail}
+        value={email}
         name={"email"}
         ref={emailRef}
         onIconClick={onEmailClick}
       />
-      <Input
-        placeholder={"Пароль"}
-        onChange={onPasswordChange}
-        icon={"EditIcon"}
-        value={userPassword}
+      <PasswordInput
+        onChange={onChangePassword}
+        value={password}
         name={"password"}
-        ref={passwordRef}
-        onIconClick={onPasswordClick}
       />
       {isDataChanged && (
         <div className={styles.buttons_container}>

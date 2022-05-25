@@ -54,19 +54,24 @@ export function getRegistration(email, password, name) {
       type: GET_REGISTRATION_REQUEST,
     });
     try {
-      getRegistrationRequest(email, password, name).then((data) => {
-        if (data) {
-          console.log(data);
-          dispatch({
-            type: GET_REGISTRATION_SUCCESS,
-            email: email,
-            name: name,
-            password: password,
-          });
-        } else {
+      getRegistrationRequest(email, password, name)
+        .then((data) => {
+          if (data) {
+            console.log(data);
+            dispatch({
+              type: GET_REGISTRATION_SUCCESS,
+              email: email,
+              name: name,
+              password: password,
+            });
+          } else {
+            dispatch(getRegistrationFailed());
+          }
+        })
+        .catch((e) => {
           dispatch(getRegistrationFailed());
-        }
-      });
+          console.error("Ошибка при регистрации", e);
+        });
     } catch (e) {
       dispatch(getRegistrationFailed());
       console.error("Ошибка при регистрации", e);
@@ -80,19 +85,24 @@ export function getLogin(email, password) {
       type: GET_LOGIN_REQUEST,
     });
     try {
-      getLoginRequest(email, password).then((data) => {
-        if (data) {
-          console.log("Login", data);
-          dispatch({
-            type: GET_LOGIN_SUCCESS,
-            email: email,
-            name: data.user.name,
-            password: password,
-          });
-        } else {
+      getLoginRequest(email, password)
+        .then((data) => {
+          if (data) {
+            console.log("Login", data);
+            dispatch({
+              type: GET_LOGIN_SUCCESS,
+              email: email,
+              name: data.user.name,
+              password: password,
+            });
+          } else {
+            dispatch(getLoginFailed());
+          }
+        })
+        .catch((e) => {
           dispatch(getLoginFailed());
-        }
-      });
+          console.error("Ошибка при входе", e);
+        });
     } catch (e) {
       dispatch(getLoginFailed());
       console.error("Ошибка при входе", e);
@@ -106,15 +116,20 @@ export function getEmailCode(email) {
       type: GET_EMAIL_CODE_REQUEST,
     });
     try {
-      getEmailCodeRequest(email).then((data) => {
-        if (data) {
-          dispatch({
-            type: GET_EMAIL_CODE_SUCCESS,
-          });
-        } else {
+      getEmailCodeRequest(email)
+        .then((data) => {
+          if (data) {
+            dispatch({
+              type: GET_EMAIL_CODE_SUCCESS,
+            });
+          } else {
+            dispatch(getEmailCodeFailed());
+          }
+        })
+        .catch((e) => {
           dispatch(getEmailCodeFailed());
-        }
-      });
+          console.error("Ошибка при отправке кода на почту", e);
+        });
     } catch (e) {
       dispatch(getEmailCodeFailed());
       console.error("Ошибка при отправке кода на почту", e);
@@ -128,16 +143,21 @@ export function getPasswordReset(password, token) {
       type: GET_PASSWORD_RESET_REQUEST,
     });
     try {
-      getPasswordResetRequest(password, token).then((data) => {
-        if (data) {
-          console.log("PasswordReset", data);
-          dispatch({
-            type: GET_PASSWORD_RESET_SUCCESS,
-          });
-        } else {
+      getPasswordResetRequest(password, token)
+        .then((data) => {
+          if (data) {
+            console.log("PasswordReset", data);
+            dispatch({
+              type: GET_PASSWORD_RESET_SUCCESS,
+            });
+          } else {
+            dispatch(getPasswordResetFailed());
+          }
+        })
+        .catch((e) => {
           dispatch(getPasswordResetFailed());
-        }
-      });
+          console.error("Ошибка при сбросе пароля", e);
+        });
     } catch (e) {
       dispatch(getPasswordResetFailed());
       console.error("Ошибка при сбросе пароля", e);

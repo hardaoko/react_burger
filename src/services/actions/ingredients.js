@@ -30,16 +30,21 @@ export function getIngredients() {
       type: GET_INGREDIENTS_REQUEST,
     });
     try {
-      getIngredientsRequest().then((data) => {
-        if (data) {
-          dispatch({
-            type: GET_INGREDIENTS_SUCCESS,
-            ingredients: data.data,
-          });
-        } else {
+      getIngredientsRequest()
+        .then((data) => {
+          if (data) {
+            dispatch({
+              type: GET_INGREDIENTS_SUCCESS,
+              ingredients: data.data,
+            });
+          } else {
+            dispatch(getIngredientsFailed());
+          }
+        })
+        .catch((e) => {
           dispatch(getIngredientsFailed());
-        }
-      });
+          console.error("Ошибка при передаче ингредиентов", e);
+        });
     } catch (e) {
       dispatch(getIngredientsFailed());
       console.error("Ошибка при передаче ингредиентов", e);
@@ -53,19 +58,24 @@ export function getOrder(chosenIngredients) {
       type: GET_ORDER_REQUEST,
     });
     try {
-      getOrderRequest(chosenIngredients).then((data) => {
-        if (data) {
-          dispatch({
-            type: GET_ORDER_SUCCESS,
-            orderData: data.order.number,
-          });
-          dispatch({
-            type: DELETE_ORDER_LIST,
-          });
-        } else {
+      getOrderRequest(chosenIngredients)
+        .then((data) => {
+          if (data) {
+            dispatch({
+              type: GET_ORDER_SUCCESS,
+              orderData: data.order.number,
+            });
+            dispatch({
+              type: DELETE_ORDER_LIST,
+            });
+          } else {
+            dispatch(getOrderFailed());
+          }
+        })
+        .catch((e) => {
           dispatch(getOrderFailed());
-        }
-      });
+          console.error("Ошибка формирования заказа", e);
+        });
     } catch (e) {
       dispatch(getOrderFailed());
       console.error("Ошибка формирования заказа", e);
