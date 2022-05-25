@@ -1,9 +1,8 @@
 import { baseUrl } from "../utils/constants";
 
 export function checkResponse(response) {
-  console.log(response.ok);
   if (!response.ok) {
-    throw Error(response.statusText);
+    throw Error(response.statusText + " - " + response.status);
   } else {
     return response.json();
   }
@@ -13,7 +12,7 @@ export const getIngredientsRequest = () => {
   return fetch(`${baseUrl}ingredients`).then((res) => checkResponse(res));
 };
 
-export const getOrderRequest = (ingredients) => {
+export const orderRequest = (ingredients) => {
   const requestData = [];
   ingredients.map((item) => {
     return requestData.push(item.element._id);
@@ -25,7 +24,7 @@ export const getOrderRequest = (ingredients) => {
   }).then((res) => checkResponse(res));
 };
 
-export const getRegistrationRequest = (
+export const registrationRequest = (
   emailRequest,
   passwordRequest,
   nameRequest
@@ -41,7 +40,7 @@ export const getRegistrationRequest = (
   }).then((res) => checkResponse(res));
 };
 
-export const getLoginRequest = (emailRequest, passwordRequest) => {
+export const loginRequest = (emailRequest, passwordRequest) => {
   return fetch(`${baseUrl}auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -52,7 +51,7 @@ export const getLoginRequest = (emailRequest, passwordRequest) => {
   }).then((res) => checkResponse(res));
 };
 
-export const getEmailCodeRequest = (emailRequest) => {
+export const emailCodeRequest = (emailRequest) => {
   return fetch(`${baseUrl}password-reset`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -60,7 +59,7 @@ export const getEmailCodeRequest = (emailRequest) => {
   }).then((res) => checkResponse(res));
 };
 
-export const getPasswordResetRequest = (passwordRequest, tokenRequest) => {
+export const passwordResetRequest = (passwordRequest, tokenRequest) => {
   return fetch(`${baseUrl}password-reset/reset`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -71,26 +70,12 @@ export const getPasswordResetRequest = (passwordRequest, tokenRequest) => {
   }).then((res) => checkResponse(res));
 };
 
-//  Пример из теории
-export function setCookie(name, value, props) {
-  props = props || {};
-  let exp = props.expires;
-  if (typeof exp == "number" && exp) {
-    const d = new Date();
-    d.setTime(d.getTime() + exp * 1000);
-    exp = props.expires = d;
-  }
-  if (exp && exp.toUTCString) {
-    props.expires = exp.toUTCString();
-  }
-  value = encodeURIComponent(value);
-  let updatedCookie = name + "=" + value;
-  for (const propName in props) {
-    updatedCookie += "; " + propName;
-    const propValue = props[propName];
-    if (propValue !== true) {
-      updatedCookie += "=" + propValue;
-    }
-  }
-  document.cookie = updatedCookie;
-}
+export const getUserDataRequest = (token) => {
+  return fetch(`${baseUrl}auth/user`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+      authorization: token,
+    },
+  }).then((res) => checkResponse(res));
+};

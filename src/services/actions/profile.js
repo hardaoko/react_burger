@@ -1,41 +1,50 @@
 import {
-  getEmailCodeRequest,
-  getLoginRequest,
-  getPasswordResetRequest,
-  getRegistrationRequest,
+  emailCodeRequest,
+  getUserDataRequest,
+  loginRequest,
+  passwordResetRequest,
+  registrationRequest,
 } from "../Api";
 
 export const CHANGE_NAME = "CHANGE_NAME";
 export const CHANGE_PASSWORD = "CHANGE_PASSWORD";
 export const CHANGE_EMAIL = "CHANGE_EMAIL";
 
-export const GET_EMAIL_CODE_REQUEST = "GET_EMAIL_CODE_REQUEST";
-export const GET_EMAIL_CODE_SUCCESS = "GET_EMAIL_CODE_SUCCESS";
-export const GET_EMAIL_CODE_FAILED = "GET_EMAIL_CODE_FAILED";
+export const EMAIL_CODE_REQUEST = "EMAIL_CODE_REQUEST";
+export const EMAIL_CODE_SUCCESS = "EMAIL_CODE_SUCCESS";
+export const EMAIL_CODE_FAILED = "EMAIL_CODE_FAILED";
 
-export const GET_REGISTRATION_REQUEST = "GET_REGISTRATION_REQUEST";
-export const GET_REGISTRATION_SUCCESS = "GET_REGISTRATION_SUCCESS";
-export const GET_REGISTRATION_FAILED = "GET_REGISTRATION_FAILED";
+export const REGISTRATION_REQUEST = "REGISTRATION_REQUEST";
+export const REGISTRATION_SUCCESS = "REGISTRATION_SUCCESS";
+export const REGISTRATION_FAILED = "REGISTRATION_FAILED";
 
-export const GET_LOGIN_REQUEST = "GET_LOGIN_REQUEST";
-export const GET_LOGIN_SUCCESS = "GET_LOGIN_SUCCESS";
-export const GET_LOGIN_FAILED = "GET_LOGIN_FAILED";
+export const LOGIN_REQUEST = "LOGIN_REQUEST";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAILED = "LOGIN_FAILED";
 
-export const GET_PASSWORD_RESET_REQUEST = "GET_PASSWORD_RESET_REQUEST";
-export const GET_PASSWORD_RESET_SUCCESS = "GET_PASSWORD_RESET_SUCCESS";
-export const GET_PASSWORD_RESET_FAILED = "GET_PASSWORD_RESET_FAILED";
+export const PASSWORD_RESET_REQUEST = "PASSWORD_RESET_REQUEST";
+export const PASSWORD_RESET_SUCCESS = "GPASSWORD_RESET_SUCCESS";
+export const PASSWORD_RESET_FAILED = "PASSWORD_RESET_FAILED";
+
+export const GET_USER_DATA_REQUEST = "GET_USER_DATA_REQUEST";
+export const GET_USER_DATA_SUCCESS = "GET_USER_DATA_SUCCESS";
+export const GET_USER_DATA_FAILED = "GET_USER_DATA_FAILED";
 
 function getRegistrationFailed() {
-  return { type: GET_REGISTRATION_FAILED };
+  return { type: REGISTRATION_FAILED };
 }
 function getEmailCodeFailed() {
-  return { type: GET_EMAIL_CODE_FAILED };
+  return { type: EMAIL_CODE_FAILED };
 }
 function getLoginFailed() {
-  return { type: GET_LOGIN_FAILED };
+  return { type: LOGIN_FAILED };
 }
 function getPasswordResetFailed() {
-  return { type: GET_PASSWORD_RESET_FAILED };
+  return { type: PASSWORD_RESET_FAILED };
+}
+
+function getUserDataFailed() {
+  return { type: GET_USER_DATA_FAILED };
 }
 
 export function setUserName(name) {
@@ -50,20 +59,16 @@ export function setUserEmail(email) {
 
 export function getRegistration(email, password, name) {
   return function (dispatch) {
-    dispatch({
-      type: GET_REGISTRATION_REQUEST,
-    });
+    dispatch(REGISTRATION_REQUEST);
     try {
-      getRegistrationRequest(email, password, name)
+      registrationRequest(email, password, name)
         .then((data) => {
           if (data) {
-            console.log(data);
             dispatch({
-              type: GET_REGISTRATION_SUCCESS,
-              email: email,
-              name: name,
-              password: password,
+              type: REGISTRATION_SUCCESS,
+              accessToken: data.accessToken,
             });
+            localStorage.setItem("refreshToken", data.refreshToken);
           } else {
             dispatch(getRegistrationFailed());
           }
@@ -82,19 +87,18 @@ export function getRegistration(email, password, name) {
 export function getLogin(email, password) {
   return function (dispatch) {
     dispatch({
-      type: GET_LOGIN_REQUEST,
+      type: LOGIN_REQUEST,
     });
     try {
-      getLoginRequest(email, password)
+      loginRequest(email, password)
         .then((data) => {
           if (data) {
             console.log("Login", data);
             dispatch({
-              type: GET_LOGIN_SUCCESS,
-              email: email,
-              name: data.user.name,
-              password: password,
+              type: LOGIN_SUCCESS,
+              accessToken: data.accessToken,
             });
+            localStorage.setItem("refreshToken", data.refreshToken);
           } else {
             dispatch(getLoginFailed());
           }
@@ -110,17 +114,45 @@ export function getLogin(email, password) {
   };
 }
 
+export function getUserData(token) {
+  return function (dispatch) {
+    dispatch({
+      type: GET_USER_DATA_REQUEST,
+    });
+    try {
+      getUserDataRequest(token)
+        .then((data) => {
+          if (data) {
+            console.log("PasswordReset", data);
+            dispatch({
+              type: GET_USER_DATA_SUCCESS,
+            });
+          } else {
+            dispatch(getUserDataFailed());
+          }
+        })
+        .catch((e) => {
+          dispatch(getUserDataFailed());
+          console.error("Ошибка при сбросе пароля", e);
+        });
+    } catch (e) {
+      dispatch(getUserDataFailed());
+      console.error("Ошибка при сбросе пароля", e);
+    }
+  };
+}
+
 export function getEmailCode(email) {
   return function (dispatch) {
     dispatch({
-      type: GET_EMAIL_CODE_REQUEST,
+      type: EMAIL_CODE_REQUEST,
     });
     try {
-      getEmailCodeRequest(email)
+      emailCodeRequest(email)
         .then((data) => {
           if (data) {
             dispatch({
-              type: GET_EMAIL_CODE_SUCCESS,
+              type: EMAIL_CODE_SUCCESS,
             });
           } else {
             dispatch(getEmailCodeFailed());
@@ -140,15 +172,15 @@ export function getEmailCode(email) {
 export function getPasswordReset(password, token) {
   return function (dispatch) {
     dispatch({
-      type: GET_PASSWORD_RESET_REQUEST,
+      type: PASSWORD_RESET_REQUEST,
     });
     try {
-      getPasswordResetRequest(password, token)
+      passwordResetRequest(password, token)
         .then((data) => {
           if (data) {
             console.log("PasswordReset", data);
             dispatch({
-              type: GET_PASSWORD_RESET_SUCCESS,
+              type: PASSWORD_RESET_SUCCESS,
             });
           } else {
             dispatch(getPasswordResetFailed());

@@ -25,7 +25,6 @@ const ProfileData = () => {
 
   const nameRef = useRef(null);
   const emailRef = useRef(null);
-  const passwordRef = useRef(null);
 
   const onNameClick = () =>
     null !== emailRef.current && nameRef.current.focus();
@@ -33,19 +32,19 @@ const ProfileData = () => {
   const onEmailClick = () =>
     null !== emailRef.current && emailRef.current.focus();
 
-  const onPasswordClick = () =>
-    null !== passwordRef.current && passwordRef.current.focus();
-
   const onChangeName = (e) => {
     setName(e.target.value);
+    setIsDataChanged(true);
   };
 
   const onChangeEmail = (e) => {
     setEmail(e.target.value);
+    setIsDataChanged(true);
   };
 
   const onChangePassword = (e) => {
     setPassword(e.target.value);
+    setIsDataChanged(true);
   };
 
   const onSubmit = (e) => {
@@ -62,11 +61,6 @@ const ProfileData = () => {
     setPassword(userPassword);
     setIsDataChanged(false);
   };
-
-  useEffect(() => {
-    if (name !== userName || email !== userEmail || password !== userPassword)
-      setIsDataChanged(true);
-  }, [name, email, password]);
 
   useEffect(() => {
     setEmail(userEmail);

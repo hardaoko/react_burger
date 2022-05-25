@@ -1,4 +1,4 @@
-import { getIngredientsRequest, getOrderRequest } from "../Api";
+import { getIngredientsRequest, orderRequest } from "../Api";
 import { v4 as uuidv4 } from "uuid";
 
 export const GET_INGREDIENTS_REQUEST = "GET_INGREDIENTS_REQUEST";
@@ -58,7 +58,7 @@ export function getOrder(chosenIngredients) {
       type: GET_ORDER_REQUEST,
     });
     try {
-      getOrderRequest(chosenIngredients)
+      orderRequest(chosenIngredients)
         .then((data) => {
           if (data) {
             dispatch({

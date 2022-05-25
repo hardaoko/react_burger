@@ -2,18 +2,18 @@ import {
   CHANGE_EMAIL,
   CHANGE_NAME,
   CHANGE_PASSWORD,
-  GET_EMAIL_CODE_FAILED,
-  GET_EMAIL_CODE_REQUEST,
-  GET_EMAIL_CODE_SUCCESS,
-  GET_LOGIN_FAILED,
-  GET_LOGIN_REQUEST,
-  GET_LOGIN_SUCCESS,
-  GET_PASSWORD_RESET_FAILED,
-  GET_PASSWORD_RESET_REQUEST,
-  GET_PASSWORD_RESET_SUCCESS,
-  GET_REGISTRATION_FAILED,
-  GET_REGISTRATION_REQUEST,
-  GET_REGISTRATION_SUCCESS,
+  EMAIL_CODE_FAILED,
+  EMAIL_CODE_REQUEST,
+  EMAIL_CODE_SUCCESS,
+  LOGIN_FAILED,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  PASSWORD_RESET_FAILED,
+  PASSWORD_RESET_REQUEST,
+  PASSWORD_RESET_SUCCESS,
+  REGISTRATION_FAILED,
+  REGISTRATION_REQUEST,
+  REGISTRATION_SUCCESS,
 } from "../actions/profile";
 
 const initialProfile = {
@@ -36,11 +36,13 @@ const initialProfile = {
   userName: "",
   userEmail: "",
   userPassword: "",
+
+  accessToken: "",
 };
 
 export const profileReducer = (state = initialProfile, action) => {
   switch (action.type) {
-    case GET_EMAIL_CODE_REQUEST: {
+    case EMAIL_CODE_REQUEST: {
       return {
         ...state,
         emailCodeRequest: true,
@@ -48,7 +50,7 @@ export const profileReducer = (state = initialProfile, action) => {
         emailCodeFailed: false,
       };
     }
-    case GET_EMAIL_CODE_SUCCESS: {
+    case EMAIL_CODE_SUCCESS: {
       return {
         ...state,
         emailCodeFailed: false,
@@ -56,7 +58,7 @@ export const profileReducer = (state = initialProfile, action) => {
         emailCodeRequest: false,
       };
     }
-    case GET_EMAIL_CODE_FAILED: {
+    case EMAIL_CODE_FAILED: {
       return {
         ...state,
         emailCodeFailed: true,
@@ -64,7 +66,7 @@ export const profileReducer = (state = initialProfile, action) => {
         emailCodeRequest: false,
       };
     }
-    case GET_PASSWORD_RESET_REQUEST: {
+    case PASSWORD_RESET_REQUEST: {
       return {
         ...state,
         passwordResetRequest: true,
@@ -72,7 +74,7 @@ export const profileReducer = (state = initialProfile, action) => {
         passwordResetFailed: false,
       };
     }
-    case GET_PASSWORD_RESET_SUCCESS: {
+    case PASSWORD_RESET_SUCCESS: {
       return {
         ...state,
         passwordResetRequest: false,
@@ -81,7 +83,7 @@ export const profileReducer = (state = initialProfile, action) => {
         userPassword: action.password,
       };
     }
-    case GET_PASSWORD_RESET_FAILED: {
+    case PASSWORD_RESET_FAILED: {
       return {
         ...state,
         passwordResetRequest: false,
@@ -89,7 +91,7 @@ export const profileReducer = (state = initialProfile, action) => {
         passwordResetFailed: true,
       };
     }
-    case GET_REGISTRATION_REQUEST: {
+    case REGISTRATION_REQUEST: {
       return {
         ...state,
         registrationRequest: true,
@@ -97,18 +99,16 @@ export const profileReducer = (state = initialProfile, action) => {
         registrationFailed: false,
       };
     }
-    case GET_REGISTRATION_SUCCESS: {
+    case REGISTRATION_SUCCESS: {
       return {
         ...state,
         registrationFailed: false,
         registrationSuccess: true,
         registrationRequest: false,
-        userEmail: action.email,
-        userName: action.name,
-        userPassword: action.password,
+        accessToken: action.accessToken,
       };
     }
-    case GET_REGISTRATION_FAILED: {
+    case REGISTRATION_FAILED: {
       return {
         ...state,
         registrationFailed: true,
@@ -116,7 +116,7 @@ export const profileReducer = (state = initialProfile, action) => {
         registrationRequest: false,
       };
     }
-    case GET_LOGIN_REQUEST: {
+    case LOGIN_REQUEST: {
       return {
         ...state,
         loginRequest: true,
@@ -124,18 +124,16 @@ export const profileReducer = (state = initialProfile, action) => {
         loginFailed: false,
       };
     }
-    case GET_LOGIN_SUCCESS: {
+    case LOGIN_SUCCESS: {
       return {
         ...state,
         loginRequest: false,
         loginSuccess: true,
         loginFailed: false,
-        userEmail: action.email,
-        userName: action.name,
-        userPassword: action.password,
+        accessToken: action.accessToken,
       };
     }
-    case GET_LOGIN_FAILED: {
+    case LOGIN_FAILED: {
       return {
         ...state,
         loginRequest: false,
