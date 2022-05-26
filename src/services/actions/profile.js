@@ -1,9 +1,12 @@
 import {
   emailCodeRequest,
   getUserDataRequest,
+  setUserDataRequest,
   loginRequest,
   passwordResetRequest,
+  refreshTokenRequest,
   registrationRequest,
+  logoutRequest,
 } from "../Api";
 
 export const CHANGE_NAME = "CHANGE_NAME";
@@ -30,6 +33,18 @@ export const GET_USER_DATA_REQUEST = "GET_USER_DATA_REQUEST";
 export const GET_USER_DATA_SUCCESS = "GET_USER_DATA_SUCCESS";
 export const GET_USER_DATA_FAILED = "GET_USER_DATA_FAILED";
 
+export const SET_USER_DATA_REQUEST = "SET_USER_DATA_REQUEST";
+export const SET_USER_DATA_SUCCESS = "SET_USER_DATA_SUCCESS";
+export const SET_USER_DATA_FAILED = "SET_USER_DATA_FAILED";
+
+export const REFRESH_TOKEN_REQUEST = "REFRESH_TOKEN_REQUEST";
+export const REFRESH_TOKEN_SUCCESS = "REFRESH_TOKEN_SUCCESS";
+export const REFRESH_TOKEN_FAILED = "REFRESH_TOKEN_FAILED";
+
+export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
+export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
+export const LOGOUT_FAILED = "LOGOUT_FAILED";
+
 function getRegistrationFailed() {
   return { type: REGISTRATION_FAILED };
 }
@@ -42,45 +57,42 @@ function getLoginFailed() {
 function getPasswordResetFailed() {
   return { type: PASSWORD_RESET_FAILED };
 }
-
 function getUserDataFailed() {
   return { type: GET_USER_DATA_FAILED };
 }
-
-export function setUserName(name) {
-  return { type: CHANGE_NAME, name: name };
+function setUserDataFailed() {
+  return { type: SET_USER_DATA_FAILED };
 }
-export function setUserPassword(password) {
-  return { type: CHANGE_PASSWORD, password: password };
+function refreshTokenFailed() {
+  return { type: REFRESH_TOKEN_FAILED };
 }
-export function setUserEmail(email) {
-  return { type: CHANGE_EMAIL, email: email };
+function logoutFailed() {
+  return { type: LOGOUT_FAILED };
 }
 
 export function getRegistration(email, password, name) {
   return function (dispatch) {
-    dispatch(REGISTRATION_REQUEST);
-    try {
-      registrationRequest(email, password, name)
-        .then((data) => {
-          if (data) {
-            dispatch({
-              type: REGISTRATION_SUCCESS,
-              accessToken: data.accessToken,
-            });
-            localStorage.setItem("refreshToken", data.refreshToken);
-          } else {
-            dispatch(getRegistrationFailed());
-          }
-        })
-        .catch((e) => {
+    dispatch({
+      type: REGISTRATION_REQUEST,
+    });
+
+    registrationRequest(email, password, name)
+      .then((data) => {
+        if (data) {
+          dispatch({
+            type: REGISTRATION_SUCCESS,
+            accessToken: data.accessToken,
+            password: password,
+          });
+          localStorage.setItem("refreshToken", data.refreshToken);
+        } else {
           dispatch(getRegistrationFailed());
-          console.error("Ошибка при регистрации", e);
-        });
-    } catch (e) {
-      dispatch(getRegistrationFailed());
-      console.error("Ошибка при регистрации", e);
-    }
+        }
+      })
+      .catch((e) => {
+        dispatch(getRegistrationFailed());
+        console.error("Ошибка при регистрации", e);
+      });
   };
 }
 
@@ -89,28 +101,23 @@ export function getLogin(email, password) {
     dispatch({
       type: LOGIN_REQUEST,
     });
-    try {
-      loginRequest(email, password)
-        .then((data) => {
-          if (data) {
-            console.log("Login", data);
-            dispatch({
-              type: LOGIN_SUCCESS,
-              accessToken: data.accessToken,
-            });
-            localStorage.setItem("refreshToken", data.refreshToken);
-          } else {
-            dispatch(getLoginFailed());
-          }
-        })
-        .catch((e) => {
+    loginRequest(email, password)
+      .then((data) => {
+        if (data) {
+          dispatch({
+            type: LOGIN_SUCCESS,
+            accessToken: data.accessToken,
+            password: password,
+          });
+          localStorage.setItem("refreshToken", data.refreshToken);
+        } else {
           dispatch(getLoginFailed());
-          console.error("Ошибка при входе", e);
-        });
-    } catch (e) {
-      dispatch(getLoginFailed());
-      console.error("Ошибка при входе", e);
-    }
+        }
+      })
+      .catch((e) => {
+        dispatch(getLoginFailed());
+        console.error("Ошибка при входе", e);
+      });
   };
 }
 
@@ -119,26 +126,94 @@ export function getUserData(token) {
     dispatch({
       type: GET_USER_DATA_REQUEST,
     });
-    try {
-      getUserDataRequest(token)
-        .then((data) => {
-          if (data) {
-            console.log("PasswordReset", data);
-            dispatch({
-              type: GET_USER_DATA_SUCCESS,
-            });
-          } else {
-            dispatch(getUserDataFailed());
-          }
-        })
-        .catch((e) => {
+    getUserDataRequest(token)
+      .then((data) => {
+        if (data) {
+          dispatch({
+            type: GET_USER_DATA_SUCCESS,
+            name: data.user.name,
+            email: data.user.email,
+          });
+        } else {
           dispatch(getUserDataFailed());
-          console.error("Ошибка при сбросе пароля", e);
-        });
-    } catch (e) {
-      dispatch(getUserDataFailed());
-      console.error("Ошибка при сбросе пароля", e);
-    }
+        }
+      })
+      .catch((e) => {
+        dispatch(getUserDataFailed());
+        console.error("Ошибка при получении данных пользователя", e);
+        dispatch(refreshToken(localStorage.getItem("refreshToken")));
+      });
+  };
+}
+
+export function setUserData(token, name, email, password) {
+  return function (dispatch) {
+    dispatch({
+      type: SET_USER_DATA_REQUEST,
+    });
+    setUserDataRequest(token, name, email, password)
+      .then((data) => {
+        if (data) {
+          dispatch({
+            type: SET_USER_DATA_SUCCESS,
+          });
+        } else {
+          dispatch(setUserDataFailed());
+        }
+      })
+      .catch((e) => {
+        dispatch(setUserDataFailed());
+        console.error("Ошибка при обновлении данных пользователя", e);
+        dispatch(refreshToken(localStorage.getItem("refreshToken")));
+      });
+  };
+}
+
+export function refreshToken(refreshToken) {
+  return function (dispatch) {
+    dispatch({
+      type: REFRESH_TOKEN_REQUEST,
+    });
+    refreshTokenRequest(refreshToken)
+      .then((data) => {
+        if (data) {
+          dispatch({
+            type: REFRESH_TOKEN_SUCCESS,
+            accessToken: data.accessToken,
+          });
+          localStorage.setItem("refreshToken", data.refreshToken);
+        } else {
+          dispatch(refreshTokenFailed());
+        }
+      })
+      .catch((e) => {
+        dispatch(refreshTokenFailed());
+        console.error("Ошибка при обновлении токена", e);
+      });
+  };
+}
+
+export function logout(refreshToken) {
+  return function (dispatch) {
+    dispatch({
+      type: LOGOUT_REQUEST,
+    });
+    logoutRequest(refreshToken)
+      .then((data) => {
+        console.log("logout", data);
+        if (data) {
+          dispatch({
+            type: LOGOUT_SUCCESS,
+          });
+          localStorage.removeItem("refreshToken");
+        } else {
+          dispatch(logoutFailed());
+        }
+      })
+      .catch((e) => {
+        dispatch(logoutFailed());
+        console.error("Ошибка при выходе", e);
+      });
   };
 }
 
@@ -147,25 +222,20 @@ export function getEmailCode(email) {
     dispatch({
       type: EMAIL_CODE_REQUEST,
     });
-    try {
-      emailCodeRequest(email)
-        .then((data) => {
-          if (data) {
-            dispatch({
-              type: EMAIL_CODE_SUCCESS,
-            });
-          } else {
-            dispatch(getEmailCodeFailed());
-          }
-        })
-        .catch((e) => {
+    emailCodeRequest(email)
+      .then((data) => {
+        if (data) {
+          dispatch({
+            type: EMAIL_CODE_SUCCESS,
+          });
+        } else {
           dispatch(getEmailCodeFailed());
-          console.error("Ошибка при отправке кода на почту", e);
-        });
-    } catch (e) {
-      dispatch(getEmailCodeFailed());
-      console.error("Ошибка при отправке кода на почту", e);
-    }
+        }
+      })
+      .catch((e) => {
+        dispatch(getEmailCodeFailed());
+        console.error("Ошибка при отправке кода на почту", e);
+      });
   };
 }
 
@@ -174,25 +244,19 @@ export function getPasswordReset(password, token) {
     dispatch({
       type: PASSWORD_RESET_REQUEST,
     });
-    try {
-      passwordResetRequest(password, token)
-        .then((data) => {
-          if (data) {
-            console.log("PasswordReset", data);
-            dispatch({
-              type: PASSWORD_RESET_SUCCESS,
-            });
-          } else {
-            dispatch(getPasswordResetFailed());
-          }
-        })
-        .catch((e) => {
+    passwordResetRequest(password, token)
+      .then((data) => {
+        if (data) {
+          dispatch({
+            type: PASSWORD_RESET_SUCCESS,
+          });
+        } else {
           dispatch(getPasswordResetFailed());
-          console.error("Ошибка при сбросе пароля", e);
-        });
-    } catch (e) {
-      dispatch(getPasswordResetFailed());
-      console.error("Ошибка при сбросе пароля", e);
-    }
+        }
+      })
+      .catch((e) => {
+        dispatch(getPasswordResetFailed(e));
+        console.error("Ошибка при сбросе пароля", e);
+      });
   };
 }

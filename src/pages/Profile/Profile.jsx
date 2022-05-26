@@ -1,9 +1,17 @@
 import styles from "./Profile.module.css";
 import { NavLink, Route, useRouteMatch } from "react-router-dom";
 import ProfileData from "../../components/ProfileData/ProfileData";
+import { logout } from "../../services/actions/profile";
+import { useDispatch } from "react-redux";
 
 const Profile = () => {
   const { path, url } = useRouteMatch();
+  const dispatch = useDispatch();
+
+  const handleLogout = (e) => {
+    const refreshToken = localStorage.getItem("refreshToken");
+    dispatch(logout(refreshToken));
+  };
 
   return (
     <article className={styles.container}>
@@ -33,6 +41,7 @@ const Profile = () => {
               activeClassName={styles.link_active}
               className={`${styles.link} text text_type_main-medium`}
               to="/login"
+              onClick={handleLogout}
             >
               Выход
             </NavLink>

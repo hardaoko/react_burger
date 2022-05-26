@@ -19,7 +19,7 @@ export const orderRequest = (ingredients) => {
   });
   return fetch(`${baseUrl}orders`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json;charset=utf-8" },
     body: JSON.stringify({ ingredients: requestData }),
   }).then((res) => checkResponse(res));
 };
@@ -31,7 +31,7 @@ export const registrationRequest = (
 ) => {
   return fetch(`${baseUrl}auth/register`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json;charset=utf-8" },
     body: JSON.stringify({
       email: emailRequest,
       password: passwordRequest,
@@ -43,7 +43,7 @@ export const registrationRequest = (
 export const loginRequest = (emailRequest, passwordRequest) => {
   return fetch(`${baseUrl}auth/login`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json;charset=utf-8" },
     body: JSON.stringify({
       email: emailRequest,
       password: passwordRequest,
@@ -54,7 +54,7 @@ export const loginRequest = (emailRequest, passwordRequest) => {
 export const emailCodeRequest = (emailRequest) => {
   return fetch(`${baseUrl}password-reset`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json;charset=utf-8" },
     body: JSON.stringify({ email: emailRequest }),
   }).then((res) => checkResponse(res));
 };
@@ -62,7 +62,7 @@ export const emailCodeRequest = (emailRequest) => {
 export const passwordResetRequest = (passwordRequest, tokenRequest) => {
   return fetch(`${baseUrl}password-reset/reset`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json;charset=utf-8" },
     body: JSON.stringify({
       password: passwordRequest,
       token: tokenRequest,
@@ -77,5 +77,44 @@ export const getUserDataRequest = (token) => {
       "Content-Type": "application/json;charset=utf-8",
       authorization: token,
     },
+  }).then((res) => checkResponse(res));
+};
+
+export const setUserDataRequest = (token, name, email, password) => {
+  return fetch(`${baseUrl}auth/user`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+      authorization: token,
+    },
+    body: JSON.stringify({
+      email: email,
+      name: name,
+      password: password,
+    }),
+  }).then((res) => checkResponse(res));
+};
+
+export const refreshTokenRequest = (refreshToken) => {
+  return fetch(`${baseUrl}auth/token`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      token: refreshToken,
+    }),
+  }).then((res) => checkResponse(res));
+};
+
+export const logoutRequest = (refreshToken) => {
+  return fetch(`${baseUrl}auth/logout`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      token: refreshToken,
+    }),
   }).then((res) => checkResponse(res));
 };

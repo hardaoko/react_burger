@@ -7,9 +7,9 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setUserEmail,
-  setUserName,
-  setUserPassword,
+  getUserData,
+  refreshToken,
+  setUserData,
 } from "../../services/actions/profile";
 
 const ProfileData = () => {
@@ -18,7 +18,7 @@ const ProfileData = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
-  const { userName, userEmail, userPassword } = useSelector(
+  const { userName, userEmail, userPassword, accessToken } = useSelector(
     (store) => store.profile
   );
   const dispatch = useDispatch();
@@ -49,24 +49,24 @@ const ProfileData = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(setUserName(name));
-    dispatch(setUserEmail(email));
-    dispatch(setUserPassword(password));
+    dispatch(setUserData(accessToken, name, email, password));
     setIsDataChanged(false);
   };
 
   const onCancelEditing = () => {
-    setEmail(userEmail);
-    setName(userName);
-    setPassword(userPassword);
     setIsDataChanged(false);
   };
 
+  // useEffect(() => {
+  //   dispatch(getUserData(accessToken));
+  // }, []);
+
   useEffect(() => {
+    dispatch(getUserData(accessToken));
     setEmail(userEmail);
     setName(userName);
-    setPassword(userPassword);
-  }, []);
+    setPassword(userPassword || "");
+  }, [userEmail, userName, userPassword]);
 
   return (
     <form onSubmit={onSubmit} className={styles.form}>
