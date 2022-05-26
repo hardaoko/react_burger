@@ -75,6 +75,7 @@ export const profileReducer = (state = initialProfile, action) => {
         emailCodeRequest: true,
         emailCodeSuccess: false,
         emailCodeFailed: false,
+        resetPasswordSuccess: false,
       };
     }
     case EMAIL_CODE_SUCCESS: {
@@ -107,6 +108,7 @@ export const profileReducer = (state = initialProfile, action) => {
         passwordResetRequest: false,
         passwordResetSuccess: true,
         passwordResetFailed: false,
+        emailCodeSuccess: false,
         userPassword: action.password,
       };
     }

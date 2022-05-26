@@ -31,6 +31,9 @@ const App = () => {
         <Router>
           <AppHeader />
           <Switch>
+            <Route path="/" exact={true}>
+              <Main />
+            </Route>
             <Route path="/login" exact={true}>
               <Login />
             </Route>
@@ -51,9 +54,6 @@ const App = () => {
             </Route>
             <Route path="/orders-list" exact={true}>
               <OrdersList />
-            </Route>
-            <Route path="/" exact={true}>
-              <Main />
             </Route>
           </Switch>
         </Router>

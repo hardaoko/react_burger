@@ -13,7 +13,9 @@ const ResetPassword = () => {
   const [token, setToken] = useState("");
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState(false);
-  const { passwordResetSuccess } = useSelector((store) => store.profile);
+  const { emailCodeSuccess, resetPasswordSuccess } = useSelector(
+    (store) => store.profile
+  );
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -57,8 +59,10 @@ const ResetPassword = () => {
   };
 
   useEffect(() => {
-    passwordResetSuccess && history.push("/login");
-  }, [passwordResetSuccess, history]);
+    resetPasswordSuccess
+      ? history.push("/login")
+      : !emailCodeSuccess && history.push("/forgot-password");
+  }, [emailCodeSuccess, resetPasswordSuccess, history]);
 
   return (
     <div className={styles.container}>

@@ -6,11 +6,7 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getUserData,
-  refreshToken,
-  setUserData,
-} from "../../services/actions/profile";
+import { getUserData, setUserData } from "../../services/actions/profile";
 
 const ProfileData = () => {
   const [isDataChanged, setIsDataChanged] = useState(false);
@@ -56,10 +52,6 @@ const ProfileData = () => {
   const onCancelEditing = () => {
     setIsDataChanged(false);
   };
-
-  // useEffect(() => {
-  //   dispatch(getUserData(accessToken));
-  // }, []);
 
   useEffect(() => {
     dispatch(getUserData(accessToken));
