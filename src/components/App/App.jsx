@@ -1,23 +1,36 @@
-import {useEffect} from "react";
-import './App.module.css';
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getIngredients } from "../../services/actions/ingredients";
+import { BrowserRouter as Router } from "react-router-dom";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
+import "./App.module.css";
 import AppHeader from "../AppHeader/AppHeader";
-import Main from "../Main/Main";
-import { useDispatch } from "react-redux";
-import { getIngredients } from "../../services/actions";
+import { getUserData } from "../../services/actions/profile";
+import ModalSwitch from "../ModalSwitch/ModalSwitch";
 
 const App = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const { accessToken } = useSelector((store) => store.profile);
 
   useEffect(() => {
-    dispatch(getIngredients())
-  },[dispatch])
+    dispatch(getUserData(accessToken));
+  }, [dispatch, accessToken]);
+
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
 
   return (
     <div className="App">
-      <AppHeader />
-        <Main />
+      <DndProvider backend={HTML5Backend}>
+        <Router>
+          <AppHeader />
+          <ModalSwitch />
+        </Router>
+      </DndProvider>
     </div>
   );
-}
+};
 
-export default App
+export default App;

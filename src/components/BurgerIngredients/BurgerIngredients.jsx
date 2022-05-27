@@ -2,32 +2,18 @@ import { useRef, useState } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredients.module.css";
 import Ingredient from "../Ingredient/Ingredient";
-import Modal from "../Modal/Modal";
-import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { useDispatch, useSelector } from "react-redux";
-import { MODAL_CLOSE, MODAL_DETAILS_OPEN } from "../../services/actions";
+import { MODAL_DETAILS_OPEN } from "../../services/actions/ingredients";
 
 const BurgerIngredients = () => {
-  const [current, setCurrent] = useState("one");
-  const { ingredients, modalDetailsVisible } = useSelector(
-    (state) => state.ingredients
-  );
+  const [current, setCurrent] = useState("bun");
+  const { ingredients } = useSelector((state) => state.ingredients);
 
   const refBun = useRef(null);
   const refSauce = useRef(null);
   const refMain = useRef(null);
 
   const dispatch = useDispatch();
-
-  const closeModal = () => {
-    dispatch({ type: MODAL_CLOSE });
-  };
-
-  const modal = (
-    <Modal onClose={closeModal} title="Детали ингредиента">
-      <IngredientDetails />
-    </Modal>
-  );
 
   const scrollPosition = (e) => {
     if (
@@ -62,7 +48,6 @@ const BurgerIngredients = () => {
 
   return (
     <div className={styles.container}>
-      {modalDetailsVisible && modal}
       <h1 className="mt-10 mb-5 text text_type_main-large">Соберите бургер</h1>
       <div className={styles.tab_container}>
         <Tab value="bun" active={current === "bun"} onClick={scrollToBun}>

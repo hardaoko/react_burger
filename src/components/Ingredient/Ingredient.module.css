@@ -2,6 +2,7 @@
   position: relative;
   box-sizing: border-box;
   border-radius: 8px;
+  cursor: pointer
 }
 
 .link {
@@ -28,4 +29,9 @@
 .text {
   padding-top: 0px;
   text-align: center;
+
+}
+
+.text_color {
+  color: white
 }

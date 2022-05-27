@@ -17,8 +17,9 @@ import {
   MODAL_CLOSE,
   MODAL_ORDER_OPEN,
   replaceIngredients,
-} from "../../services/actions";
+} from "../../services/actions/ingredients";
 import { useDrag, useDrop } from "react-dnd";
+import { useHistory } from "react-router-dom";
 
 const BurgerConstructor = () => {
   const {
@@ -30,18 +31,22 @@ const BurgerConstructor = () => {
     orderRequest,
   } = useSelector((store) => store.ingredients);
   const ingredients = useSelector((store) => store.ingredients.ingredientsList);
+  const { isAuth, accessToken } = useSelector((store) => store.profile);
+  const history = useHistory();
 
   const dispatch = useDispatch();
 
   //  Формирование номера заказа
   const createOrder = () => {
-    dispatch(getOrder(chosenIngredients));
+    dispatch(getOrder(accessToken, chosenIngredients));
   };
 
   //  Открытие модального окна
   const openModal = () => {
-    createOrder();
-    dispatch({ type: MODAL_ORDER_OPEN });
+    if (isAuth) {
+      createOrder();
+      dispatch({ type: MODAL_ORDER_OPEN });
+    } else history.push("/login");
   };
 
   const closeModal = () => {
@@ -102,7 +107,8 @@ const BurgerConstructor = () => {
     return (
       <li
         ref={(item) => dragRef(dropRef(item))}
-        className={`${styles.item} pt-5
+        className={`${styles.item}
+          ${item.index !== 1 && "pt-5"}
           ${targetIndex === item.index ? styles.dropItem : ""}
           ${startIndex === item.index ? styles.draggedItem : ""}`}
       >
@@ -138,7 +144,7 @@ const BurgerConstructor = () => {
       return (
         <div
           className={`${styles.item}  ${
-            side === "top" ? " ml-10" : "mt-5 ml-10"
+            side === "top" ? " ml-10 mb-5" : "mt-5 ml-10"
           }`}
         >
           <ConstructorElement
@@ -156,7 +162,7 @@ const BurgerConstructor = () => {
 
   return (
     <div
-      className={`${styles.container} ${highlightTarget} mt-25 p-1`}
+      className={`${styles.container} ${highlightTarget} mt-20 p-1`}
       ref={dropTarget}
     >
       {modalOrderVisible && !orderRequest && modal}

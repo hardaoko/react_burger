@@ -1,4 +1,4 @@
-import { getIngredientsRequest, getOrderRequest } from "../Api";
+import { getIngredientsRequest, orderRequest } from "../Api";
 import { v4 as uuidv4 } from "uuid";
 
 export const GET_INGREDIENTS_REQUEST = "GET_INGREDIENTS_REQUEST";
@@ -30,16 +30,21 @@ export function getIngredients() {
       type: GET_INGREDIENTS_REQUEST,
     });
     try {
-      getIngredientsRequest().then((data) => {
-        if (data) {
-          dispatch({
-            type: GET_INGREDIENTS_SUCCESS,
-            ingredients: data.data,
-          });
-        } else {
+      getIngredientsRequest()
+        .then((data) => {
+          if (data) {
+            dispatch({
+              type: GET_INGREDIENTS_SUCCESS,
+              ingredients: data.data,
+            });
+          } else {
+            dispatch(getIngredientsFailed());
+          }
+        })
+        .catch((e) => {
           dispatch(getIngredientsFailed());
-        }
-      });
+          console.error("Ошибка при передаче ингредиентов", e);
+        });
     } catch (e) {
       dispatch(getIngredientsFailed());
       console.error("Ошибка при передаче ингредиентов", e);
@@ -47,25 +52,30 @@ export function getIngredients() {
   };
 }
 
-export function getOrder(chosenIngredients) {
+export function getOrder(token, chosenIngredients) {
   return function (dispatch) {
     dispatch({
       type: GET_ORDER_REQUEST,
     });
     try {
-      getOrderRequest(chosenIngredients).then((data) => {
-        if (data) {
-          dispatch({
-            type: GET_ORDER_SUCCESS,
-            orderData: data.order.number,
-          });
-          dispatch({
-            type: DELETE_ORDER_LIST,
-          });
-        } else {
+      orderRequest(token, chosenIngredients)
+        .then((data) => {
+          if (data) {
+            dispatch({
+              type: GET_ORDER_SUCCESS,
+              orderData: data.order.number,
+            });
+            dispatch({
+              type: DELETE_ORDER_LIST,
+            });
+          } else {
+            dispatch(getOrderFailed());
+          }
+        })
+        .catch((e) => {
           dispatch(getOrderFailed());
-        }
-      });
+          console.error("Ошибка формирования заказа", e);
+        });
     } catch (e) {
       dispatch(getOrderFailed());
       console.error("Ошибка формирования заказа", e);
@@ -79,7 +89,6 @@ export function addIngredients(chosenIngredients, ingredient) {
     index: chosenIngredients.length,
     uuid: uuidv4(),
   });
-  console.log(chosenIngredients);
   return {
     type: UPGRADE_ORDER_LIST,
     payload: chosenIngredients,

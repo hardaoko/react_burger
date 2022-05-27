@@ -31,7 +31,21 @@
     box-sizing: border-box;
     color: #8585AD;
     cursor: pointer;
+    transition: all 0.2s
 }
+
+.link:hover{
+    transform: translateY(2px);
+}
+
+.link_active {
+    color: #F2F2F3;
+}
+
+.link_active svg {
+    fill: #F2F2F3;
+}
+
 
 .content {
     display: flex;

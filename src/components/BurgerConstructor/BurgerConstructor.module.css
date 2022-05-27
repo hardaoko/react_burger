@@ -30,6 +30,7 @@
   align-items: center;
   gap: 10px;
   transition: padding 0.3s;
+  cursor:grab
 }
 
 .button_container {
