@@ -19,6 +19,7 @@ import {
   replaceIngredients,
 } from "../../services/actions/ingredients";
 import { useDrag, useDrop } from "react-dnd";
+import { useHistory } from "react-router-dom";
 
 const BurgerConstructor = () => {
   const {
@@ -30,18 +31,22 @@ const BurgerConstructor = () => {
     orderRequest,
   } = useSelector((store) => store.ingredients);
   const ingredients = useSelector((store) => store.ingredients.ingredientsList);
+  const { isAuth, accessToken } = useSelector((store) => store.profile);
+  const history = useHistory();
 
   const dispatch = useDispatch();
 
   //  Формирование номера заказа
   const createOrder = () => {
-    dispatch(getOrder(chosenIngredients));
+    dispatch(getOrder(accessToken, chosenIngredients));
   };
 
   //  Открытие модального окна
   const openModal = () => {
-    createOrder();
-    dispatch({ type: MODAL_ORDER_OPEN });
+    if (isAuth) {
+      createOrder();
+      dispatch({ type: MODAL_ORDER_OPEN });
+    } else history.push("/login");
   };
 
   const closeModal = () => {

@@ -15,8 +15,11 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getUserData(accessToken));
-    dispatch(getIngredients());
   }, [dispatch, accessToken]);
+
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
 
   return (
     <div className="App">

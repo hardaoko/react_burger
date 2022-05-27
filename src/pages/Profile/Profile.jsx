@@ -1,14 +1,14 @@
 import styles from "./Profile.module.css";
-import { NavLink, Route, Switch, useRouteMatch } from "react-router-dom";
+import { NavLink, useRouteMatch } from "react-router-dom";
 import ProfileData from "../../components/ProfileData/ProfileData";
 import { logout } from "../../services/actions/profile";
 import { useDispatch } from "react-redux";
 
 const Profile = () => {
-  const { path, url } = useRouteMatch();
+  const { url } = useRouteMatch();
   const dispatch = useDispatch();
 
-  const handleLogout = (e) => {
+  const handleLogout = () => {
     const refreshToken = localStorage.getItem("refreshToken");
     dispatch(logout(refreshToken));
   };

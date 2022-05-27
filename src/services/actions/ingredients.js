@@ -52,13 +52,13 @@ export function getIngredients() {
   };
 }
 
-export function getOrder(chosenIngredients) {
+export function getOrder(token, chosenIngredients) {
   return function (dispatch) {
     dispatch({
       type: GET_ORDER_REQUEST,
     });
     try {
-      orderRequest(chosenIngredients)
+      orderRequest(token, chosenIngredients)
         .then((data) => {
           if (data) {
             dispatch({

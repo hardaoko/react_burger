@@ -12,14 +12,17 @@ export const getIngredientsRequest = () => {
   return fetch(`${baseUrl}ingredients`).then((res) => checkResponse(res));
 };
 
-export const orderRequest = (ingredients) => {
+export const orderRequest = (token, ingredients) => {
   const requestData = [];
   ingredients.map((item) => {
     return requestData.push(item.element._id);
   });
   return fetch(`${baseUrl}orders`, {
     method: "POST",
-    headers: { "Content-Type": "application/json;charset=utf-8" },
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+      authorization: token,
+    },
     body: JSON.stringify({ ingredients: requestData }),
   }).then((res) => checkResponse(res));
 };
