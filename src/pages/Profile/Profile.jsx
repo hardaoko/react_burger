@@ -3,7 +3,6 @@ import { NavLink, Route, Switch, useRouteMatch } from "react-router-dom";
 import ProfileData from "../../components/ProfileData/ProfileData";
 import { logout } from "../../services/actions/profile";
 import { useDispatch } from "react-redux";
-import OrdersHistory from "../OrdersHistory/OrdersHistory";
 
 const Profile = () => {
   const { path, url } = useRouteMatch();
@@ -54,14 +53,7 @@ const Profile = () => {
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </nav>
-      <Switch>
-        <Route exact={true} path={`${path}`}>
-          <ProfileData />
-        </Route>
-        <Route exact={true} path={`${path}/orders`}>
-          <OrdersHistory />
-        </Route>
-      </Switch>
+      <ProfileData />
     </article>
   );
 };

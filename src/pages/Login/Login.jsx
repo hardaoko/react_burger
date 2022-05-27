@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "./Login.module.css";
-import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
+import { Link, Redirect, useLocation } from "react-router-dom";
 import {
   Input,
   PasswordInput,
@@ -12,9 +12,8 @@ import { getLogin } from "../../services/actions/profile";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { loginSuccess, isAuth } = useSelector((store) => store.profile);
+  const { isAuth } = useSelector((store) => store.profile);
   const dispatch = useDispatch();
-  const history = useHistory();
   const location = useLocation();
 
   const onChangeEmail = (e) => {

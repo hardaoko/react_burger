@@ -200,7 +200,6 @@ export function logout(refreshToken) {
     });
     logoutRequest(refreshToken)
       .then((data) => {
-        console.log("logout", data);
         if (data) {
           dispatch({
             type: LOGOUT_SUCCESS,

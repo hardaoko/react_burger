@@ -58,7 +58,7 @@ const ProfileData = () => {
     setEmail(userEmail);
     setName(userName);
     setPassword(userPassword || "");
-  }, [userEmail, userName, userPassword]);
+  }, [userEmail, userName, userPassword, accessToken, dispatch]);
 
   return (
     <form onSubmit={onSubmit} className={styles.form}>
