@@ -24,14 +24,14 @@ const Ingredient = ({ item, onOpen }) => {
   });
 
   return (
-    <li className={styles.item}>
+    <li className={styles.item} ref={dragRef}>
       <Link
         to={{
           pathname: `/ingredients/${_id}`,
           state: { background: location },
         }}
       >
-        <div className={styles.link} onClick={onOpen} ref={dragRef}>
+        <div className={styles.link} onClick={onOpen}>
           <img alt={name} src={image} className={`${styles.image} ml-4 mr-4`} />
           <div className={`${styles.price} mt-1 mb-1`}>
             <span
