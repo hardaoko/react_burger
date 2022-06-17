@@ -24,8 +24,8 @@ function getOrderFailed() {
   return { type: GET_INGREDIENTS_FAILED };
 }
 
-export function getIngredients() {
-  return function (dispatch) {
+export function getIngredients(): any {
+  return function (dispatch: any ) {
     dispatch({
       type: GET_INGREDIENTS_REQUEST,
     });
@@ -52,8 +52,8 @@ export function getIngredients() {
   };
 }
 
-export function getOrder(token, chosenIngredients) {
-  return function (dispatch) {
+export function getOrder(token: string, chosenIngredients: string): any  {
+  return function (dispatch: any ) {
     dispatch({
       type: GET_ORDER_REQUEST,
     });
@@ -83,7 +83,7 @@ export function getOrder(token, chosenIngredients) {
   };
 }
 
-export function addIngredients(chosenIngredients, ingredient) {
+export function addIngredients(chosenIngredients: any, ingredient: any): any  {
   chosenIngredients.push({
     element: ingredient,
     index: chosenIngredients.length,
@@ -95,7 +95,7 @@ export function addIngredients(chosenIngredients, ingredient) {
   };
 }
 
-export function deleteIngredients(chosenIngredients, index) {
+export function deleteIngredients(chosenIngredients: any , index: any ) {
   let arr = [...chosenIngredients];
   arr.splice(index, 1);
   arr = arr.map((item, i) => ({ ...item, index: i }));
@@ -105,7 +105,7 @@ export function deleteIngredients(chosenIngredients, index) {
   };
 }
 
-export function replaceIngredients(chosenIngredients, start, end) {
+export function replaceIngredients(chosenIngredients: any , start: number , end: number ): any  {
   let arr = [...chosenIngredients];
   if (start === end) return;
   if (start < end) {
@@ -124,7 +124,7 @@ export function replaceIngredients(chosenIngredients, start, end) {
   };
 }
 
-export function addBun(chosenIngredients, bun) {
+export function addBun(chosenIngredients: any, bun: any) {
   chosenIngredients.splice(0, 1, { element: bun, index: 0, uuid: uuidv4() });
   return {
     type: UPGRADE_ORDER_LIST,

@@ -18,7 +18,7 @@ const AppHeader = () => {
             activeClassName={styles.link_active}
             className={`${styles.link} p-4`}
           >
-            <BurgerIcon type="secondary" className={styles.icon} />
+            <BurgerIcon type="secondary" />
             <p className={`${styles.link_text} text text_type_main-default`}>
               Конструктор
             </p>
@@ -28,7 +28,7 @@ const AppHeader = () => {
             activeClassName={styles.link_active}
             className={`${styles.link} p-4`}
           >
-            <ListIcon type="secondary" className={styles.icon} />
+            <ListIcon type="secondary" />
             <p className={`${styles.link_text} text text_type_main-default`}>
               Лента заказов
             </p>
@@ -36,7 +36,7 @@ const AppHeader = () => {
         </div>
 
         <div className={styles.logo}>
-          <Logo className={styles.logo} />
+          <Logo  />
         </div>
 
         <NavLink
@@ -44,7 +44,7 @@ const AppHeader = () => {
           activeClassName={styles.link_active}
           className={`${styles.link} ${styles.account} p-4`}
         >
-          <ProfileIcon type="secondary" className={styles.icon} />
+          <ProfileIcon type="secondary" />
           <p className={`${styles.link_text} text text_type_main-default`}>
             Личный кабинет
           </p>

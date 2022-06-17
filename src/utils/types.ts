@@ -15,3 +15,20 @@ export const burgerDataType = PropTypes.shape({
   __v: PropTypes.number,
   _id: PropTypes.string,
 });
+
+export interface IBurgerData {
+  calories: number,
+  carbohydrates: number,
+  fat: number,
+  image: string,
+  image_large: string,
+  image_mobile: string,
+  name: string,
+  price: number,
+  proteins: number,
+  type: string,
+  uuid: string,
+  __v: number,
+  _id: string,
+}
+
