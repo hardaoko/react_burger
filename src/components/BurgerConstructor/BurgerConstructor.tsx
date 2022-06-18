@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { FC, useCallback } from "react";
 import styles from "./BurgerConstructor.module.css";
 import {
   ConstructorElement,
@@ -20,6 +20,7 @@ import {
 } from "../../services/actions/ingredients";
 import { useDrag, useDrop } from "react-dnd";
 import { useHistory } from "react-router-dom";
+import { IBurgerData, IChosenIngredient } from "../../utils/types";
 
 const BurgerConstructor = () => {
   const {
@@ -29,10 +30,14 @@ const BurgerConstructor = () => {
     bun,
     finalCost,
     orderRequest,
-  } = useSelector((store) => store.ingredients);
-  const ingredients = useSelector((store) => store.ingredients.ingredientsList);
-  const { isAuth, accessToken } = useSelector((store) => store.profile);
+  } = useSelector((store: any) => store.ingredients);
+  const ingredients = useSelector((store: any) => store.ingredients.ingredientsList);
+  const { isAuth, accessToken } = useSelector((store: any) => store.profile);
   const history = useHistory();
+
+  type TDraggableIngredient = {
+    item: IChosenIngredient
+  }
 
   const dispatch = useDispatch();
 
@@ -55,14 +60,14 @@ const BurgerConstructor = () => {
 
   const modal = (
     <Modal onClose={closeModal}>
-      <OrderDetails order={orderData} />
+      <OrderDetails />
     </Modal>
   );
 
   //  useDrop при добавлении ингредиента
   const [{ isHover }, dropTarget] = useDrop({
     accept: "ingredients",
-    drop(item) {
+    drop(item: IBurgerData) {
       item.type === "bun"
         ? dispatch(addBun(chosenIngredients, item))
         : chosenIngredients.length > 0 &&
@@ -76,12 +81,12 @@ const BurgerConstructor = () => {
   //  Подсветка дроп-контейнера
   const highlightTarget = isHover ? styles.highlight : "";
 
-  let targetIndex;
-  let startIndex;
+  let targetIndex: number;
+  let startIndex: number;
 
-  const DraggableItem = ({ item }) => {
+  const DraggableItem:FC<TDraggableIngredient> = ({ item }) => {
     const dispatch = useDispatch();
-    const { chosenIngredients } = useSelector((store) => store.ingredients);
+    const { chosenIngredients } = useSelector((store: any) => store.ingredients);
     const [, dragRef] = useDrag({
       type: "orderList",
       item: { item },
@@ -95,7 +100,7 @@ const BurgerConstructor = () => {
           replaceIngredients(chosenIngredients, startIndex, targetIndex)
         );
       },
-      hover(dragItem) {
+      hover(dragItem: TDraggableIngredient) {
         targetIndex = item.index;
         startIndex = dragItem.item.index;
       },
@@ -130,16 +135,18 @@ const BurgerConstructor = () => {
   const IngredientSection = useCallback(() => {
     return (
       <ul className={`${styles.list} pr-4 pl-4  `}>
-        {ingredients.map((item, index) => {
+        {ingredients.map((item: IChosenIngredient) => {
           return (
-            <DraggableItem item={item} index={index + 1} key={item.uuid} />
+            <DraggableItem item={item} key={item.uuid} />
           );
         })}
       </ul>
     );
   }, [ingredients]);
 
-  const BunElement = useCallback(
+  type TBunCallback = (side: any) => any;
+
+  const BunElement = useCallback<TBunCallback>(
     ({ side }) => {
       return (
         <div

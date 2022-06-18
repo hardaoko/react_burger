@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import React from "react";
 
 export const burgerDataType = PropTypes.shape({
   calories: PropTypes.number,
@@ -38,5 +39,16 @@ export interface IIngredientDetailsProps {
 
 export interface IModalProps {
   title?: string,
-  onClose: () => {}
+  children: React.ReactNode,
+  onClose: () => void
+}
+
+export interface IModalOverlayProps {
+  onClose: () => void
+}
+
+export interface IChosenIngredient {
+  element: IBurgerData,
+  index: number,
+  uuid: string,
 }

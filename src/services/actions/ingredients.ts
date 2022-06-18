@@ -1,5 +1,6 @@
 import { getIngredientsRequest, orderRequest } from "../Api";
 import { v4 as uuidv4 } from "uuid";
+import { IBurgerData, IChosenIngredient } from "../../utils/types";
 
 export const GET_INGREDIENTS_REQUEST = "GET_INGREDIENTS_REQUEST";
 export const GET_INGREDIENTS_SUCCESS = "GET_INGREDIENTS_SUCCESS";
@@ -52,7 +53,7 @@ export function getIngredients(): any {
   };
 }
 
-export function getOrder(token: string, chosenIngredients: string): any  {
+export function getOrder(token: string, chosenIngredients: IChosenIngredient[]): any  {
   return function (dispatch: any ) {
     dispatch({
       type: GET_ORDER_REQUEST,
@@ -83,7 +84,7 @@ export function getOrder(token: string, chosenIngredients: string): any  {
   };
 }
 
-export function addIngredients(chosenIngredients: any, ingredient: any): any  {
+export function addIngredients(chosenIngredients: IChosenIngredient[], ingredient: IBurgerData): any  {
   chosenIngredients.push({
     element: ingredient,
     index: chosenIngredients.length,
@@ -95,7 +96,7 @@ export function addIngredients(chosenIngredients: any, ingredient: any): any  {
   };
 }
 
-export function deleteIngredients(chosenIngredients: any , index: any ) {
+export function deleteIngredients(chosenIngredients: IChosenIngredient[] , index: any ) {
   let arr = [...chosenIngredients];
   arr.splice(index, 1);
   arr = arr.map((item, i) => ({ ...item, index: i }));
@@ -105,7 +106,7 @@ export function deleteIngredients(chosenIngredients: any , index: any ) {
   };
 }
 
-export function replaceIngredients(chosenIngredients: any , start: number , end: number ): any  {
+export function replaceIngredients(chosenIngredients: IChosenIngredient[] , start: number , end: number ): any  {
   let arr = [...chosenIngredients];
   if (start === end) return;
   if (start < end) {
@@ -124,7 +125,7 @@ export function replaceIngredients(chosenIngredients: any , start: number , end:
   };
 }
 
-export function addBun(chosenIngredients: any, bun: any) {
+export function addBun(chosenIngredients: IChosenIngredient[], bun: any) {
   chosenIngredients.splice(0, 1, { element: bun, index: 0, uuid: uuidv4() });
   return {
     type: UPGRADE_ORDER_LIST,
