@@ -22,6 +22,12 @@ import { useDrag, useDrop } from "react-dnd";
 import { useHistory } from "react-router-dom";
 import { IBurgerData, IChosenIngredient } from "../../utils/types";
 
+declare module 'react' {
+  interface FunctionComponent<P = {}> {
+    (props: PropsWithChildren<P>, context?: any): ReactElement<any, any> | null;
+  }
+}
+
 const BurgerConstructor = () => {
   const {
     orderData,
