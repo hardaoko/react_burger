@@ -13,7 +13,7 @@ import { FC } from "react";
 
 interface IIngredient {
   item: IBurgerData,
-  onOpen: () => {}
+  onOpen: () => void
 }
 
 const Ingredient:FC<IIngredient> = ({ item, onOpen }) => {

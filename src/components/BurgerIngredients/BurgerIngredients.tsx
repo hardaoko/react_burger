@@ -1,49 +1,55 @@
-import { useRef, useState } from "react";
+import { SyntheticEvent, useRef, useState } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredients.module.css";
 import Ingredient from "../Ingredient/Ingredient";
 import { useDispatch, useSelector } from "react-redux";
 import { MODAL_DETAILS_OPEN } from "../../services/actions/ingredients";
+import { IBurgerData } from "../../utils/types";
+
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState("bun");
-  const { ingredients } = useSelector((state) => state.ingredients);
+  const { ingredients } = useSelector((state: any) => state.ingredients);
 
-  const refBun = useRef(null);
-  const refSauce = useRef(null);
-  const refMain = useRef(null);
+  const refBun = useRef<HTMLHeadingElement>(null);
+  const refSauce = useRef<HTMLHeadingElement>(null);
+  const refMain = useRef<HTMLHeadingElement>(null);
+  const refDiv = useRef<HTMLDivElement>(null);
 
   const dispatch = useDispatch();
 
-  const scrollPosition = (e) => {
-    if (
-      e.target.scrollTop + refBun.current.offsetTop <
-      refSauce.current.offsetTop
-    ) {
-      setCurrent("bun");
-      return;
-    }
+  const scrollPosition = () => {
+    if(refBun.current && refSauce.current && refMain.current && refDiv.current) {
 
-    if (
-      e.target.scrollTop + refBun.current.offsetTop <
-      refMain.current.offsetTop
-    ) {
-      setCurrent("sauce");
-      return;
+      if (
+        refDiv.current.scrollTop + refBun.current.offsetTop <
+        refSauce.current.offsetTop
+      ) {
+        setCurrent("bun");
+        return;
+      }
+
+      if (
+        refDiv.current.scrollTop + refBun.current.offsetTop <
+        refMain.current.offsetTop
+      ) {
+        setCurrent("sauce");
+        return;
+      }
     }
     setCurrent("main");
   };
 
   const scrollToBun = () => {
-    refBun.current.scrollIntoView({ behavior: "smooth" });
+    refBun.current && refBun.current.scrollIntoView({ behavior: "smooth" });
   };
 
   const scrollToSauce = () => {
-    refSauce.current.scrollIntoView({ behavior: "smooth" });
+    refSauce.current && refSauce.current.scrollIntoView({ behavior: "smooth" });
   };
 
   const scrollToMain = () => {
-    refMain.current.scrollIntoView({ behavior: "smooth" });
+    refMain.current && refMain.current.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -63,6 +69,7 @@ const BurgerIngredients = () => {
       <div
         className={`${styles.ingredients_container} `}
         onScroll={scrollPosition}
+        ref={refDiv}
       >
         <h2
           id="bun"
@@ -73,7 +80,7 @@ const BurgerIngredients = () => {
         </h2>
         <ul className={styles.list}>
           {ingredients.map(
-            (item) =>
+            (item: IBurgerData) =>
               item.type === "bun" && (
                 <Ingredient
                   key={item._id}
@@ -94,7 +101,7 @@ const BurgerIngredients = () => {
         </h2>
         <ul className={styles.list}>
           {ingredients.map(
-            (item) =>
+            (item: IBurgerData) =>
               item.type === "sauce" && (
                 <Ingredient
                   key={item._id}
@@ -115,7 +122,7 @@ const BurgerIngredients = () => {
         </h2>
         <ul className={styles.list}>
           {ingredients.map(
-            (item) =>
+            (item: IBurgerData) =>
               item.type === "main" && (
                 <Ingredient
                   key={item._id}

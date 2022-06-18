@@ -150,10 +150,10 @@ const BurgerConstructor = () => {
     );
   }, [ingredients]);
 
-  type TBunCallback = (side: any) => any;
+  type TBunCallback = (side: "top" | "bottom" | undefined) => React.ReactNode;
 
   const BunElement = useCallback<TBunCallback>(
-    ({ side }) => {
+    ( side ) => {
       return (
         <div
           className={`${styles.item}  ${
@@ -180,9 +180,8 @@ const BurgerConstructor = () => {
     >
       {modalOrderVisible && !orderRequest && modal}
 
-      {bun !== null ? (
-        <BunElement side="top" />
-      ) : (
+      {bun !== null ? BunElement("top")
+       : (
         <div
           className={`${styles.tip} mb-15 mr-5 mt-5 text text_type_main-large`}
         >
@@ -191,7 +190,7 @@ const BurgerConstructor = () => {
       )}
       {bun !== null && <IngredientSection />}
 
-      {bun !== null && <BunElement side="bottom" />}
+      {bun !== null && BunElement("bottom")}
 
       <div className={`${styles.button_container} pt-5 pr-5`}>
         <div className="mr-10">
