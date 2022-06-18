@@ -2,11 +2,13 @@ import styles from "./IngredientDetails.module.css";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import PropTypes from "prop-types";
+import { FC } from "react";
+import { IIngredientDetailsProps } from "../../utils/types";
 
-const IngredientDetails = ({ title }) => {
+const IngredientDetails:FC<IIngredientDetailsProps> = ({ title }) => {
   const { id } = useParams();
   const { ingredients, ingredientsFailed, ingredientsRequest } = useSelector(
-    (store) => store.ingredients
+    (store: any) => store.ingredients
   );
 
   if (ingredientsFailed || ingredientsRequest || ingredients.length === 0) {
@@ -14,7 +16,7 @@ const IngredientDetails = ({ title }) => {
   }
 
   const selectedIngredient = ingredients.find(
-    (ingredient) => ingredient._id === id
+    (ingredient: any) => ingredient._id === id
   );
 
   const { image_large, carbohydrates, name, calories, proteins, fat } =

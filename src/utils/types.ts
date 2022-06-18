@@ -32,3 +32,11 @@ export interface IBurgerData {
   _id: string,
 }
 
+export interface IIngredientDetailsProps {
+  title?: string
+}
+
+export interface IModalProps {
+  title?: string,
+  onClose: () => {}
+}
