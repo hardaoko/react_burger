@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Switch, useHistory, useLocation } from "react-router-dom";
+import { Location } from "react-router";
 import Login from "../../pages/Login/Login";
 import Main from "../../pages/Main/Main";
 import Registration from "../../pages/Registration/Registration";
@@ -15,8 +16,24 @@ import { useDispatch } from "react-redux";
 import OrdersHistory from "../../pages/OrdersHistory/OrdersHistory";
 
 function ModalSwitch() {
+  type ExtendedLocation = Location & {
+    state: {
+      background:
+      { pathname: string, search: string, hash: string, state: undefined };
+    };
+  };
+
   let location = useLocation();
-  let background = location.state && location.state.background;
+
+  function isLocationWithState(location: Location): location is ExtendedLocation {
+    return (
+      typeof location.state === 'object' && location.state !== null && 'background' in location.state
+    );
+  }
+
+  let background = isLocationWithState(location) ? location.state.background : null;
+
+  console.log("background", background)
   const dispatch = useDispatch();
   const history = useHistory();
   const handleClose = () => {
@@ -27,38 +44,39 @@ function ModalSwitch() {
   return (
     <div>
       <Switch location={background || location}>
-        <Route path="/" exact={true}>
-          <Main />
-        </Route>
-        <Route path="/login" exact={true}>
+
+        <Route path="/login">
           <Login />
         </Route>
-        <Route path="/register" exact={true}>
+        <Route path="/register">
           <Registration />
         </Route>
-        <Route path="/forgot-password" exact={true}>
+        <Route path="/forgot-password">
           <ForgotPassword />
         </Route>
-        <Route path="/reset-password" exact={true}>
+        <Route path="/reset-password">
           <ResetPassword />
         </Route>
-        <ProtectedRoute path="/profile" exact={true}>
-          <Profile />
-        </ProtectedRoute>
-        <Route path="/ingredients/:id" exact={true}>
+        <Route path="/ingredients/:id">
           <IngredientDetails title="Детали ингредиента" />
         </Route>
-        <Route path="/orders-list" exact={true}>
+        <Route path="/orders-list">
           <OrdersList />
         </Route>
-        <Route path="/profile/orders" exact={true}>
+        <Route path="/profile/orders">
           <OrdersHistory />
+        </Route>
+        <ProtectedRoute path="/profile">
+          <Profile />
+        </ProtectedRoute>
+        <Route path="/">
+          <Main />
         </Route>
       </Switch>
 
       {/* Show the modal when a background page is set */}
-      {background && (
-        <Route path="/ingredients/:id" exact={true}>
+      {background != null && (
+        <Route path="/ingredients/:id">
           <Modal onClose={handleClose} title="Детали ингредиента">
             <IngredientDetails title="" />
           </Modal>

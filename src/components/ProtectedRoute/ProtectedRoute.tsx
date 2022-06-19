@@ -1,15 +1,18 @@
 import { Route, Redirect, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
+import { Location } from "react-router";
+import { FC } from "react";
+import { IRouteProps } from "../../utils/types";
 
-export function ProtectedRoute({ children, ...rest }) {
-  const { isAuth } = useSelector((store) => store.profile);
-  const location = useLocation();
+export const ProtectedRoute: FC<IRouteProps> = ({ children, ...rest }) {
+  const { isAuth } = useSelector((store: any) => store.profile);
+  const location: Location = useLocation();
 
   return (
     <Route
       {...rest}
-      render={({ location }) =>
+      render={({ location: Location }) =>
         isAuth ? (
           children
         ) : (
@@ -28,4 +31,4 @@ ProtectedRoute.propTypes = {
   children: PropTypes.element.isRequired,
 };
 
-export default ProtectedRoute;
+

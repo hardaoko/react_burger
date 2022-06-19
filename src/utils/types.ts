@@ -52,3 +52,10 @@ export interface IChosenIngredient {
   index: number,
   uuid: string,
 }
+
+export interface IRouteProps {
+  children?: React.ReactNode;
+  element?: React.ReactElement | null;
+  index?: boolean;
+  path?: string;
+}
