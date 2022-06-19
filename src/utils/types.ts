@@ -57,3 +57,13 @@ export interface IRouteProps {
   children?: React.ReactNode;
   path?: string;
 }
+
+export interface IBaseResponse {
+  ok: boolean,
+  redirected: boolean,
+  status: number,
+  statusText: string,
+  type: string,
+  url: string,
+  json:() => any
+}

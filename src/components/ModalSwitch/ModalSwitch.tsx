@@ -33,7 +33,6 @@ function ModalSwitch() {
 
   let background = isLocationWithState(location) ? location.state.background : null;
 
-  console.log("background", background)
   const dispatch = useDispatch();
   const history = useHistory();
   const handleClose = () => {
