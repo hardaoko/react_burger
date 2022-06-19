@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { Location } from "react-router";
 import styles from "./Login.module.css";
 import { Link, Redirect, useLocation } from "react-router-dom";
 import {
@@ -12,18 +13,32 @@ import { getLogin } from "../../services/actions/profile";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { isAuth } = useSelector((store) => store.profile);
+  const { isAuth } = useSelector((store: any) => store.profile);
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const onChangeEmail = (e) => {
+  type ExtendedLocation = Location & {
+    state: {
+      from: string;
+    };
+  };
+
+  function isLocationWithState(location: Location): location is ExtendedLocation {
+    return (
+      typeof location.state === 'object' && location.state !== null && 'from' in location.state
+    );
+  }
+
+  let fromPath = isLocationWithState(location) ? location.state.from : null;
+
+  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
-  const onChangePassword = (e) => {
+  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password) return;
     dispatch(getLogin(email, password));
@@ -33,7 +48,7 @@ const Login = () => {
     return (
       <Redirect
         // Если объект state не является undefined, вернём пользователя назад.
-        to={location.state?.from || "/"}
+        to={fromPath || "/"}
       />
     );
   } else {

@@ -1,5 +1,5 @@
 import styles from "./ProfileData.module.css";
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Input,
   Button,
@@ -15,35 +15,35 @@ const ProfileData = () => {
   const [email, setEmail] = useState("");
 
   const { userName, userEmail, userPassword, accessToken } = useSelector(
-    (store) => store.profile
+    (store: any) => store.profile
   );
   const dispatch = useDispatch();
 
-  const nameRef = useRef(null);
-  const emailRef = useRef(null);
+  const nameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
 
   const onNameClick = () =>
-    null !== emailRef.current && nameRef.current.focus();
+    nameRef.current && nameRef.current.focus();
 
   const onEmailClick = () =>
-    null !== emailRef.current && emailRef.current.focus();
+   emailRef.current && emailRef.current.focus();
 
-  const onChangeName = (e) => {
+  const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
     setIsDataChanged(true);
   };
 
-  const onChangeEmail = (e) => {
+  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
     setIsDataChanged(true);
   };
 
-  const onChangePassword = (e) => {
+  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
     setIsDataChanged(true);
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(setUserData(accessToken, name, email, password));
     setIsDataChanged(false);

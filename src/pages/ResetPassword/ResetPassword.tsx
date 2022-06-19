@@ -14,19 +14,19 @@ const ResetPassword = () => {
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState(false);
   const { emailCodeSuccess, resetPasswordSuccess } = useSelector(
-    (store) => store.profile
+    (store: any) => store.profile
   );
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const onIconClick = () => {
     setVisible(!visible);
     setTimeout(() => inputRef.current?.focus(), 0);
   };
 
-  const validateField = (value) => {
+  const validateField = (value: string) => {
     setError(value.length < 6);
   };
 
@@ -34,7 +34,7 @@ const ResetPassword = () => {
     setError(false);
   };
 
-  const onBlur = (e) => {
+  const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     if (e.target.value) {
       validateField(e.target.value);
     } else {
@@ -43,14 +43,14 @@ const ResetPassword = () => {
     setVisible(false);
   };
 
-  const onChangePassword = (e) => {
+  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
-  const onChangeToken = (e) => {
+  const onChangeToken = (e: React.ChangeEvent<HTMLInputElement>) => {
     setToken(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (token && password) {

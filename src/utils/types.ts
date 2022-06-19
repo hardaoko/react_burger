@@ -55,7 +55,5 @@ export interface IChosenIngredient {
 
 export interface IRouteProps {
   children?: React.ReactNode;
-  element?: React.ReactElement | null;
-  index?: boolean;
   path?: string;
 }

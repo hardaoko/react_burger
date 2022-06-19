@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./ForgotPassword.module.css";
 import { Link, useHistory } from "react-router-dom";
 import {
@@ -10,15 +10,15 @@ import { getEmailCode } from "../../services/actions/profile";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
-  const { emailCodeSuccess } = useSelector((store) => store.profile);
+  const { emailCodeSuccess } = useSelector((store: any) => store.profile);
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const onChangeEmail = (e) => {
+  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (email) {

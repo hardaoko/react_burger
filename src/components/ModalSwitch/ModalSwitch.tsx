@@ -8,7 +8,7 @@ import ResetPassword from "../../pages/ResetPassword/ResetPassword";
 import ForgotPassword from "../../pages/ForgotPassword/ForgotPassword";
 import OrdersList from "../../pages/OrdersList/OrdersList";
 import Profile from "../../pages/Profile/Profile";
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import {ProtectedRoute} from "../ProtectedRoute/ProtectedRoute";
 import Modal from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { MODAL_CLOSE } from "../../services/actions/ingredients";
@@ -23,13 +23,13 @@ function ModalSwitch() {
     };
   };
 
-  let location = useLocation();
-
   function isLocationWithState(location: Location): location is ExtendedLocation {
     return (
       typeof location.state === 'object' && location.state !== null && 'background' in location.state
     );
   }
+
+  let location = useLocation();
 
   let background = isLocationWithState(location) ? location.state.background : null;
 

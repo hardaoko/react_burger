@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Registration.module.css";
 import { Link, Redirect, useHistory } from "react-router-dom";
 import {
@@ -13,21 +13,21 @@ const Registration = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const { registrationSuccess, isAuth } = useSelector((store) => store.profile);
+  const { registrationSuccess, isAuth } = useSelector((store: any) => store.profile);
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const onChangeEmail = (e) => {
+  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
-  const onChangePassword = (e) => {
+  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
-  const onChangeName = (e) => {
+  const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (name && email && password) {

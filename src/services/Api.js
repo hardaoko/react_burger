@@ -1,4 +1,4 @@
-import { baseUrl } from "../utils/constants";
+import { baseUrl } from "../utils/constants.ts";
 
 export function checkResponse(response) {
   if (!response.ok) {

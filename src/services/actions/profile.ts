@@ -193,7 +193,7 @@ export function refreshToken(refreshToken: string | null): any {
   };
 }
 
-export function logout(refreshToken: string): any {
+export function logout(refreshToken: string | null): any {
   return function (dispatch: any) {
     dispatch({
       type: LOGOUT_REQUEST,
