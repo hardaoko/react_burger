@@ -11,7 +11,7 @@ import ModalSwitch from "../ModalSwitch/ModalSwitch";
 
 const App = () => {
   const dispatch = useDispatch();
-  const { accessToken } = useSelector((store) => store.profile);
+  const { accessToken } = useSelector((store: any) => store.profile);
 
   useEffect(() => {
     dispatch(getUserData(accessToken));

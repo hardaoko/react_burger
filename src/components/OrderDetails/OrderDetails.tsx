@@ -3,7 +3,7 @@ import checkIcon from '../../images/done.svg'
 import { useSelector } from 'react-redux';
 
 const OrderDetails = () => {
-  const orderData = useSelector(state => state.ingredients.orderData)
+  const orderData = useSelector((store: any) => store.ingredients.orderData)
   return (
     <div className={styles.container}>
       <p className={`${styles.number} text text_type_digits-large`}>{orderData}</p>

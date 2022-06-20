@@ -6,7 +6,7 @@ import BurgerConstructor from "../../components/BurgerConstructor/BurgerConstruc
 
 const Main = () => {
   const { ingredientsRequest, ingredientsFailed } = useSelector(
-    (state) => state.ingredients
+    (state: any) => state.ingredients
   );
 
   return (

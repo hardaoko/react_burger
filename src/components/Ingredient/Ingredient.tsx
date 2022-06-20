@@ -1,21 +1,25 @@
 import styles from "./Ingredient.module.css";
-import PropTypes from "prop-types";
-
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { burgerDataType } from "../../utils/types";
+import { IBurgerData } from "../../utils/types";
 import { useDrag } from "react-dnd";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+import { FC } from "react";
 
-const Ingredient = ({ item, onOpen }) => {
+interface IIngredient {
+  item: IBurgerData,
+  onOpen: () => void
+}
+
+const Ingredient:FC<IIngredient> = ({ item, onOpen }) => {
   const { image, price, name, _id, type } = item;
   const location = useLocation();
-  const { chosenIngredients } = useSelector((store) => store.ingredients);
+  const { chosenIngredients } = useSelector((store: any) => store.ingredients);
   const number =
-    chosenIngredients.filter((item) => item.element._id === _id).length *
+    chosenIngredients.filter((item: any) => item.element._id === _id).length *
     (type === "bun" ? 2 : 1);
 
   const [, dragRef] = useDrag({
@@ -24,14 +28,14 @@ const Ingredient = ({ item, onOpen }) => {
   });
 
   return (
-    <li className={styles.item}>
+    <li className={styles.item} ref={dragRef}>
       <Link
         to={{
           pathname: `/ingredients/${_id}`,
           state: { background: location },
         }}
       >
-        <div className={styles.link} onClick={onOpen} ref={dragRef}>
+        <div className={styles.link} onClick={onOpen}>
           <img alt={name} src={image} className={`${styles.image} ml-4 mr-4`} />
           <div className={`${styles.price} mt-1 mb-1`}>
             <span
@@ -53,9 +57,5 @@ const Ingredient = ({ item, onOpen }) => {
   );
 };
 
-Ingredient.propTypes = {
-  item: burgerDataType.isRequired,
-  onOpen: PropTypes.func.isRequired,
-};
 
 export default Ingredient;

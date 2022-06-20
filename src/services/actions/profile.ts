@@ -70,8 +70,8 @@ function logoutFailed() {
   return { type: LOGOUT_FAILED };
 }
 
-export function getRegistration(email, password, name) {
-  return function (dispatch) {
+export function getRegistration(email: string, password: string, name: string): any {
+  return function (dispatch: any) {
     dispatch({
       type: REGISTRATION_REQUEST,
     });
@@ -96,8 +96,8 @@ export function getRegistration(email, password, name) {
   };
 }
 
-export function getLogin(email, password) {
-  return function (dispatch) {
+export function getLogin(email: string, password: string): any {
+  return function (dispatch: any) {
     dispatch({
       type: LOGIN_REQUEST,
     });
@@ -121,8 +121,8 @@ export function getLogin(email, password) {
   };
 }
 
-export function getUserData(token) {
-  return function (dispatch) {
+export function getUserData(token: string): any {
+  return function (dispatch: any) {
     dispatch({
       type: GET_USER_DATA_REQUEST,
     });
@@ -146,8 +146,8 @@ export function getUserData(token) {
   };
 }
 
-export function setUserData(token, name, email, password) {
-  return function (dispatch) {
+export function setUserData(token: string, name: string, email: string, password: string): any {
+  return function (dispatch: any) {
     dispatch({
       type: SET_USER_DATA_REQUEST,
     });
@@ -169,8 +169,8 @@ export function setUserData(token, name, email, password) {
   };
 }
 
-export function refreshToken(refreshToken) {
-  return function (dispatch) {
+export function refreshToken(refreshToken: string | null): any {
+  return function (dispatch: any) {
     dispatch({
       type: REFRESH_TOKEN_REQUEST,
     });
@@ -193,8 +193,8 @@ export function refreshToken(refreshToken) {
   };
 }
 
-export function logout(refreshToken) {
-  return function (dispatch) {
+export function logout(refreshToken: string | null): any {
+  return function (dispatch: any) {
     dispatch({
       type: LOGOUT_REQUEST,
     });
@@ -216,8 +216,8 @@ export function logout(refreshToken) {
   };
 }
 
-export function getEmailCode(email) {
-  return function (dispatch) {
+export function getEmailCode(email: string): any {
+  return function (dispatch: any) {
     dispatch({
       type: EMAIL_CODE_REQUEST,
     });
@@ -238,8 +238,8 @@ export function getEmailCode(email) {
   };
 }
 
-export function getPasswordReset(password, token) {
-  return function (dispatch) {
+export function getPasswordReset(password: string, token: string): any {
+  return function (dispatch: any) {
     dispatch({
       type: PASSWORD_RESET_REQUEST,
     });
@@ -254,7 +254,7 @@ export function getPasswordReset(password, token) {
         }
       })
       .catch((e) => {
-        dispatch(getPasswordResetFailed(e));
+        dispatch(getPasswordResetFailed());
         console.error("Ошибка при сбросе пароля", e);
       });
   };
