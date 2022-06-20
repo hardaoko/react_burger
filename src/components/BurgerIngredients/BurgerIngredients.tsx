@@ -1,4 +1,4 @@
-import { SyntheticEvent, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredients.module.css";
 import Ingredient from "../Ingredient/Ingredient";
@@ -20,7 +20,6 @@ const BurgerIngredients = () => {
 
   const scrollPosition = () => {
     if(refBun.current && refSauce.current && refMain.current && refDiv.current) {
-
       if (
         refDiv.current.scrollTop + refBun.current.offsetTop <
         refSauce.current.offsetTop

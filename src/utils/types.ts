@@ -1,21 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-export const burgerDataType = PropTypes.shape({
-  calories: PropTypes.number,
-  carbohydrates: PropTypes.number,
-  fat: PropTypes.number,
-  image: PropTypes.string,
-  image_large: PropTypes.string,
-  image_mobile: PropTypes.string,
-  name: PropTypes.string,
-  price: PropTypes.number,
-  proteins: PropTypes.number,
-  type: PropTypes.string,
-  uuid: PropTypes.string,
-  __v: PropTypes.number,
-  _id: PropTypes.string,
-});
 
 export interface IBurgerData {
   calories: number,
@@ -56,14 +41,4 @@ export interface IChosenIngredient {
 export interface IRouteProps {
   children?: React.ReactNode;
   path?: string;
-}
-
-export interface IBaseResponse {
-  ok: boolean,
-  redirected: boolean,
-  status: number,
-  statusText: string,
-  type: string,
-  url: string,
-  json:() => any
 }

@@ -1,7 +1,7 @@
 import { baseUrl } from "../utils/constants";
-import { IBaseResponse, IChosenIngredient } from "../utils/types";
+import { IChosenIngredient } from "../utils/types";
 
-export function checkResponse(response: IBaseResponse) {
+export function checkResponse(response: Response) {
   console.log(response);
   if (!response.ok) {
     throw Error(response.statusText + " - " + response.status);
