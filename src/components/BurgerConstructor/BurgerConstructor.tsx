@@ -30,7 +30,6 @@ declare module 'react' {
 
 const BurgerConstructor = () => {
   const {
-    orderData,
     chosenIngredients,
     modalOrderVisible,
     bun,
