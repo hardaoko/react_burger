@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./ResetPassword.module.css";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Input,
   Button,
@@ -17,7 +17,7 @@ const ResetPassword = () => {
     (store: any) => store.profile
   );
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -60,9 +60,9 @@ const ResetPassword = () => {
 
   useEffect(() => {
     resetPasswordSuccess
-      ? history.push("/login")
-      : !emailCodeSuccess && history.push("/forgot-password");
-  }, [emailCodeSuccess, resetPasswordSuccess, history]);
+      ? navigate("/login")
+      : !emailCodeSuccess && navigate("/forgot-password");
+  }, [emailCodeSuccess, resetPasswordSuccess, navigate]);
 
   return (
     <div className={styles.container}>

@@ -30,9 +30,9 @@ const Ingredient:FC<IIngredient> = ({ item, onOpen }) => {
   return (
     <li className={styles.item} ref={dragRef}>
       <Link
+        state={ location }
         to={{
           pathname: `/ingredients/${_id}`,
-          state: { background: location },
         }}
       >
         <div className={styles.link} onClick={onOpen}>

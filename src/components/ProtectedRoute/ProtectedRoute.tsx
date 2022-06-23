@@ -1,28 +1,13 @@
-import { Route, Redirect, useLocation, RouteProps } from "react-router-dom";
+import { Outlet } from "react-router";
 import { useSelector } from "react-redux";
 import { FC } from "react";
+import Login from "../../pages/Login/Login";
 
-export const ProtectedRoute: FC<RouteProps> = ({ children, ...rest }) => {
+export const ProtectedRoute = ( ) => {
   const { isAuth } = useSelector((store: any) => store.profile);
-  const location = useLocation();
 
-  return (
-    <Route
-      {...rest}
-      //@ts-ignore
-      render={() =>
-        isAuth ? (
-          children
-        ) : (
-          // Если пользователя нет в хранилище, происходит переадресация на роут /login
-          <Redirect
-            to={{ pathname: "/login", state: { from: location } }}
-            exact={true}
-          />
-        )
-      }
-    />
-  );
+  return isAuth ? <Outlet/> : <Login/>
+
 }
 
 

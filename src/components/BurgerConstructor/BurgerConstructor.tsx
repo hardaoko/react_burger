@@ -19,7 +19,7 @@ import {
   replaceIngredients,
 } from "../../services/actions/ingredients";
 import { useDrag, useDrop } from "react-dnd";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { IBurgerData, IChosenIngredient } from "../../utils/types";
 
 declare module 'react' {
@@ -38,7 +38,7 @@ const BurgerConstructor = () => {
   } = useSelector((store: any) => store.ingredients);
   const ingredients = useSelector((store: any) => store.ingredients.ingredientsList);
   const { isAuth, accessToken } = useSelector((store: any) => store.profile);
-  const history = useHistory();
+  const navigate= useNavigate();
 
   type TDraggableIngredient = {
     item: IChosenIngredient
@@ -56,7 +56,7 @@ const BurgerConstructor = () => {
     if (isAuth) {
       createOrder();
       dispatch({ type: MODAL_ORDER_OPEN });
-    } else history.push("/login");
+    } else navigate("/login");
   };
 
   const closeModal = () => {

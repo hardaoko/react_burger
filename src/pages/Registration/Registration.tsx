@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Registration.module.css";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import {
   Input,
   PasswordInput,
@@ -15,7 +15,7 @@ const Registration = () => {
   const [name, setName] = useState("");
   const { registrationSuccess, isAuth } = useSelector((store: any) => store.profile);
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -36,11 +36,12 @@ const Registration = () => {
   };
 
   useEffect(() => {
-    registrationSuccess && history.push("/");
-  }, [registrationSuccess, history]);
+    registrationSuccess && navigate("/");
+  }, [registrationSuccess, navigate]);
 
   if (isAuth) {
-    return <Redirect exact to="/" />;
+    <Navigate replace to='/' />
+    return <></>
   } else {
     return (
       <div className={styles.container}>

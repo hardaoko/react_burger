@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Location } from "react-router";
+import { Location, Navigate } from "react-router";
 import styles from "./Login.module.css";
-import { Link, Redirect, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   Input,
   PasswordInput,
@@ -10,7 +10,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { getLogin } from "../../services/actions/profile";
 
-const Login = () => {
+const Login = (): React.ReactElement => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { isAuth } = useSelector((store: any) => store.profile);
@@ -46,10 +46,7 @@ const Login = () => {
 
   if (isAuth) {
     return (
-      <Redirect
-        // Если объект state не является undefined, вернём пользователя назад.
-        to={fromPath || "/"}
-      />
+      <Navigate replace to={fromPath || "/"} />
     );
   } else {
     return (

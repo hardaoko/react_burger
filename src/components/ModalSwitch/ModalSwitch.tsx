@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch, useHistory, useLocation } from "react-router-dom";
+import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
 import { Location } from "react-router";
 import Login from "../../pages/Login/Login";
 import Main from "../../pages/Main/Main";
@@ -34,15 +34,15 @@ function ModalSwitch() {
   let background = isLocationWithState(location) ? location.state.background : null;
 
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const handleClose = () => {
     dispatch({ type: MODAL_CLOSE });
-    history.push("/");
+    navigate("/");
   };
 
   return (
     <div>
-      <Switch location={background || location}>
+      <Routes location={background || location}>
 
         <Route path="/login">
           <Login />
@@ -65,13 +65,13 @@ function ModalSwitch() {
         <Route path="/profile/orders">
           <OrdersHistory />
         </Route>
-        <ProtectedRoute path="/profile">
+        <Route path="/profile">
           <Profile />
-        </ProtectedRoute>
+        </Route>
         <Route path="/">
           <Main />
         </Route>
-      </Switch>
+      </Routes>
 
       {/* Show the modal when a background page is set */}
       {background != null && (

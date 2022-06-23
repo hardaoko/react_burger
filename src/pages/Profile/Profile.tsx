@@ -1,11 +1,10 @@
 import styles from "./Profile.module.css";
-import { NavLink, useRouteMatch } from "react-router-dom";
+import { NavLink, useMatch } from "react-router-dom";
 import ProfileData from "../../components/ProfileData/ProfileData";
 import { logout } from "../../services/actions/profile";
 import { useDispatch } from "react-redux";
 
 const Profile = () => {
-  const { url } = useRouteMatch();
   const dispatch = useDispatch();
 
   const handleLogout = () => {
@@ -13,33 +12,45 @@ const Profile = () => {
     dispatch(logout(refreshToken));
   };
 
+  const activeLinkStyle = `${styles.link_active} ${styles.link} text text_type_main-medium`
+  const linkStyle = `${styles.link} text text_type_main-medium`
   return (
     <article className={styles.container}>
       <nav className={`${styles.navigation} pl-4`}>
         <ul className={styles.list}>
           <li className={styles.list_item}>
+
             <NavLink
-              activeClassName={styles.link_active}
-              className={`${styles.link} text text_type_main-medium`}
-              to={`${url}`}
-              exact
+              className={({ isActive }) =>
+                isActive ? activeLinkStyle : linkStyle
+              }
+              // activeClassName={styles.link_active}
+              // className={`${styles.link} text text_type_main-medium`}
+              to='/profile'
+
             >
               Профиль
             </NavLink>
           </li>
           <li>
             <NavLink
-              activeClassName={styles.link_active}
-              className={`${styles.link} text text_type_main-medium`}
-              to={`${url}/orders`}
+              className={({ isActive }) =>
+              isActive ? activeLinkStyle : linkStyle
+            }
+            // activeClassName={styles.link_active}
+            // className={`${styles.link} text text_type_main-medium`}
+              to='/profile/orders'
             >
               История заказов
             </NavLink>
           </li>
           <li>
             <NavLink
-              activeClassName={styles.link_active}
-              className={`${styles.link} text text_type_main-medium`}
+              className={({ isActive }) =>
+              isActive ? activeLinkStyle : linkStyle
+            }
+            // activeClassName={styles.link_active}
+            // className={`${styles.link} text text_type_main-medium`}
               to="/login"
               onClick={handleLogout}
             >
