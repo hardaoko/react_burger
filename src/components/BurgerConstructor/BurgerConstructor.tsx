@@ -20,7 +20,7 @@ import {
 } from "../../services/actions/ingredients";
 import { useDrag, useDrop } from "react-dnd";
 import { useHistory } from "react-router-dom";
-import { IBurgerData, IChosenIngredient } from "../../utils/types";
+import { AppDispatch, IBurgerData, IChosenIngredient } from "../../utils/types";
 
 declare module 'react' {
   interface FunctionComponent<P = {}> {
@@ -44,7 +44,7 @@ const BurgerConstructor = () => {
     item: IChosenIngredient
   }
 
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   //  Формирование номера заказа
   const createOrder = () => {
@@ -90,7 +90,7 @@ const BurgerConstructor = () => {
   let startIndex: number;
 
   const DraggableItem:FC<TDraggableIngredient> = ({ item }) => {
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
     const { chosenIngredients } = useSelector((store: any) => store.ingredients);
     const [, dragRef] = useDrag({
       type: "orderList",
