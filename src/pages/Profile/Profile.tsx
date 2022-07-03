@@ -3,10 +3,11 @@ import { NavLink, useRouteMatch } from "react-router-dom";
 import ProfileData from "../../components/ProfileData/ProfileData";
 import { logout } from "../../services/actions/profile";
 import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../utils/types";
 
 const Profile = () => {
   const { url } = useRouteMatch();
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   const handleLogout = () => {
     const refreshToken = localStorage.getItem("refreshToken");

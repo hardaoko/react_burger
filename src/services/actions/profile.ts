@@ -1,3 +1,4 @@
+import { AppDispatch, AppThunk } from "../../utils/types";
 import {
   emailCodeRequest,
   getUserDataRequest,
@@ -70,8 +71,8 @@ function logoutFailed() {
   return { type: LOGOUT_FAILED };
 }
 
-export function getRegistration(email: string, password: string, name: string): any {
-  return function (dispatch: any) {
+export const getRegistration: AppThunk = (email: string, password: string, name: string) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: REGISTRATION_REQUEST,
     });
@@ -96,8 +97,8 @@ export function getRegistration(email: string, password: string, name: string): 
   };
 }
 
-export function getLogin(email: string, password: string): any {
-  return function (dispatch: any) {
+export const getLogin: AppThunk = (email: string, password: string) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: LOGIN_REQUEST,
     });
@@ -121,8 +122,8 @@ export function getLogin(email: string, password: string): any {
   };
 }
 
-export function getUserData(token: string): any {
-  return function (dispatch: any) {
+export const getUserData: AppThunk = (token: string) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_DATA_REQUEST,
     });
@@ -146,8 +147,8 @@ export function getUserData(token: string): any {
   };
 }
 
-export function setUserData(token: string, name: string, email: string, password: string): any {
-  return function (dispatch: any) {
+export const setUserData: AppThunk = (token: string, name: string, email: string, password: string) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: SET_USER_DATA_REQUEST,
     });
@@ -169,8 +170,8 @@ export function setUserData(token: string, name: string, email: string, password
   };
 }
 
-export function refreshToken(refreshToken: string | null): any {
-  return function (dispatch: any) {
+export const refreshToken: AppThunk = (refreshToken: string | null) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: REFRESH_TOKEN_REQUEST,
     });
@@ -193,8 +194,8 @@ export function refreshToken(refreshToken: string | null): any {
   };
 }
 
-export function logout(refreshToken: string | null): any {
-  return function (dispatch: any) {
+export const logout: AppThunk = (refreshToken: string | null) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: LOGOUT_REQUEST,
     });
@@ -216,8 +217,8 @@ export function logout(refreshToken: string | null): any {
   };
 }
 
-export function getEmailCode(email: string): any {
-  return function (dispatch: any) {
+export const getEmailCode: AppThunk = (email: string) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: EMAIL_CODE_REQUEST,
     });
@@ -238,8 +239,8 @@ export function getEmailCode(email: string): any {
   };
 }
 
-export function getPasswordReset(password: string, token: string): any {
-  return function (dispatch: any) {
+export const getPasswordReset: AppThunk = (password: string, token: string) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: PASSWORD_RESET_REQUEST,
     });

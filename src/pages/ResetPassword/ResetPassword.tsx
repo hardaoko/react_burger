@@ -7,6 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import { getPasswordReset } from "../../services/actions/profile";
+import { AppDispatch } from "../../utils/types";
 
 const ResetPassword = () => {
   const [password, setPassword] = useState("");
@@ -16,7 +17,7 @@ const ResetPassword = () => {
   const { emailCodeSuccess, resetPasswordSuccess } = useSelector(
     (store: any) => store.profile
   );
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const history = useHistory();
 
   const inputRef = useRef<HTMLInputElement>(null);

@@ -132,7 +132,7 @@ export const replaceIngredients = (chosenIngredients: IChosenIngredient[] , star
   };
 }
 
-export const addBun = (chosenIngredients: IChosenIngredient[], bun: any) => {
+export const addBun = (chosenIngredients: IChosenIngredient[], bun: IBurgerData) => {
   chosenIngredients.splice(0, 1, { element: bun, index: 0, uuid: uuidv4() });
   return {
     type: UPGRADE_ORDER_LIST,
