@@ -22,8 +22,6 @@ export interface IUpgradeOrderList  {
   payload: IChosenIngredient[];
 }
 
-
-
 function getIngredientsFailed() {
   return { type: GET_INGREDIENTS_FAILED };
 }

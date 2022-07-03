@@ -46,6 +46,54 @@ export interface IRouteProps {
   path?: string;
 }
 
+export interface IIngredientsState {
+  ingredients: IBurgerData[],
+  ingredientsRequest: boolean,
+  ingredientsFailed: boolean,
+  chosenIngredients: IChosenIngredient[],
+  ingredientsList: IChosenIngredient[],
+  bun: IChosenIngredient | null,
+  orderData: number,
+  orderRequest: boolean,
+  orderFailed: boolean,
+  modalDetailsVisible: boolean,
+  modalOrderVisible: boolean,
+  ingredientDetails: IBurgerData | null,
+  finalCost: number,
+};
+
+export interface IProfileState {
+  emailCodeRequest: boolean,
+  emailCodeSuccess: boolean,
+  emailCodeFailed: boolean,
+  passwordResetRequest: boolean,
+  passwordResetSuccess: boolean,
+  passwordResetFailed: boolean,
+  registrationRequest: boolean,
+  registrationSuccess: boolean,
+  registrationFailed: boolean,
+  loginRequest: boolean,
+  loginSuccess: boolean,
+  loginFailed: boolean,
+  logoutRequest: boolean,
+  logoutSuccess: boolean,
+  logoutFailed: boolean,
+  getUserDataRequest: boolean,
+  getUserDataSuccess: boolean,
+  getUserDataFailed: boolean,
+  setUserDataRequest: boolean,
+  setUserDataSuccess: boolean,
+  setUserDataFailed: boolean,
+  refreshTokenRequest: boolean,
+  refreshTokenSuccess: boolean,
+  refreshTokenFailed: boolean,
+  isAuth: boolean,
+  userName: string,
+  userEmail: string,
+  userPassword: string,
+  accessToken: string,
+};
+
 export type TAppActions = IUpgradeOrderList
 
 export type RootState = ReturnType<typeof store.getState>;

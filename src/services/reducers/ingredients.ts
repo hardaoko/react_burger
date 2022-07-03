@@ -1,3 +1,5 @@
+import { AnyAction } from "redux";
+import { IChosenIngredient, IIngredientsState } from "../../utils/types";
 import {
   DELETE_ORDER_LIST,
   GET_INGREDIENTS_FAILED,
@@ -12,27 +14,23 @@ import {
   UPGRADE_ORDER_LIST,
 } from "../actions/ingredients";
 
-const initialIngredients = {
+const initialIngredients: IIngredientsState = {
   ingredients: [],
   ingredientsRequest: false,
   ingredientsFailed: false,
-
   chosenIngredients: [],
   ingredientsList: [],
   bun: null,
-
-  orderData: null,
+  orderData: 0,
   orderRequest: false,
   orderFailed: false,
-
   modalDetailsVisible: false,
   modalOrderVisible: false,
-  ingredientDetails: {},
-
+  ingredientDetails: null,
   finalCost: 0,
 };
 
-export const ingredientsReducer = (state = initialIngredients, action) => {
+export const ingredientsReducer = (state = initialIngredients, action: AnyAction) => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return { ...state, ingredientsRequest: true };
@@ -68,10 +66,10 @@ export const ingredientsReducer = (state = initialIngredients, action) => {
         ...state,
         chosenIngredients: action.payload,
         ingredientsList: action.payload.filter(
-          (item) => item.element.type !== "bun"
+          (item: IChosenIngredient) => item.element.type !== "bun"
         ),
         bun: action.payload[0],
-        finalCost: action.payload.reduce((prev, next) => {
+        finalCost: action.payload.reduce((prev: number, next: IChosenIngredient) => {
           return prev + next.element.price;
         }, action.payload[0].element.price),
       };
@@ -85,6 +83,7 @@ export const ingredientsReducer = (state = initialIngredients, action) => {
         finalCost: 0,
       };
     }
+
     case MODAL_DETAILS_OPEN: {
       return {
         ...state,
