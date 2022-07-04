@@ -69,7 +69,7 @@ const initialProfile: IProfileState = {
   accessToken: "",
 };
 
-export const profileReducer = (state = initialProfile, action: AnyAction) => {
+export const profileReducer = (state = initialProfile, action: any) => {
   switch (action.type) {
     case EMAIL_CODE_REQUEST: {
       return {

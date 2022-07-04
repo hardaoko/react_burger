@@ -30,7 +30,7 @@ const initialIngredients: IIngredientsState = {
   finalCost: 0,
 };
 
-export const ingredientsReducer = (state = initialIngredients, action: AnyAction) => {
+export const ingredientsReducer = (state = initialIngredients, action: any) => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return { ...state, ingredientsRequest: true };

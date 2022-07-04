@@ -1,4 +1,4 @@
-import React from "react";
+
 import { Route, Switch, useHistory, useLocation } from "react-router-dom";
 import { Location } from "react-router";
 import Login from "../../pages/Login/Login";
@@ -6,7 +6,6 @@ import Main from "../../pages/Main/Main";
 import Registration from "../../pages/Registration/Registration";
 import ResetPassword from "../../pages/ResetPassword/ResetPassword";
 import ForgotPassword from "../../pages/ForgotPassword/ForgotPassword";
-import OrdersList from "../../pages/OrdersList/OrdersList";
 import Profile from "../../pages/Profile/Profile";
 import {ProtectedRoute} from "../ProtectedRoute/ProtectedRoute";
 import Modal from "../Modal/Modal";
@@ -14,6 +13,7 @@ import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { MODAL_CLOSE } from "../../services/actions/ingredients";
 import { useDispatch } from "react-redux";
 import OrdersHistory from "../../pages/OrdersHistory/OrdersHistory";
+import OrderFeed from "../../pages/OrderFeed/OrderFeed";
 
 function ModalSwitch() {
   type ExtendedLocation = Location & {
@@ -60,7 +60,7 @@ function ModalSwitch() {
           <IngredientDetails title="Детали ингредиента" />
         </Route>
         <Route path="/orders-list">
-          <OrdersList />
+          <OrderFeed />
         </Route>
         <Route path="/profile/orders">
           <OrdersHistory />
