@@ -6,8 +6,10 @@ import {
   Logo,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const AppHeader = () => {
+  const { isAuth, userName } = useSelector((store: any) => store.profile);
   return (
     <header className={styles.header}>
       <div className={styles.container}>
@@ -46,7 +48,7 @@ const AppHeader = () => {
         >
           <ProfileIcon type="secondary" />
           <p className={`${styles.link_text} text text_type_main-default`}>
-            Личный кабинет
+            {isAuth && userName? userName: 'Личный кабинет'}
           </p>
         </NavLink>
       </div>
