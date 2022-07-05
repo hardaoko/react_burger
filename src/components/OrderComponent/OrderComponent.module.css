@@ -8,11 +8,11 @@
   border-radius: 40px;
   margin-right: 8px;
   padding: 24px;
-  transition: opacity 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .link:hover {
-  opacity: 0.8;
+  opacity: 0.6;
 }
 
 .header {

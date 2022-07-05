@@ -34,9 +34,9 @@ const OrderComponent = () => {
           <p className="text text_type_main-default text_color_inactive">{date}</p>
         </div>
         <h2 className="text text_type_main-medium">{name}</h2>
-        {
+        {/* {
           (status) && <p className="text text_type_main-default">{convertStatus(status)}</p>
-        }
+        } */}
         <div className={styles.footer}>
           <ul className={styles.ingredients_list}>
             {
