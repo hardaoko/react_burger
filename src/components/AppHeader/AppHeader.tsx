@@ -26,7 +26,7 @@ const AppHeader = () => {
             </p>
           </NavLink>
           <NavLink
-            to="/orders-list"
+            to="/orders-feed"
             activeClassName={styles.link_active}
             className={`${styles.link} p-4`}
           >

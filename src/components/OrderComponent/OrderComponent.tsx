@@ -3,11 +3,17 @@ import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { IBurgerData } from "../../utils/types";
-import { useLocation } from "react-router";
+import { useLocation } from "react-router-dom";
+import { FC } from "react";
 
+interface IOrderComponentpProps {
+  order: number,
+  onOpen: () => void
+}
 
-const OrderComponent = () => {
+const OrderComponent: FC<IOrderComponentpProps> = ({order, onOpen}) => {
   const ingredients = useSelector((state:any) => state.ingredients.ingredients)
+  const location = useLocation();
   const number: number = 1
   const date: string = "Сегодня, 16:20 i-GMT+3"
   const name: string = "Бутерброд"
@@ -25,9 +31,9 @@ const OrderComponent = () => {
 
   return (
     <li>
-      <Link className={styles.link} to={{
-        pathname: ``,
-        state: ``,
+      <Link className={styles.link} onClick={onOpen} to={{
+          pathname: `/orders-feed/${order}`,
+          state: { background: location },
       }}>
         <div className={styles.header}>
           <p className="text text_type_digits-default">{`#${number}`}</p>

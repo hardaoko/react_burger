@@ -10,6 +10,7 @@ import {
   GET_ORDER_SUCCESS,
   MODAL_CLOSE,
   MODAL_DETAILS_OPEN,
+  MODAL_ORDER_INFO_OPEN,
   MODAL_ORDER_OPEN,
   UPGRADE_ORDER_LIST,
 } from "../actions/ingredients";
@@ -24,7 +25,9 @@ const initialIngredients: IIngredientsState = {
   orderData: 0,
   orderRequest: false,
   orderFailed: false,
+  orderInfo: 0,
   modalDetailsVisible: false,
+  modalOrderInfoVisible: false,
   modalOrderVisible: false,
   ingredientDetails: null,
   finalCost: 0,
@@ -97,11 +100,19 @@ export const ingredientsReducer = (state = initialIngredients, action: any) => {
         modalOrderVisible: true,
       };
     }
+    case MODAL_ORDER_INFO_OPEN: {
+      return {
+        ...state,
+        modalOrderInfoVisible: true,
+        orderInfo: action.order,
+      };
+    }
     case MODAL_CLOSE: {
       return {
         ...state,
         modalOrderVisible: false,
         modalDetailsVisible: false,
+        modalOrderInfoVisible: false,
       };
     }
 

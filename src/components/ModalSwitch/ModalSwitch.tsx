@@ -14,6 +14,7 @@ import { MODAL_CLOSE } from "../../services/actions/ingredients";
 import { useDispatch } from "react-redux";
 import OrdersHistory from "../../pages/OrdersHistory/OrdersHistory";
 import OrderFeed from "../../pages/OrderFeed/OrderFeed";
+import OrderInfo from "../OrderInfo/OrderInfo";
 
 function ModalSwitch() {
   type ExtendedLocation = Location & {
@@ -40,6 +41,11 @@ function ModalSwitch() {
     history.push("/");
   };
 
+  const handleCloseOrderInfo = () => {
+    dispatch({ type: MODAL_CLOSE });
+    history.push("/orders-feed");
+  };
+
   return (
     <div>
       <Switch location={background || location}>
@@ -59,7 +65,10 @@ function ModalSwitch() {
         <Route path="/ingredients/:id">
           <IngredientDetails title="Детали ингредиента" />
         </Route>
-        <Route path="/orders-list">
+        <Route path="/orders-feed/:id">
+          <OrderInfo />
+        </Route>
+        <Route path="/orders-feed">
           <OrderFeed />
         </Route>
         <Route path="/profile/orders">
@@ -75,12 +84,20 @@ function ModalSwitch() {
 
       {/* Show the modal when a background page is set */}
       {background != null && (
-        <Route path="/ingredients/:id">
-          <Modal onClose={handleClose} title="Детали ингредиента">
-            <IngredientDetails title="" />
-          </Modal>
-        </Route>
-      )}
+        <Switch>
+          <Route path="/ingredients/:id">
+            <Modal onClose={handleClose} title="Детали ингредиента">
+              <IngredientDetails title="" />
+            </Modal>
+          </Route>
+          <Route path="/orders-feed/:id">
+            <Modal onClose={handleCloseOrderInfo} >
+              <OrderInfo />
+            </Modal>
+          </Route>
+        </Switch>
+        )
+      }
     </div>
   );
 }
