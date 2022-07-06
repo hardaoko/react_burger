@@ -1,12 +1,13 @@
 import styles from "./Profile.module.css";
-import { NavLink, useRouteMatch } from "react-router-dom";
+import { NavLink, Route, Router, Switch, useRouteMatch } from "react-router-dom";
 import ProfileData from "../../components/ProfileData/ProfileData";
 import { logout } from "../../services/actions/profile";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../utils/types";
+import OrderHistory from "../../components/OrderHistory/OrderHistory";
 
 const Profile = () => {
-  const { url } = useRouteMatch();
+  const { path, url } = useRouteMatch();
   const dispatch: AppDispatch = useDispatch();
 
   const handleLogout = () => {
@@ -54,7 +55,15 @@ const Profile = () => {
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </nav>
-      <ProfileData />
+      <Switch>
+        <Route path={`${url}/orders`}>
+          <OrderHistory />
+        </Route>
+        <Route path={`${path}`}>
+          <ProfileData />
+        </Route>
+      </Switch>
+
     </article>
   );
 };

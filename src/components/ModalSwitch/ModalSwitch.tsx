@@ -12,7 +12,6 @@ import Modal from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { MODAL_CLOSE } from "../../services/actions/ingredients";
 import { useDispatch } from "react-redux";
-import OrdersHistory from "../../pages/OrdersHistory/OrdersHistory";
 import OrderFeed from "../../pages/OrderFeed/OrderFeed";
 import OrderInfo from "../OrderInfo/OrderInfo";
 
@@ -43,7 +42,7 @@ function ModalSwitch() {
 
   const handleCloseOrderInfo = () => {
     dispatch({ type: MODAL_CLOSE });
-    history.push("/orders-feed");
+    history.push(background);
   };
 
   return (
@@ -71,9 +70,7 @@ function ModalSwitch() {
         <Route path="/orders-feed">
           <OrderFeed />
         </Route>
-        <Route path="/profile/orders">
-          <OrdersHistory />
-        </Route>
+
         <ProtectedRoute path="/profile">
           <Profile />
         </ProtectedRoute>
