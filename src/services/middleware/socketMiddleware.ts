@@ -1,5 +1,6 @@
 import type { Middleware, MiddlewareAPI } from 'redux';
 import { TAppActions, AppDispatch, RootState, IWebsocketActions } from '../../utils/types';
+import { WS_CONNECTION_START } from '../actions/orders';
 
 
 export const socketMiddleware = (wsUrl: string, wsActions: IWebsocketActions): Middleware => {
@@ -14,11 +15,11 @@ export const socketMiddleware = (wsUrl: string, wsActions: IWebsocketActions): M
 
       if (type === onInit) {
         // объект класса WebSocket
-        socket = new WebSocket(`${wsUrl}?token=${profile.accessToken.replace('Bearer ', '')}`);
+        if (type === WS_CONNECTION_START)
+          socket = new WebSocket('wss:/norma.nomoreparties.space/orders/all')
+        else
+          socket = new WebSocket(`${wsUrl}?token=${profile.accessToken.replace('Bearer ', '')}`);
 
-      }
-
-      if (socket) {
         // функция, которая вызывается при открытии сокета
         socket.onopen = event => {
           dispatch({ type: onOpen, payload: event });
@@ -31,11 +32,10 @@ export const socketMiddleware = (wsUrl: string, wsActions: IWebsocketActions): M
 
         // функция, которая вызывается при получения события от сервера
         socket.onmessage = event => {
-          const {data} = event;
-          const parsed = JSON.parse(data);
-          const {success, ...restParsedData} = parsed;
+          const data = JSON.parse(event.data);
+          const {success, ...payload} = data;
 
-          dispatch({type: onMessage, payload: restParsedData});
+          dispatch({type: onMessage, payload: payload});
         };
         // функция, которая вызывается при закрытии соединения
         socket.onclose = event => {

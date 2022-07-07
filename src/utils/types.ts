@@ -22,6 +22,16 @@ export interface IBurgerData {
   _id: string,
 }
 
+export interface IOrder {
+  createdAt: string,
+  ingredients: string[],
+  name: string,
+  number: number,
+  status: string,
+  updatedAt: string,
+  _id: string,
+}
+
 export interface IIngredientDetailsProps {
   title?: string
 }
@@ -47,6 +57,11 @@ export interface IRouteProps {
   path?: string;
 }
 
+export interface IOrderComponentProps {
+  order: IOrder,
+  onOpen: () => void
+}
+
 export interface IWebsocketActions {
   onInit: string,
   onOpen: string,
@@ -55,15 +70,7 @@ export interface IWebsocketActions {
   onMessage: string
 }
 
-export interface IOrder {
-  createdAt: string,
-  ingredients: string[],
-  name: string,
-  number: number,
-  status: string,
-  updatedAt: string,
-  _id: string,
-}
+
 
 export interface IIngredientsState {
   ingredients: IBurgerData[],

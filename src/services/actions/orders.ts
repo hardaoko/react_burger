@@ -39,6 +39,12 @@ export const wsOrdersConnectionStart = () => {
   };
 };
 
+export const wsHistoryConnectionStart = () => {
+  return {
+    type: WS_HISTORY_CONNECTION_START
+  };
+};
+
 export const wsAllOrdersActions = {
   onInit: WS_CONNECTION_START,
   onOpen: WS_CONNECTION_SUCCESS,

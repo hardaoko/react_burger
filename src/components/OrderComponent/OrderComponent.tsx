@@ -2,23 +2,27 @@ import styles from "./OrderComponent.module.css";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link} from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { IBurgerData } from "../../utils/types";
+import { IBurgerData, IOrderComponentProps, RootState } from "../../utils/types";
 import { useLocation } from "react-router-dom";
 import { FC } from "react";
 
-interface IOrderComponentpProps {
-  order: number,
-  onOpen: () => void
-}
-
-const OrderComponent: FC<IOrderComponentpProps> = ({order, onOpen}) => {
-  const ingredients = useSelector((state:any) => state.ingredients.ingredients)
+const OrderComponent: FC<IOrderComponentProps> = ({order, onOpen}) => {
+  const {createdAt,
+    ingredients,
+    name,
+    number,
+    status,
+    updatedAt,
+    _id} = order
   const location = useLocation();
-  const number: number = 1
-  const date: string = "Сегодня, 16:20 i-GMT+3"
-  const name: string = "Бутерброд"
-  const status: string = "done"
+
+  const ingredientsMenu = useSelector((store: RootState) => store.ingredients.ingredients)
+
   const summ: number = 480
+
+  const findIngredient = (ingredient: string, ingredients: IBurgerData[]) => {
+    return ingredients.find((item:IBurgerData) => item._id === ingredient)
+  }
 
   const convertStatus = (status: string) => {
     if (status === 'done') {
@@ -37,7 +41,7 @@ const OrderComponent: FC<IOrderComponentpProps> = ({order, onOpen}) => {
       }}>
         <div className={styles.header}>
           <p className="text text_type_digits-default">{`#${number}`}</p>
-          <p className="text text_type_main-default text_color_inactive">{date}</p>
+          <p className="text text_type_main-default text_color_inactive">{createdAt}</p>
         </div>
         <h2 className="text text_type_main-medium">{name}</h2>
         {/* {
@@ -46,8 +50,8 @@ const OrderComponent: FC<IOrderComponentpProps> = ({order, onOpen}) => {
         <div className={styles.footer}>
           <ul className={styles.ingredients_list}>
             {
-              ingredients.map((ingredient: IBurgerData, index: number) => {
-
+              ingredients.map((value: string, index: number) => {
+                  const ingredient = findIngredient(value, ingredientsMenu)
                   if (index < 5) {
                     return (
                       <li key={index} style={{zIndex: 999 - index}} className={styles.ingredients_list_item}>

@@ -4,17 +4,15 @@ import OrderComponent from "../../components/OrderComponent/OrderComponent";
 import OrdersMonitor from "../../components/OrdersMonitor/OrdersMonitor";
 import { MODAL_ORDER_INFO_OPEN } from "../../services/actions/ingredients";
 import { wsOrdersConnectionStart, WS_CONNECTION_START } from "../../services/actions/orders";
-import { AppDispatch, IOrder } from "../../utils/types";
+import { AppDispatch, IOrder, RootState } from "../../utils/types";
 import styles from "./OrderFeed.module.css";
 
 const OrderFeed = () => {
   const dispatch: AppDispatch = useDispatch()
-  const { orders } = useSelector((state: any) => state.orders)
-  console.log(orders)
-
+  const { orders, wsOrders } = useSelector((store: RootState) => store.orders)
 
   useEffect(() => {
-    dispatch(wsOrdersConnectionStart);
+    dispatch(wsOrdersConnectionStart());
   }, [dispatch])
 
   //const orders: Array<number> = [1,2,3,4,5];
@@ -29,7 +27,7 @@ const OrderFeed = () => {
             <ul className={styles.list}>
               {
                 orders?.map((order: IOrder, index: number) => (
-                  <OrderComponent order={index} key={index} onOpen={() => {
+                  <OrderComponent order={order} key={index} onOpen={() => {
                     dispatch({ type: MODAL_ORDER_INFO_OPEN, order: order });
                   }}/>
                 ))
