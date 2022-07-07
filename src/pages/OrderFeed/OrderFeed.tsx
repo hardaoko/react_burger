@@ -1,13 +1,23 @@
-import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import OrderComponent from "../../components/OrderComponent/OrderComponent";
 import OrdersMonitor from "../../components/OrdersMonitor/OrdersMonitor";
 import { MODAL_ORDER_INFO_OPEN } from "../../services/actions/ingredients";
+import { wsOrdersConnectionStart, WS_CONNECTION_START } from "../../services/actions/orders";
+import { AppDispatch, IOrder } from "../../utils/types";
 import styles from "./OrderFeed.module.css";
 
 const OrderFeed = () => {
-  const dispatch = useDispatch()
+  const dispatch: AppDispatch = useDispatch()
+  const { orders } = useSelector((state: any) => state.orders)
+  console.log(orders)
 
-  const orders: Array<number> = [1,2,3,4,5];
+
+  useEffect(() => {
+    dispatch(wsOrdersConnectionStart);
+  }, [dispatch])
+
+  //const orders: Array<number> = [1,2,3,4,5];
 
   return (
     <div className={styles.container}>
@@ -18,8 +28,8 @@ const OrderFeed = () => {
             orders.length > 0 ? (
             <ul className={styles.list}>
               {
-                orders?.map((order: number, index: number) => (
-                  <OrderComponent order={order}key={index} onOpen={() => {
+                orders?.map((order: IOrder, index: number) => (
+                  <OrderComponent order={index} key={index} onOpen={() => {
                     dispatch({ type: MODAL_ORDER_INFO_OPEN, order: order });
                   }}/>
                 ))

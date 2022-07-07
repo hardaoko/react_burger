@@ -2,6 +2,7 @@ import React from "react";
 import { Action, ActionCreator } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { IUpgradeOrderList } from "../services/actions/ingredients";
+import { TOrdersType } from "../services/actions/orders";
 import { store } from "../services/store";
 
 
@@ -44,6 +45,24 @@ export interface IChosenIngredient {
 export interface IRouteProps {
   children?: React.ReactNode;
   path?: string;
+}
+
+export interface IWebsocketActions {
+  onInit: string,
+  onOpen: string,
+  onClose: string,
+  onError: string,
+  onMessage: string
+}
+
+export interface IOrder {
+  createdAt: string,
+  ingredients: string[],
+  name: string,
+  number: number,
+  status: string,
+  updatedAt: string,
+  _id: string,
 }
 
 export interface IIngredientsState {
@@ -96,7 +115,21 @@ export interface IProfileState {
   accessToken: string,
 };
 
-export type TAppActions = IUpgradeOrderList
+export interface IOrdersState  {
+  wsOrders: boolean,
+  wsHistoryOrders: boolean,
+  orders: IOrder[],
+  historyOrders: IOrder[],
+  total: number,
+  totalToday: number,
+  orderInfoRequest: boolean,
+  orderInfoFailed: boolean,
+  orderInfo: IOrder | null,
+  ordersError: undefined | Event,
+  historyOrdersError: undefined | Event
+};
+
+export type TAppActions = IUpgradeOrderList | TOrdersType
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk<TReturn = void> = ActionCreator<ThunkAction<TReturn, Action, RootState, TAppActions>>;
