@@ -39,6 +39,12 @@ export const wsOrdersConnectionStart = () => {
   };
 };
 
+export const wsOrdersClose = () => {
+  return {
+    type: WS_CONNECTION_CLOSED
+  };
+};
+
 export const wsHistoryConnectionStart = () => {
   return {
     type: WS_HISTORY_CONNECTION_START

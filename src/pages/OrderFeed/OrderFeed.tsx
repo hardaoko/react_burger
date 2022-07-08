@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import OrderComponent from "../../components/OrderComponent/OrderComponent";
 import OrdersMonitor from "../../components/OrdersMonitor/OrdersMonitor";
 import { MODAL_ORDER_INFO_OPEN } from "../../services/actions/ingredients";
-import { wsOrdersConnectionStart, WS_CONNECTION_START } from "../../services/actions/orders";
+import { wsOrdersClose, wsOrdersConnectionStart, WS_CONNECTION_START } from "../../services/actions/orders";
 import { AppDispatch, IOrder, RootState } from "../../utils/types";
 import styles from "./OrderFeed.module.css";
 
@@ -13,6 +13,8 @@ const OrderFeed = () => {
 
   useEffect(() => {
     dispatch(wsOrdersConnectionStart());
+
+
   }, [dispatch])
 
   //const orders: Array<number> = [1,2,3,4,5];

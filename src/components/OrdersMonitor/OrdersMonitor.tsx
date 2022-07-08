@@ -1,11 +1,12 @@
 import {FC} from 'react';
+import { useSelector } from 'react-redux';
+import { IOrder, RootState } from '../../utils/types';
 import styles from './OrdersMonitor.module.css';
 
 const OrdersMonitor = () => {
-  const ready: number[] = [151965, 516516, 16511, 165198, 19511, 15691]
-  const cooking: number[] = [152432, 512342, 16423, 156566, 16510 ,165165 ,6516]
-  const total: number = 28919;
-  const totalToday: number = 119;
+  const { orders, wsOrders, total, totalToday } = useSelector((store: RootState) => store.orders)
+  const ready = orders.filter((order: IOrder) => order.status === "done")
+  const pending = orders.filter((order: IOrder) => order.status === "pending")
 
   return (
     <div className={styles.container}>
@@ -17,10 +18,10 @@ const OrdersMonitor = () => {
           <div className={styles.numbers_container}>
             <ul className={styles.list_ready}>
               {
-                ready.map((value:number, index: number) => {
+                ready.map((order: IOrder, index: number) => {
                   if (index < 5) {
-                    return (<li key={index} className="text text_type_digits-default pb-2">
-                      {value}
+                    return (<li key={order._id} className="text text_type_digits-default pb-2">
+                      {order.number}
                     </li>)
                   }
                   return null
@@ -29,10 +30,10 @@ const OrdersMonitor = () => {
             </ul>
             <ul className={styles.list_ready}>
               {
-                ready.map((value:number, index: number) => {
+                ready.map((order: IOrder, index: number) => {
                   if (index >= 5 && index < 10) {
-                    return (<li key={index} className="text text_type_digits-default pb-2">
-                      {value}
+                    return (<li key={order._id} className="text text_type_digits-default pb-2">
+                      {order.number}
                     </li>)
                   }
                   return null
@@ -49,10 +50,10 @@ const OrdersMonitor = () => {
           <div className={styles.numbers_container}>
             <ul className={styles.list}>
               {
-                cooking.map((value:number, index: number) => {
+                pending.map((order: IOrder, index: number) => {
                   if (index < 5) {
-                    return (<li key={index} className="text text_type_digits-default pb-2">
-                      {value}
+                    return (<li key={order._id} className="text text_type_digits-default pb-2">
+                      {order.number}
                     </li>)
                   }
                   return null
@@ -61,10 +62,10 @@ const OrdersMonitor = () => {
             </ul>
             <ul className={styles.list}>
               {
-                cooking.map((value:number, index: number) => {
+                pending.map((order: IOrder, index: number) => {
                   if (index >= 5 && index < 10) {
-                    return (<li key={index} className="text text_type_digits-default pb-2">
-                      {value}
+                    return (<li key={order._id} className="text text_type_digits-default pb-2">
+                      {order.number}
                     </li>)
                   }
                   return null

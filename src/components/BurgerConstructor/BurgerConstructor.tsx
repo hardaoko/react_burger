@@ -20,7 +20,7 @@ import {
 } from "../../services/actions/ingredients";
 import { useDrag, useDrop } from "react-dnd";
 import { useHistory } from "react-router-dom";
-import { AppDispatch, IBurgerData, IChosenIngredient } from "../../utils/types";
+import { AppDispatch, IBurgerData, IChosenIngredient, RootState } from "../../utils/types";
 
 declare module 'react' {
   interface FunctionComponent<P = {}> {
@@ -35,9 +35,9 @@ const BurgerConstructor = () => {
     bun,
     finalCost,
     orderRequest,
-  } = useSelector((store: any) => store.ingredients);
-  const ingredients = useSelector((store: any) => store.ingredients.ingredientsList);
-  const { isAuth, accessToken } = useSelector((store: any) => store.profile);
+  } = useSelector((store: RootState) => store.ingredients);
+  const ingredients = useSelector((store: RootState) => store.ingredients.ingredientsList);
+  const { isAuth, accessToken } = useSelector((store: RootState) => store.profile);
   const history = useHistory();
 
   type TDraggableIngredient = {
@@ -48,7 +48,10 @@ const BurgerConstructor = () => {
 
   //  Формирование номера заказа
   const createOrder = () => {
-    dispatch(getOrder(accessToken, chosenIngredients));
+    let finalOrder: IChosenIngredient[] = chosenIngredients
+    finalOrder.push(bun)
+    console.log('chosenIngredients', chosenIngredients)
+    dispatch(getOrder(accessToken, finalOrder));
   };
 
   //  Открытие модального окна
