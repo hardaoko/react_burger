@@ -17,10 +17,45 @@ export const MODAL_DETAILS_OPEN = "MODAL_DETAILS_OPEN" as const;
 export const MODAL_ORDER_OPEN = "MODAL_ORDER_OPEN" as const;
 export const MODAL_CLOSE = "MODAL_CLOSE" as const;
 
+export interface IGetIngredientsRequest  {type: typeof GET_INGREDIENTS_REQUEST;}
+export interface IGetIngredientsFailed  {type: typeof GET_INGREDIENTS_FAILED;}
+export interface IGetOrderRequest  {type: typeof GET_ORDER_REQUEST;}
+export interface IGetOrderFailed  {type: typeof GET_ORDER_FAILED;}
+export interface IFeleteOrderList  {type: typeof DELETE_ORDER_LIST;}
+export interface IModalOrderOpen  {type: typeof MODAL_ORDER_OPEN;}
+export interface IModalClose  {type: typeof MODAL_CLOSE;}
+
+export interface IGetIngredientsSuccess  {
+  type: typeof GET_INGREDIENTS_SUCCESS;
+  payload: IBurgerData[]
+}
+
+export interface IGetOrderSuccess  {
+  type: typeof GET_ORDER_SUCCESS;
+  payload: string
+}
+
+export interface IModalDetailsOpen  {
+  type: typeof MODAL_DETAILS_OPEN;
+  payload: IBurgerData;
+}
+
 export interface IUpgradeOrderList  {
-  type: "UPGRADE_ORDER_LIST";
+  type: typeof UPGRADE_ORDER_LIST;
   payload: IChosenIngredient[];
 }
+
+export type TIngredientsActions = IGetIngredientsRequest |
+  IGetIngredientsSuccess |
+  IGetIngredientsFailed |
+  IGetOrderRequest |
+  IGetOrderSuccess |
+  IGetOrderFailed |
+  IFeleteOrderList |
+  IModalOrderOpen |
+  IModalClose |
+  IModalDetailsOpen |
+  IUpgradeOrderList
 
 function getIngredientsFailed() {
   return { type: GET_INGREDIENTS_FAILED };
@@ -41,7 +76,7 @@ export const getIngredients: AppThunk = () => {
           if (data) {
             dispatch({
               type: GET_INGREDIENTS_SUCCESS,
-              ingredients: data.data,
+              payload: data.data,
             });
           } else {
             dispatch(getIngredientsFailed());
@@ -69,7 +104,7 @@ export const getOrder: AppThunk = (token: string, chosenIngredients: IChosenIngr
           if (data) {
             dispatch({
               type: GET_ORDER_SUCCESS,
-              orderData: data.order.number,
+              payload: data.order.number,
             });
             dispatch({
               type: DELETE_ORDER_LIST,

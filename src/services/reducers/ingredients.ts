@@ -1,5 +1,5 @@
 import { AnyAction } from "redux";
-import { IChosenIngredient, IIngredientsState } from "../../utils/types";
+import { IChosenIngredient, IIngredientsState, TAppActions } from "../../utils/types";
 import {
   DELETE_ORDER_LIST,
   GET_INGREDIENTS_FAILED,
@@ -11,6 +11,7 @@ import {
   MODAL_CLOSE,
   MODAL_DETAILS_OPEN,
   MODAL_ORDER_OPEN,
+  TIngredientsActions,
   UPGRADE_ORDER_LIST,
 } from "../actions/ingredients";
 
@@ -21,7 +22,7 @@ const initialIngredients: IIngredientsState = {
   chosenIngredients: [],
   ingredientsList: [],
   bun: null,
-  orderData: 0,
+  orderData: '',
   orderRequest: false,
   orderFailed: false,
   orderInfo: 0,
@@ -31,7 +32,7 @@ const initialIngredients: IIngredientsState = {
   finalCost: 0,
 };
 
-export const ingredientsReducer = (state = initialIngredients, action: any) => {
+export const ingredientsReducer = (state = initialIngredients, action: TIngredientsActions): IIngredientsState => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return { ...state, ingredientsRequest: true };
@@ -40,7 +41,7 @@ export const ingredientsReducer = (state = initialIngredients, action: any) => {
       return {
         ...state,
         ingredientsFailed: false,
-        ingredients: action.ingredients,
+        ingredients: action.payload,
         ingredientsRequest: false,
       };
     }
@@ -54,7 +55,7 @@ export const ingredientsReducer = (state = initialIngredients, action: any) => {
       return {
         ...state,
         orderFailed: false,
-        orderData: action.orderData,
+        orderData: action.payload,
         orderRequest: false,
       };
     }
@@ -89,7 +90,7 @@ export const ingredientsReducer = (state = initialIngredients, action: any) => {
       return {
         ...state,
         modalDetailsVisible: true,
-        ingredientDetails: action.item,
+        ingredientDetails: action.payload,
       };
     }
     case MODAL_ORDER_OPEN: {

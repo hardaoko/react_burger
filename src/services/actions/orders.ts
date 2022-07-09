@@ -69,7 +69,7 @@ export const wsHistoryOrdersActions = {
   onMessage: WS_GET_HISTORY_ORDERS
 };
 
-export type TOrdersType =
+export type TOrdersActions =
   IWsConnectionStart |
   IWsConnectionSuccess |
   IWsConnectionError |

@@ -165,9 +165,9 @@ const BurgerConstructor = () => {
           <ConstructorElement
             type={side}
             isLocked={true}
-            text={`${bun.element.name} ${side === "top" ? "(верх)" : "(низ)"}`}
-            price={bun.element.price}
-            thumbnail={bun.element.image}
+            text={`${bun?.element.name} ${side === "top" ? "(верх)" : "(низ)"}`}
+            price={bun ? bun.element.price : 0}
+            thumbnail={bun ? bun.element.image : ''}
           />
         </div>
       );

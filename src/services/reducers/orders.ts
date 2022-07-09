@@ -1,6 +1,7 @@
 
+import { AnyAction } from 'redux';
 import { IOrdersState } from '../../utils/types';
-import { MODAL_ORDER_INFO_OPEN, WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_SUCCESS, WS_GET_HISTORY_ORDERS, WS_GET_ORDERS, WS_HISTORY_CONNECTION_CLOSED, WS_HISTORY_CONNECTION_ERROR, WS_HISTORY_CONNECTION_SUCCESS } from '../actions/orders';
+import { MODAL_ORDER_INFO_OPEN, TOrdersActions, WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_SUCCESS, WS_GET_HISTORY_ORDERS, WS_GET_ORDERS, WS_HISTORY_CONNECTION_CLOSED, WS_HISTORY_CONNECTION_ERROR, WS_HISTORY_CONNECTION_SUCCESS } from '../actions/orders';
 
 const initialState: IOrdersState = {
   wsOrders: false,
@@ -83,7 +84,7 @@ export const ordersReducer = (state = initialState, action: any): IOrdersState =
       case MODAL_ORDER_INFO_OPEN: {
         return {
           ...state,
-          orderInfo: action.order,
+          orderInfo: action.payload,
         };
       }
     default:

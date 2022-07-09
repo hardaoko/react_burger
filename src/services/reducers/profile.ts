@@ -1,4 +1,4 @@
-import { AnyAction } from "redux";
+import { Action, AnyAction } from "redux";
 import { IProfileState } from "../../utils/types";
 import {
   EMAIL_CODE_FAILED,
@@ -69,7 +69,7 @@ const initialProfile: IProfileState = {
   accessToken: "",
 };
 
-export const profileReducer = (state = initialProfile, action: any) => {
+export const profileReducer = (state = initialProfile, action: AnyAction): IProfileState => {
   switch (action.type) {
     case EMAIL_CODE_REQUEST: {
       return {
@@ -77,7 +77,7 @@ export const profileReducer = (state = initialProfile, action: any) => {
         emailCodeRequest: true,
         emailCodeSuccess: false,
         emailCodeFailed: false,
-        resetPasswordSuccess: false,
+        passwordResetSuccess: false,
       };
     }
     case EMAIL_CODE_SUCCESS: {

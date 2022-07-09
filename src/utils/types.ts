@@ -1,8 +1,8 @@
 import React from "react";
 import { Action, ActionCreator } from "redux";
 import { ThunkAction } from "redux-thunk";
-import { IUpgradeOrderList } from "../services/actions/ingredients";
-import { TOrdersType } from "../services/actions/orders";
+import { IUpgradeOrderList, TIngredientsActions } from "../services/actions/ingredients";
+import { TOrdersActions } from "../services/actions/orders";
 import { store } from "../services/store";
 
 
@@ -71,6 +71,9 @@ export interface IWebsocketActions {
   onMessage: string
 }
 
+export interface IOrderData {
+
+}
 
 
 export interface IIngredientsState {
@@ -80,7 +83,7 @@ export interface IIngredientsState {
   chosenIngredients: IChosenIngredient[],
   ingredientsList: IChosenIngredient[],
   bun: IChosenIngredient | null,
-  orderData: number,
+  orderData: string,
   orderRequest: boolean,
   orderFailed: boolean,
   orderInfo: number,
@@ -136,8 +139,8 @@ export interface IOrdersState  {
   historyOrdersError: undefined | Event
 };
 
-export type TAppActions = IUpgradeOrderList | TOrdersType
+export type TAppActions = IUpgradeOrderList | TOrdersActions | TIngredientsActions
 
 export type RootState = ReturnType<typeof store.getState>;
-export type AppThunk<TReturn = void> = ActionCreator<ThunkAction<TReturn, Action, RootState, TAppActions>>;
+export type AppThunk<TReturn = void> = ActionCreator<ThunkAction<TReturn, RootState, any, TAppActions>>;
 export type AppDispatch = typeof store.dispatch;
