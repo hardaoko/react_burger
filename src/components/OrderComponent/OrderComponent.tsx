@@ -6,7 +6,7 @@ import { IBurgerData, IOrderComponentProps, RootState } from "../../utils/types"
 import { useLocation } from "react-router-dom";
 import { FC } from "react";
 
-const OrderComponent: FC<IOrderComponentProps> = ({order, onOpen}) => {
+const OrderComponent: FC<IOrderComponentProps> = ({order, onOpen, isStatus}) => {
   const {createdAt,
     ingredients,
     name,
@@ -24,19 +24,29 @@ const OrderComponent: FC<IOrderComponentProps> = ({order, onOpen}) => {
     return ingredients.find((item:IBurgerData) => item._id === ingredient)
   }
 
+  const calculateTotalCost = () => {
+    let totalCost = 0;
+    ingredients.map((itemId: string)=>{
+      const find = ingredientsMenu.find((item: IBurgerData) => item._id === itemId)
+      if (find?.price) {
+        totalCost += find.price
+      }
+    })
+    return totalCost
+  }
+
   const convertStatus = (status: string) => {
     if (status === 'done') {
       return "Выполнен"
-
     }
-    return 'Создан'
+    return 'Готовится'
   }
 
 
   return (
     <li>
       <Link className={styles.link} onClick={onOpen} to={{
-          pathname: `/orders-feed/${order}`,
+          pathname: `/orders-feed/${_id}`,
           state: { background: location },
       }}>
         <div className={styles.header}>
@@ -44,9 +54,9 @@ const OrderComponent: FC<IOrderComponentProps> = ({order, onOpen}) => {
           <p className="text text_type_main-default text_color_inactive">{createdAt}</p>
         </div>
         <h2 className="text text_type_main-medium">{name}</h2>
-        {/* {
-          (status) && <p className="text text_type_main-default">{convertStatus(status)}</p>
-        } */}
+        {
+          isStatus && status && <p className="text text_type_main-default">{convertStatus(status)}</p>
+        }
         <div className={styles.footer}>
           <ul className={styles.ingredients_list}>
             {
@@ -54,18 +64,20 @@ const OrderComponent: FC<IOrderComponentProps> = ({order, onOpen}) => {
                   const ingredient = findIngredient(value, ingredientsMenu)
                   if (index < 5) {
                     return (
-                      <li key={index} style={{zIndex: 999 - index}} className={styles.ingredients_list_item}>
+                      <li key={index}  className={styles.ingredients_list_item}>
                         <img className={styles.ingredients_list_item_image} src={ingredient?.image}
                              alt={ingredient?.name}/>
                       </li>
                     )
                   } else if (index === 6) {
-                    return (<li key={index} style={{zIndex: 999 - index}} className={styles.last_ingredient}>
-                      <img className={styles.last_ingredient_image} src={ingredient?.image}
-                           alt={ingredient?.name}/>
-                      <div className={styles.overlay}></div>
-                      <span className={`text text_type_main-default ${styles.last_ingredient_count}`}>+{ingredients.length - 5}</span>
-                    </li>)
+                    return (
+                      <li key={index} className={`${styles.ingredients_list_item}`}>
+                        <img className={styles.last_ingredient_image} src={ingredient?.image}
+                            alt={ingredient?.name}/>
+                        <div className={styles.overlay}></div>
+                        <span className={`text text_type_main-default ${styles.last_ingredient_count}`}>+{ingredients.length - 5}</span>
+                      </li>
+                    )
                   }
                   return null
                 }
@@ -73,7 +85,7 @@ const OrderComponent: FC<IOrderComponentProps> = ({order, onOpen}) => {
             }
           </ul>
           <div className={styles.total}>
-            <span className="text text_type_digits-default">{summ}</span>
+            <span className="text text_type_digits-default">{calculateTotalCost()}</span>
             <CurrencyIcon type="primary"/>
           </div>
         </div>

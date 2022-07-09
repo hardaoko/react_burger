@@ -12,6 +12,8 @@ export const WS_HISTORY_CONNECTION_ERROR = 'WS_HISTORY_CONNECTION_ERROR' as cons
 export const WS_HISTORY_CONNECTION_CLOSED = 'WS_HISTORY_CONNECTION_CLOSED' as const;
 export const WS_GET_HISTORY_ORDERS = 'WS_GET_HISTORY_ORDERS' as const;
 
+export const MODAL_ORDER_INFO_OPEN = "MODAL_ORDER_INFO_OPEN" as const;
+
 interface IWsConnectionStart {
   type: typeof WS_CONNECTION_START
 }

@@ -59,7 +59,8 @@ export interface IRouteProps {
 
 export interface IOrderComponentProps {
   order: IOrder,
-  onOpen: () => void
+  onOpen: () => void,
+  isStatus?: boolean
 }
 
 export interface IWebsocketActions {
@@ -84,7 +85,6 @@ export interface IIngredientsState {
   orderFailed: boolean,
   orderInfo: number,
   modalDetailsVisible: boolean,
-  modalOrderInfoVisible: boolean,
   modalOrderVisible: boolean,
   ingredientDetails: IBurgerData | null,
   finalCost: number,

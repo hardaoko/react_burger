@@ -34,7 +34,6 @@ export const socketMiddleware = (wsUrl: string, wsActions: IWebsocketActions): M
         socket.onmessage = event => {
           const data = JSON.parse(event.data);
           const {success, ...payload} = data;
-
           dispatch({type: onMessage, payload: payload});
         };
         // функция, которая вызывается при закрытии соединения

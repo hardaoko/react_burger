@@ -1,9 +1,11 @@
 .list{
   display: flex;
   flex-direction: column;
+  gap: 16px;
   overflow-y: scroll;
   overflow-x: hidden;
   max-height: 850px;
+  max-width: 844px;
   scrollbar-width: thin;
 }
 

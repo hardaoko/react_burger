@@ -21,6 +21,8 @@ import {
 import { useDrag, useDrop } from "react-dnd";
 import { useHistory } from "react-router-dom";
 import { AppDispatch, IBurgerData, IChosenIngredient, RootState } from "../../utils/types";
+import Loading from "../Loading/Loading";
+
 
 declare module 'react' {
   interface FunctionComponent<P = {}> {
@@ -48,9 +50,7 @@ const BurgerConstructor = () => {
 
   //  Формирование номера заказа
   const createOrder = () => {
-    let finalOrder: IChosenIngredient[] = chosenIngredients
-    finalOrder.push(bun)
-    console.log('chosenIngredients', chosenIngredients)
+    let finalOrder = [...chosenIngredients, bun]
     dispatch(getOrder(accessToken, finalOrder));
   };
 
@@ -203,11 +203,12 @@ const BurgerConstructor = () => {
           type="primary"
           size="medium"
           onClick={openModal}
-          disabled={bun === null}
+          disabled={bun === null || orderRequest}
         >
-          {orderRequest ? "Загрузка" : "Оформить заказ"}
+          {orderRequest ? <Loading color="light" size="small"/> : "Оформить заказ"}
         </Button>
       </div>
+
     </div>
   );
 };

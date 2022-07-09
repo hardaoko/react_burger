@@ -19,7 +19,7 @@ const OrdersMonitor = () => {
             <ul className={styles.list_ready}>
               {
                 ready.map((order: IOrder, index: number) => {
-                  if (index < 5) {
+                  if (index < 10) {
                     return (<li key={order._id} className="text text_type_digits-default pb-2">
                       {order.number}
                     </li>)
@@ -31,7 +31,7 @@ const OrdersMonitor = () => {
             <ul className={styles.list_ready}>
               {
                 ready.map((order: IOrder, index: number) => {
-                  if (index >= 5 && index < 10) {
+                  if (index >= 10 && index < 20) {
                     return (<li key={order._id} className="text text_type_digits-default pb-2">
                       {order.number}
                     </li>)
@@ -51,7 +51,7 @@ const OrdersMonitor = () => {
             <ul className={styles.list}>
               {
                 pending.map((order: IOrder, index: number) => {
-                  if (index < 5) {
+                  if (index < 10) {
                     return (<li key={order._id} className="text text_type_digits-default pb-2">
                       {order.number}
                     </li>)
@@ -63,7 +63,7 @@ const OrdersMonitor = () => {
             <ul className={styles.list}>
               {
                 pending.map((order: IOrder, index: number) => {
-                  if (index >= 5 && index < 10) {
+                  if (index >= 10 && index < 20) {
                     return (<li key={order._id} className="text text_type_digits-default pb-2">
                       {order.number}
                     </li>)

@@ -41,19 +41,27 @@
   width: 64px;
   height: 64px;
   background: linear-gradient(#1C1C21, #1C1C21) padding-box,
-  linear-gradient(45deg, #801AB2, #4C4CFF) border-box;
+  linear-gradient(135deg, #801AB2, #4C4CFF) border-box;
   border: 2px solid transparent;
-  display: flex;
-  align-items: center;
 }
 
-.last_ingredient {
-  border-radius: 50%;
-  width: 64px;
-  height: 64px;
-  background: linear-gradient(#1C1C21, #1C1C21) padding-box,
-  linear-gradient(45deg, #801AB2, #4C4CFF) border-box;
-  border: 2px solid transparent;
+.ingredients_list_item:nth-child(1) {
+  z-index: 99;
+}
+.ingredients_list_item:nth-child(2) {
+  z-index: 98;
+}
+.ingredients_list_item:nth-child(3) {
+  z-index: 97;
+}
+.ingredients_list_item:nth-child(4) {
+  z-index: 96;
+}
+.ingredients_list_item:nth-child(5) {
+  z-index: 95;
+}
+.ingredients_list_item:nth-child(6) {
+  z-index: 94;
   display: flex;
   justify-content: center;
   align-items: center;

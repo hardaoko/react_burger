@@ -1,9 +1,10 @@
 import React, {FC, useEffect} from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { MODAL_ORDER_INFO_OPEN } from '../../services/actions/ingredients';
-import { wsHistoryConnectionStart } from '../../services/actions/orders';
+
+import { MODAL_ORDER_INFO_OPEN, wsHistoryConnectionStart } from '../../services/actions/orders';
 import { IOrder, RootState } from '../../utils/types';
+import Loading from '../Loading/Loading';
 import OrderComponent from '../OrderComponent/OrderComponent';
 import styles from './OrderHistory.module.css';
 
@@ -16,23 +17,21 @@ const OrderHistory: FC = () => {
   }, [dispatch])
 
   return (
-    <ul className={styles.list}>
       <>
         {
           historyOrders.length > 0 ? (
-            <>
+            <ul className={styles.list}>
               {
                 historyOrders.map((order: IOrder, index: number) => (
-                  <OrderComponent order={order} key={index} onOpen={() => {
+                  <OrderComponent order={order} key={index} isStatus={true} onOpen={() => {
                     dispatch({ type: MODAL_ORDER_INFO_OPEN, order: order });
                   }}/>
                 ))
               }
-            </>
-          ) : (<div>Загрузка</div>)
+            </ul>
+          ) : (<div className="ml-25 mt-25 pt-25"><Loading color="dark" size="large"/></div>)
         }
       </>
-    </ul>
   )
 };
 

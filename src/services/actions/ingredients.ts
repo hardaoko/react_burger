@@ -14,7 +14,6 @@ export const DELETE_ORDER_LIST = "DELETE_ORDER_LIST" as const;
 export const UPGRADE_ORDER_LIST = "UPGRADE_ORDER_LIST" as const;
 
 export const MODAL_DETAILS_OPEN = "MODAL_DETAILS_OPEN" as const;
-export const MODAL_ORDER_INFO_OPEN = "MODAL_ORDER_INFO_OPEN" as const;
 export const MODAL_ORDER_OPEN = "MODAL_ORDER_OPEN" as const;
 export const MODAL_CLOSE = "MODAL_CLOSE" as const;
 
