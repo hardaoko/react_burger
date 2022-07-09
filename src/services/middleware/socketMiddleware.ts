@@ -32,13 +32,18 @@ export const socketMiddleware = (wsUrl: string, wsActions: IWebsocketActions): M
 
         // функция, которая вызывается при получения события от сервера
         socket.onmessage = event => {
+
           const data = JSON.parse(event.data);
+          console.log(data)
           const {success, ...payload} = data;
+          console.log(success)
+          console.log(payload)
           dispatch({type: onMessage, payload: payload});
         };
         // функция, которая вызывается при закрытии соединения
         socket.onclose = event => {
           dispatch({type: onClose, payload: event});
+          socket?.close()
         };
       }
 

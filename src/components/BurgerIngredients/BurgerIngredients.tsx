@@ -4,12 +4,12 @@ import styles from "./BurgerIngredients.module.css";
 import Ingredient from "../Ingredient/Ingredient";
 import { useDispatch, useSelector } from "react-redux";
 import { MODAL_DETAILS_OPEN } from "../../services/actions/ingredients";
-import { IBurgerData } from "../../utils/types";
+import { IBurgerData, RootState } from "../../utils/types";
 
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState("bun");
-  const { ingredients } = useSelector((state: any) => state.ingredients);
+  const { ingredients } = useSelector((state: RootState) => state.ingredients);
 
   const refBun = useRef<HTMLHeadingElement>(null);
   const refSauce = useRef<HTMLHeadingElement>(null);

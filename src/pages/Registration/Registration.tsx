@@ -8,13 +8,13 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import { getRegistration } from "../../services/actions/profile";
-import { AppDispatch } from "../../utils/types";
+import { AppDispatch, RootState } from "../../utils/types";
 
 const Registration = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const { registrationSuccess, isAuth } = useSelector((store: any) => store.profile);
+  const { registrationSuccess, isAuth } = useSelector((store: RootState) => store.profile);
   const dispatch: AppDispatch = useDispatch();
   const history = useHistory();
 

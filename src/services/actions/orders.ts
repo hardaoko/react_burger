@@ -1,3 +1,4 @@
+import { IOrderResponse } from "../../utils/types";
 
 
 export const WS_CONNECTION_START = 'WS_CONNECTION_START' as const;
@@ -32,7 +33,7 @@ interface IWsConnectionClosed {
 
 interface IWsGetOrders {
   type: typeof WS_GET_ORDERS
-  payload: any
+  payload: IOrderResponse
 }
 
 export const wsOrdersConnectionStart = () => {
@@ -50,6 +51,12 @@ export const wsOrdersClose = () => {
 export const wsHistoryConnectionStart = () => {
   return {
     type: WS_HISTORY_CONNECTION_START
+  };
+};
+
+export const wsHistoryConnectionClose = () => {
+  return {
+    type: WS_HISTORY_CONNECTION_CLOSED
   };
 };
 

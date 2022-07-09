@@ -7,15 +7,15 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import { getPasswordReset } from "../../services/actions/profile";
-import { AppDispatch } from "../../utils/types";
+import { AppDispatch, RootState } from "../../utils/types";
 
 const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [token, setToken] = useState("");
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState(false);
-  const { emailCodeSuccess, resetPasswordSuccess } = useSelector(
-    (store: any) => store.profile
+  const { emailCodeSuccess, passwordResetSuccess } = useSelector(
+    (store: RootState) => store.profile
   );
   const dispatch: AppDispatch = useDispatch();
   const history = useHistory();
@@ -60,10 +60,10 @@ const ResetPassword = () => {
   };
 
   useEffect(() => {
-    resetPasswordSuccess
+    passwordResetSuccess
       ? history.push("/login")
       : !emailCodeSuccess && history.push("/forgot-password");
-  }, [emailCodeSuccess, resetPasswordSuccess, history]);
+  }, [emailCodeSuccess, passwordResetSuccess, history]);
 
   return (
     <div className={styles.container}>

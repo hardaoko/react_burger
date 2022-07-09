@@ -7,9 +7,10 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { RootState } from "../../utils/types";
 
 const AppHeader = () => {
-  const { isAuth, userName } = useSelector((store: any) => store.profile);
+  const { isAuth, userName } = useSelector((store: RootState) => store.profile);
   return (
     <header className={styles.header}>
       <div className={styles.container}>

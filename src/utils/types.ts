@@ -32,6 +32,12 @@ export interface IOrder {
   _id: string,
 }
 
+export interface IOrderResponse {
+  orders: IOrder[],
+  total: number,
+  totalToday: number
+}
+
 export interface IIngredientDetailsProps {
   title?: string
 }
@@ -71,9 +77,6 @@ export interface IWebsocketActions {
   onMessage: string
 }
 
-export interface IOrderData {
-
-}
 
 
 export interface IIngredientsState {

@@ -8,11 +8,11 @@ import "./App.module.css";
 import AppHeader from "../AppHeader/AppHeader";
 import { getUserData } from "../../services/actions/profile";
 import ModalSwitch from "../ModalSwitch/ModalSwitch";
-import { AppDispatch } from "../../utils/types";
+import { AppDispatch, RootState } from "../../utils/types";
 
 const App = () => {
   const dispatch: AppDispatch = useDispatch();
-  const { accessToken } = useSelector((store: any) => store.profile);
+  const { accessToken } = useSelector((store: RootState) => store.profile);
 
   useEffect(() => {
     dispatch(getUserData(accessToken));

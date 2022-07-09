@@ -94,7 +94,7 @@ const BurgerConstructor = () => {
 
   const DraggableItem:FC<TDraggableIngredient> = ({ item }) => {
     const dispatch: AppDispatch = useDispatch();
-    const { chosenIngredients } = useSelector((store: any) => store.ingredients);
+    const { chosenIngredients } = useSelector((store: RootState) => store.ingredients);
     const [, dragRef] = useDrag({
       type: "orderList",
       item: { item },

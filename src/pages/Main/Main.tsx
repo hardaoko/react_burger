@@ -3,10 +3,11 @@ import { useSelector } from "react-redux";
 
 import BurgerIngredients from "../../components/BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../../components/BurgerConstructor/BurgerConstructor";
+import { RootState } from "../../utils/types";
 
 const Main = () => {
   const { ingredientsRequest, ingredientsFailed } = useSelector(
-    (state: any) => state.ingredients
+    (state: RootState) => state.ingredients
   );
 
   return (

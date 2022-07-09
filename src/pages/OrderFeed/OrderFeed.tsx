@@ -14,6 +14,9 @@ const OrderFeed = () => {
 
   useEffect(() => {
     dispatch(wsOrdersConnectionStart());
+    return (()=> {
+      dispatch(wsOrdersClose())
+    })
   }, [dispatch])
 
   return (
@@ -26,7 +29,7 @@ const OrderFeed = () => {
             {
               orders?.map((order: IOrder, index: number) => (
                 <OrderComponent order={order} key={index} onOpen={() => {
-                  dispatch({ type: MODAL_ORDER_INFO_OPEN, order: order });
+                  dispatch({ type: MODAL_ORDER_INFO_OPEN, payload: order });
                 }}/>
               ))
             }
