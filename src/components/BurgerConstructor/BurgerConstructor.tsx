@@ -8,7 +8,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
-import { useSelector, useDispatch } from "react-redux";
 import {
   addBun,
   addIngredients,
@@ -20,7 +19,9 @@ import {
 } from "../../services/actions/ingredients";
 import { useDrag, useDrop } from "react-dnd";
 import { useHistory } from "react-router-dom";
-import { IBurgerData, IChosenIngredient } from "../../utils/types";
+import { IBurgerData, IChosenIngredient, useMyDispatch, useMySelector } from "../../utils/types";
+import Loading from "../Loading/Loading";
+
 
 declare module 'react' {
   interface FunctionComponent<P = {}> {
@@ -35,20 +36,21 @@ const BurgerConstructor = () => {
     bun,
     finalCost,
     orderRequest,
-  } = useSelector((store: any) => store.ingredients);
-  const ingredients = useSelector((store: any) => store.ingredients.ingredientsList);
-  const { isAuth, accessToken } = useSelector((store: any) => store.profile);
+  } = useMySelector((store) => store.ingredients);
+  const ingredients = useMySelector((store) => store.ingredients.ingredientsList);
+  const { isAuth, accessToken } = useMySelector((store) => store.profile);
   const history = useHistory();
 
   type TDraggableIngredient = {
     item: IChosenIngredient
   }
 
-  const dispatch = useDispatch();
+  const dispatch = useMyDispatch();
 
   //  Формирование номера заказа
   const createOrder = () => {
-    dispatch(getOrder(accessToken, chosenIngredients));
+    let finalOrder = [...chosenIngredients, bun]
+    dispatch(getOrder(accessToken, finalOrder));
   };
 
   //  Открытие модального окна
@@ -90,8 +92,8 @@ const BurgerConstructor = () => {
   let startIndex: number;
 
   const DraggableItem:FC<TDraggableIngredient> = ({ item }) => {
-    const dispatch = useDispatch();
-    const { chosenIngredients } = useSelector((store: any) => store.ingredients);
+    const dispatch = useMyDispatch();
+    const { chosenIngredients } = useMySelector((store) => store.ingredients);
     const [, dragRef] = useDrag({
       type: "orderList",
       item: { item },
@@ -101,9 +103,8 @@ const BurgerConstructor = () => {
     const [, dropRef] = useDrop({
       accept: "orderList",
       drop() {
-        dispatch(
-          replaceIngredients(chosenIngredients, startIndex, targetIndex)
-        );
+        const replaceAction = replaceIngredients(chosenIngredients, startIndex, targetIndex)
+        replaceAction && dispatch(replaceAction);
       },
       hover(dragItem: TDraggableIngredient) {
         targetIndex = item.index;
@@ -140,13 +141,14 @@ const BurgerConstructor = () => {
   const IngredientSection = useCallback(() => {
     return (
       <ul className={`${styles.list} pr-4 pl-4  `}>
-        {ingredients.map((item: IChosenIngredient) => {
+        {ingredients.map((item) => {
           return (
             <DraggableItem item={item} key={item.uuid} />
           );
         })}
       </ul>
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ingredients]);
 
   type TBunCallback = (side: "top" | "bottom" | undefined) => React.ReactNode;
@@ -162,9 +164,9 @@ const BurgerConstructor = () => {
           <ConstructorElement
             type={side}
             isLocked={true}
-            text={`${bun.element.name} ${side === "top" ? "(верх)" : "(низ)"}`}
-            price={bun.element.price}
-            thumbnail={bun.element.image}
+            text={`${bun?.element.name} ${side === "top" ? "(верх)" : "(низ)"}`}
+            price={bun ? bun.element.price : 0}
+            thumbnail={bun ? bun.element.image : ''}
           />
         </div>
       );
@@ -200,11 +202,12 @@ const BurgerConstructor = () => {
           type="primary"
           size="medium"
           onClick={openModal}
-          disabled={bun === null}
+          disabled={bun === null || orderRequest}
         >
-          {orderRequest ? "Загрузка" : "Оформить заказ"}
+          {orderRequest ? <Loading color="light" size="small"/> : "Оформить заказ"}
         </Button>
       </div>
+
     </div>
   );
 };

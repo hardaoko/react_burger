@@ -6,15 +6,15 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
 import { getRegistration } from "../../services/actions/profile";
+import { useMyDispatch, useMySelector } from "../../utils/types";
 
 const Registration = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const { registrationSuccess, isAuth } = useSelector((store: any) => store.profile);
-  const dispatch = useDispatch();
+  const { registrationSuccess, isAuth } = useMySelector((store) => store.profile);
+  const dispatch = useMyDispatch();
   const history = useHistory();
 
   const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {

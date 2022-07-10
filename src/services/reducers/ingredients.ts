@@ -1,3 +1,4 @@
+import { IIngredientsState, TAppActions } from "../../utils/types";
 import {
   DELETE_ORDER_LIST,
   GET_INGREDIENTS_FAILED,
@@ -12,27 +13,24 @@ import {
   UPGRADE_ORDER_LIST,
 } from "../actions/ingredients";
 
-const initialIngredients = {
+const initialIngredients: IIngredientsState = {
   ingredients: [],
   ingredientsRequest: false,
   ingredientsFailed: false,
-
   chosenIngredients: [],
   ingredientsList: [],
   bun: null,
-
-  orderData: null,
+  orderData: '',
   orderRequest: false,
   orderFailed: false,
-
+  orderInfo: 0,
   modalDetailsVisible: false,
   modalOrderVisible: false,
-  ingredientDetails: {},
-
+  ingredientDetails: null,
   finalCost: 0,
 };
 
-export const ingredientsReducer = (state = initialIngredients, action) => {
+export const ingredientsReducer = (state = initialIngredients, action: TAppActions): IIngredientsState => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return { ...state, ingredientsRequest: true };
@@ -41,7 +39,7 @@ export const ingredientsReducer = (state = initialIngredients, action) => {
       return {
         ...state,
         ingredientsFailed: false,
-        ingredients: action.ingredients,
+        ingredients: action.payload,
         ingredientsRequest: false,
       };
     }
@@ -55,7 +53,7 @@ export const ingredientsReducer = (state = initialIngredients, action) => {
       return {
         ...state,
         orderFailed: false,
-        orderData: action.orderData,
+        orderData: action.payload,
         orderRequest: false,
       };
     }
@@ -85,11 +83,12 @@ export const ingredientsReducer = (state = initialIngredients, action) => {
         finalCost: 0,
       };
     }
+
     case MODAL_DETAILS_OPEN: {
       return {
         ...state,
         modalDetailsVisible: true,
-        ingredientDetails: action.item,
+        ingredientDetails: action.payload,
       };
     }
     case MODAL_ORDER_OPEN: {
@@ -98,6 +97,7 @@ export const ingredientsReducer = (state = initialIngredients, action) => {
         modalOrderVisible: true,
       };
     }
+
     case MODAL_CLOSE: {
       return {
         ...state,

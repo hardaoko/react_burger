@@ -1,12 +1,11 @@
 import styles from "./Main.module.css";
-import { useSelector } from "react-redux";
-
 import BurgerIngredients from "../../components/BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../../components/BurgerConstructor/BurgerConstructor";
+import { useMySelector } from "../../utils/types";
+
 
 const Main = () => {
-  const { ingredientsRequest, ingredientsFailed } = useSelector(
-    (state: any) => state.ingredients
+  const { ingredientsRequest, ingredientsFailed } = useMySelector((store) => store.ingredients
   );
 
   return (

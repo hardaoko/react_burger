@@ -6,8 +6,10 @@ import {
   Logo,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink } from "react-router-dom";
+import { useMySelector } from "../../utils/types";
 
 const AppHeader = () => {
+  const { isAuth, userName } = useMySelector((store) => store.profile);
   return (
     <header className={styles.header}>
       <div className={styles.container}>
@@ -24,7 +26,7 @@ const AppHeader = () => {
             </p>
           </NavLink>
           <NavLink
-            to="/orders-list"
+            to="/orders-feed"
             activeClassName={styles.link_active}
             className={`${styles.link} p-4`}
           >
@@ -46,7 +48,7 @@ const AppHeader = () => {
         >
           <ProfileIcon type="secondary" />
           <p className={`${styles.link_text} text text_type_main-default`}>
-            Личный кабинет
+            {isAuth && userName? userName: 'Личный кабинет'}
           </p>
         </NavLink>
       </div>

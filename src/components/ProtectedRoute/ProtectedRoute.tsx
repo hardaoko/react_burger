@@ -1,9 +1,9 @@
 import { Route, Redirect, useLocation, RouteProps } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { FC } from "react";
+import { useMySelector } from "../../utils/types";
 
 export const ProtectedRoute: FC<RouteProps> = ({ children, ...rest }) => {
-  const { isAuth } = useSelector((store: any) => store.profile);
+  const { isAuth } = useMySelector((store) => store.profile);
   const location = useLocation();
 
   return (

@@ -1,3 +1,4 @@
+import { AppDispatch } from "../../utils/types";
 import {
   emailCodeRequest,
   getUserDataRequest,
@@ -9,41 +10,41 @@ import {
   logoutRequest,
 } from "../Api";
 
-export const CHANGE_NAME = "CHANGE_NAME";
-export const CHANGE_PASSWORD = "CHANGE_PASSWORD";
-export const CHANGE_EMAIL = "CHANGE_EMAIL";
+export const CHANGE_NAME = "CHANGE_NAME" as const;
+export const CHANGE_PASSWORD = "CHANGE_PASSWORD" as const;
+export const CHANGE_EMAIL = "CHANGE_EMAIL" as const;
 
-export const EMAIL_CODE_REQUEST = "EMAIL_CODE_REQUEST";
-export const EMAIL_CODE_SUCCESS = "EMAIL_CODE_SUCCESS";
-export const EMAIL_CODE_FAILED = "EMAIL_CODE_FAILED";
+export const EMAIL_CODE_REQUEST = "EMAIL_CODE_REQUEST" as const;
+export const EMAIL_CODE_SUCCESS = "EMAIL_CODE_SUCCESS" as const;
+export const EMAIL_CODE_FAILED = "EMAIL_CODE_FAILED" as const;
 
-export const REGISTRATION_REQUEST = "REGISTRATION_REQUEST";
-export const REGISTRATION_SUCCESS = "REGISTRATION_SUCCESS";
-export const REGISTRATION_FAILED = "REGISTRATION_FAILED";
+export const REGISTRATION_REQUEST = "REGISTRATION_REQUEST" as const;
+export const REGISTRATION_SUCCESS = "REGISTRATION_SUCCESS" as const;
+export const REGISTRATION_FAILED = "REGISTRATION_FAILED" as const;
 
-export const LOGIN_REQUEST = "LOGIN_REQUEST";
-export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
-export const LOGIN_FAILED = "LOGIN_FAILED";
+export const LOGIN_REQUEST = "LOGIN_REQUEST" as const;
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS" as const;
+export const LOGIN_FAILED = "LOGIN_FAILED" as const;
 
-export const PASSWORD_RESET_REQUEST = "PASSWORD_RESET_REQUEST";
-export const PASSWORD_RESET_SUCCESS = "GPASSWORD_RESET_SUCCESS";
-export const PASSWORD_RESET_FAILED = "PASSWORD_RESET_FAILED";
+export const PASSWORD_RESET_REQUEST = "PASSWORD_RESET_REQUEST" as const;
+export const PASSWORD_RESET_SUCCESS = "GPASSWORD_RESET_SUCCESS" as const;
+export const PASSWORD_RESET_FAILED = "PASSWORD_RESET_FAILED" as const;
 
-export const GET_USER_DATA_REQUEST = "GET_USER_DATA_REQUEST";
-export const GET_USER_DATA_SUCCESS = "GET_USER_DATA_SUCCESS";
-export const GET_USER_DATA_FAILED = "GET_USER_DATA_FAILED";
+export const GET_USER_DATA_REQUEST = "GET_USER_DATA_REQUEST" as const;
+export const GET_USER_DATA_SUCCESS = "GET_USER_DATA_SUCCESS" as const;
+export const GET_USER_DATA_FAILED = "GET_USER_DATA_FAILED" as const;
 
-export const SET_USER_DATA_REQUEST = "SET_USER_DATA_REQUEST";
-export const SET_USER_DATA_SUCCESS = "SET_USER_DATA_SUCCESS";
-export const SET_USER_DATA_FAILED = "SET_USER_DATA_FAILED";
+export const SET_USER_DATA_REQUEST = "SET_USER_DATA_REQUEST" as const;
+export const SET_USER_DATA_SUCCESS = "SET_USER_DATA_SUCCESS" as const;
+export const SET_USER_DATA_FAILED = "SET_USER_DATA_FAILED" as const;
 
-export const REFRESH_TOKEN_REQUEST = "REFRESH_TOKEN_REQUEST";
-export const REFRESH_TOKEN_SUCCESS = "REFRESH_TOKEN_SUCCESS";
-export const REFRESH_TOKEN_FAILED = "REFRESH_TOKEN_FAILED";
+export const REFRESH_TOKEN_REQUEST = "REFRESH_TOKEN_REQUEST" as const;
+export const REFRESH_TOKEN_SUCCESS = "REFRESH_TOKEN_SUCCESS" as const;
+export const REFRESH_TOKEN_FAILED = "REFRESH_TOKEN_FAILED" as const;
 
-export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
-export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
-export const LOGOUT_FAILED = "LOGOUT_FAILED";
+export const LOGOUT_REQUEST = "LOGOUT_REQUEST" as const;
+export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS" as const;
+export const LOGOUT_FAILED = "LOGOUT_FAILED" as const;
 
 function getRegistrationFailed() {
   return { type: REGISTRATION_FAILED };
@@ -70,8 +71,83 @@ function logoutFailed() {
   return { type: LOGOUT_FAILED };
 }
 
-export function getRegistration(email: string, password: string, name: string): any {
-  return function (dispatch: any) {
+export interface IChangeName  {type: typeof CHANGE_NAME;}
+export interface IGetIngredientsFailed  {type: typeof CHANGE_PASSWORD;}
+export interface IGetOrderRequest  {type: typeof CHANGE_EMAIL;}
+export interface IEmailCodeRequest  {type: typeof EMAIL_CODE_REQUEST;}
+export interface IEmailCodeSuccess  {type: typeof EMAIL_CODE_SUCCESS;}
+export interface IEmailCodeFailed  {type: typeof EMAIL_CODE_FAILED;}
+export interface IRegistrationRequest  {type: typeof REGISTRATION_REQUEST;}
+export interface IRegistrationSuccess  {
+  type: typeof REGISTRATION_SUCCESS,
+  accessToken: string,
+  password: string
+}
+export interface IRegistrationFailed  {type: typeof REGISTRATION_FAILED;}
+export interface ILoginRequest  {type: typeof LOGIN_REQUEST;}
+export interface ILoginSuccess  {
+  type: typeof LOGIN_SUCCESS,
+  accessToken: string,
+  password: string
+}
+export interface ILoginFailed  {type: typeof LOGIN_FAILED;}
+export interface ILogoutRequest  {type: typeof LOGOUT_REQUEST;}
+export interface ILogoutSuccess  {type: typeof LOGOUT_SUCCESS;}
+export interface ILogoutFailed  {type: typeof LOGOUT_FAILED;}
+export interface IPasswordResetRequest  {type: typeof PASSWORD_RESET_REQUEST;}
+export interface IPasswordResetSuccess  {
+  type: typeof PASSWORD_RESET_SUCCESS,
+  password: string;
+}
+export interface IPasswordResetFailed  {type: typeof PASSWORD_RESET_FAILED;}
+export interface IGetUserDataRequest  {type: typeof GET_USER_DATA_REQUEST;}
+export interface IGetUserDataSuccess  {
+  type: typeof GET_USER_DATA_SUCCESS,
+  name: string,
+  email: string,
+  password?: string
+}
+export interface IGetUserDataFailed  {type: typeof GET_USER_DATA_FAILED;}
+export interface ISetUserDataRequest  {type: typeof SET_USER_DATA_REQUEST;}
+export interface ISetUserDataSuccess  {type: typeof SET_USER_DATA_SUCCESS;}
+export interface ISetUserDataFailed  {type: typeof SET_USER_DATA_FAILED;}
+export interface IRefreshTokenRequest  {type: typeof REFRESH_TOKEN_REQUEST}
+export interface IRefreshTokenSuccess  {
+  type: typeof REFRESH_TOKEN_SUCCESS,
+  accessToken: string
+}
+export interface IRefreshTokenFailed  {type: typeof REFRESH_TOKEN_FAILED;}
+
+export type TProfileActions = IChangeName |
+ IGetIngredientsFailed  |
+ IGetOrderRequest  |
+ IEmailCodeRequest  |
+ IEmailCodeSuccess  |
+ IEmailCodeFailed  |
+ IRegistrationRequest  |
+ IRegistrationSuccess  |
+ IRegistrationFailed  |
+ ILoginRequest  |
+ ILoginSuccess  |
+ ILoginFailed  |
+ ILogoutRequest  |
+ ILogoutSuccess  |
+ ILogoutFailed  |
+ IPasswordResetRequest  |
+ IPasswordResetSuccess  |
+ IPasswordResetFailed  |
+ IGetUserDataRequest  |
+ IGetUserDataSuccess  |
+ IGetUserDataFailed  |
+ ISetUserDataRequest  |
+ ISetUserDataSuccess  |
+ ISetUserDataFailed  |
+ IRefreshTokenRequest |
+ IRefreshTokenSuccess  |
+ IRefreshTokenFailed
+
+export const getRegistration = (email: string, password: string, name: string) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: REGISTRATION_REQUEST,
     });
@@ -96,8 +172,8 @@ export function getRegistration(email: string, password: string, name: string): 
   };
 }
 
-export function getLogin(email: string, password: string): any {
-  return function (dispatch: any) {
+export const getLogin = (email: string, password: string) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: LOGIN_REQUEST,
     });
@@ -121,8 +197,8 @@ export function getLogin(email: string, password: string): any {
   };
 }
 
-export function getUserData(token: string): any {
-  return function (dispatch: any) {
+export const getUserData = (token: string) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_DATA_REQUEST,
     });
@@ -146,8 +222,8 @@ export function getUserData(token: string): any {
   };
 }
 
-export function setUserData(token: string, name: string, email: string, password: string): any {
-  return function (dispatch: any) {
+export const setUserData = (token: string, name: string, email: string, password: string) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: SET_USER_DATA_REQUEST,
     });
@@ -169,8 +245,8 @@ export function setUserData(token: string, name: string, email: string, password
   };
 }
 
-export function refreshToken(refreshToken: string | null): any {
-  return function (dispatch: any) {
+export const refreshToken = (refreshToken: string | null) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: REFRESH_TOKEN_REQUEST,
     });
@@ -193,8 +269,8 @@ export function refreshToken(refreshToken: string | null): any {
   };
 }
 
-export function logout(refreshToken: string | null): any {
-  return function (dispatch: any) {
+export const logout = (refreshToken: string | null) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: LOGOUT_REQUEST,
     });
@@ -216,8 +292,8 @@ export function logout(refreshToken: string | null): any {
   };
 }
 
-export function getEmailCode(email: string): any {
-  return function (dispatch: any) {
+export const getEmailCode = (email: string) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: EMAIL_CODE_REQUEST,
     });
@@ -238,8 +314,8 @@ export function getEmailCode(email: string): any {
   };
 }
 
-export function getPasswordReset(password: string, token: string): any {
-  return function (dispatch: any) {
+export const getPasswordReset = (password: string, token: string) => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: PASSWORD_RESET_REQUEST,
     });
@@ -248,6 +324,7 @@ export function getPasswordReset(password: string, token: string): any {
         if (data) {
           dispatch({
             type: PASSWORD_RESET_SUCCESS,
+            password: data.user.password
           });
         } else {
           dispatch(getPasswordResetFailed());

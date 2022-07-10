@@ -1,4 +1,4 @@
-import React from "react";
+
 import { Route, Switch, useHistory, useLocation } from "react-router-dom";
 import { Location } from "react-router";
 import Login from "../../pages/Login/Login";
@@ -6,14 +6,14 @@ import Main from "../../pages/Main/Main";
 import Registration from "../../pages/Registration/Registration";
 import ResetPassword from "../../pages/ResetPassword/ResetPassword";
 import ForgotPassword from "../../pages/ForgotPassword/ForgotPassword";
-import OrdersList from "../../pages/OrdersList/OrdersList";
 import Profile from "../../pages/Profile/Profile";
 import {ProtectedRoute} from "../ProtectedRoute/ProtectedRoute";
 import Modal from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { MODAL_CLOSE } from "../../services/actions/ingredients";
-import { useDispatch } from "react-redux";
-import OrdersHistory from "../../pages/OrdersHistory/OrdersHistory";
+import OrderFeed from "../../pages/OrderFeed/OrderFeed";
+import OrderInfo from "../OrderInfo/OrderInfo";
+import { useMyDispatch } from "../../utils/types";
 
 function ModalSwitch() {
   type ExtendedLocation = Location & {
@@ -33,11 +33,16 @@ function ModalSwitch() {
 
   let background = isLocationWithState(location) ? location.state.background : null;
 
-  const dispatch = useDispatch();
+  const dispatch = useMyDispatch();
   const history = useHistory();
   const handleClose = () => {
     dispatch({ type: MODAL_CLOSE });
     history.push("/");
+  };
+
+  const handleCloseOrderInfo = () => {
+    dispatch({ type: MODAL_CLOSE });
+    history.push(background);
   };
 
   return (
@@ -59,11 +64,14 @@ function ModalSwitch() {
         <Route path="/ingredients/:id">
           <IngredientDetails title="Детали ингредиента" />
         </Route>
-        <Route path="/orders-list">
-          <OrdersList />
+        <Route path="/orders-feed/:id">
+          <OrderInfo isFullPage={true}/>
         </Route>
-        <Route path="/profile/orders">
-          <OrdersHistory />
+        <Route path="/orders-feed">
+          <OrderFeed />
+        </Route>
+        <Route path="/profile/orders/:id">
+          <OrderInfo isFullPage={true}/>
         </Route>
         <ProtectedRoute path="/profile">
           <Profile />
@@ -75,12 +83,25 @@ function ModalSwitch() {
 
       {/* Show the modal when a background page is set */}
       {background != null && (
-        <Route path="/ingredients/:id">
-          <Modal onClose={handleClose} title="Детали ингредиента">
-            <IngredientDetails title="" />
-          </Modal>
-        </Route>
-      )}
+        <Switch>
+          <Route path="/ingredients/:id">
+            <Modal onClose={handleClose} title="Детали ингредиента">
+              <IngredientDetails title="" />
+            </Modal>
+          </Route>
+          <Route path="/orders-feed/:id">
+            <Modal onClose={handleCloseOrderInfo} >
+              <OrderInfo />
+            </Modal>
+          </Route>
+          <Route path="/profile/orders/:id">
+            <Modal onClose={handleCloseOrderInfo} >
+              <OrderInfo />
+            </Modal>
+          </Route>
+        </Switch>
+        )
+      }
     </div>
   );
 }

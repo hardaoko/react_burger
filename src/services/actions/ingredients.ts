@@ -1,21 +1,61 @@
 import { getIngredientsRequest, orderRequest } from "../Api";
 import { v4 as uuidv4 } from "uuid";
-import { IBurgerData, IChosenIngredient } from "../../utils/types";
+import { AppDispatch, AppThunk, IBurgerData, IChosenIngredient } from "../../utils/types";
 
-export const GET_INGREDIENTS_REQUEST = "GET_INGREDIENTS_REQUEST";
-export const GET_INGREDIENTS_SUCCESS = "GET_INGREDIENTS_SUCCESS";
-export const GET_INGREDIENTS_FAILED = "GET_INGREDIENTS_FAILED";
+export const GET_INGREDIENTS_REQUEST = "GET_INGREDIENTS_REQUEST" as const;
+export const GET_INGREDIENTS_SUCCESS = "GET_INGREDIENTS_SUCCESS" as const;
+export const GET_INGREDIENTS_FAILED = "GET_INGREDIENTS_FAILED" as const;
 
-export const GET_ORDER_REQUEST = "GET_ORDER_REQUEST";
-export const GET_ORDER_SUCCESS = "GET_ORDER_SUCCESS";
-export const GET_ORDER_FAILED = "GET_ORDER_FAILED";
+export const GET_ORDER_REQUEST = "GET_ORDER_REQUEST" as const;
+export const GET_ORDER_SUCCESS = "GET_ORDER_SUCCESS" as const;
+export const GET_ORDER_FAILED = "GET_ORDER_FAILED" as const;
 
-export const DELETE_ORDER_LIST = "DELETE_ORDER_LIST";
-export const UPGRADE_ORDER_LIST = "UPGRADE_ORDER_LIST";
+export const DELETE_ORDER_LIST = "DELETE_ORDER_LIST" as const;
+export const UPGRADE_ORDER_LIST = "UPGRADE_ORDER_LIST" as const;
 
-export const MODAL_DETAILS_OPEN = "MODAL_DETAILS_OPEN";
-export const MODAL_ORDER_OPEN = "MODAL_DETAILS_CLOSE";
-export const MODAL_CLOSE = "MODAL_CLOSE";
+export const MODAL_DETAILS_OPEN = "MODAL_DETAILS_OPEN" as const;
+export const MODAL_ORDER_OPEN = "MODAL_ORDER_OPEN" as const;
+export const MODAL_CLOSE = "MODAL_CLOSE" as const;
+
+export interface IGetIngredientsRequest  {type: typeof GET_INGREDIENTS_REQUEST;}
+export interface IGetIngredientsFailed  {type: typeof GET_INGREDIENTS_FAILED;}
+export interface IGetOrderRequest  {type: typeof GET_ORDER_REQUEST;}
+export interface IGetOrderFailed  {type: typeof GET_ORDER_FAILED;}
+export interface IFeleteOrderList  {type: typeof DELETE_ORDER_LIST;}
+export interface IModalOrderOpen  {type: typeof MODAL_ORDER_OPEN;}
+export interface IModalClose  {type: typeof MODAL_CLOSE;}
+
+export interface IGetIngredientsSuccess  {
+  type: typeof GET_INGREDIENTS_SUCCESS;
+  payload: IBurgerData[]
+}
+
+export interface IGetOrderSuccess  {
+  type: typeof GET_ORDER_SUCCESS;
+  payload: string
+}
+
+export interface IModalDetailsOpen  {
+  type: typeof MODAL_DETAILS_OPEN;
+  payload: IBurgerData;
+}
+
+export interface IUpgradeOrderList  {
+  type: typeof UPGRADE_ORDER_LIST;
+  payload: IChosenIngredient[];
+}
+
+export type TIngredientsActions = IGetIngredientsRequest |
+  IGetIngredientsSuccess |
+  IGetIngredientsFailed |
+  IGetOrderRequest |
+  IGetOrderSuccess |
+  IGetOrderFailed |
+  IFeleteOrderList |
+  IModalOrderOpen |
+  IModalClose |
+  IModalDetailsOpen |
+  IUpgradeOrderList
 
 function getIngredientsFailed() {
   return { type: GET_INGREDIENTS_FAILED };
@@ -25,8 +65,8 @@ function getOrderFailed() {
   return { type: GET_INGREDIENTS_FAILED };
 }
 
-export function getIngredients(): any {
-  return function (dispatch: any ) {
+export const getIngredients: AppThunk = () => {
+  return function (dispatch: AppDispatch ) {
     dispatch({
       type: GET_INGREDIENTS_REQUEST,
     });
@@ -36,7 +76,7 @@ export function getIngredients(): any {
           if (data) {
             dispatch({
               type: GET_INGREDIENTS_SUCCESS,
-              ingredients: data.data,
+              payload: data.data,
             });
           } else {
             dispatch(getIngredientsFailed());
@@ -53,8 +93,8 @@ export function getIngredients(): any {
   };
 }
 
-export function getOrder(token: string, chosenIngredients: IChosenIngredient[]): any  {
-  return function (dispatch: any ) {
+export const getOrder: AppThunk = (token: string, chosenIngredients: IChosenIngredient[]) =>  {
+  return function (dispatch: AppDispatch ) {
     dispatch({
       type: GET_ORDER_REQUEST,
     });
@@ -64,7 +104,7 @@ export function getOrder(token: string, chosenIngredients: IChosenIngredient[]):
           if (data) {
             dispatch({
               type: GET_ORDER_SUCCESS,
-              orderData: data.order.number,
+              payload: data.order.number,
             });
             dispatch({
               type: DELETE_ORDER_LIST,
@@ -84,7 +124,7 @@ export function getOrder(token: string, chosenIngredients: IChosenIngredient[]):
   };
 }
 
-export function addIngredients(chosenIngredients: IChosenIngredient[], ingredient: IBurgerData): any  {
+export const addIngredients = (chosenIngredients: IChosenIngredient[], ingredient: IBurgerData) =>  {
   chosenIngredients.push({
     element: ingredient,
     index: chosenIngredients.length,
@@ -96,7 +136,7 @@ export function addIngredients(chosenIngredients: IChosenIngredient[], ingredien
   };
 }
 
-export function deleteIngredients(chosenIngredients: IChosenIngredient[] , index: any ) {
+export const deleteIngredients = (chosenIngredients: IChosenIngredient[] , index: number ) => {
   let arr = [...chosenIngredients];
   arr.splice(index, 1);
   arr = arr.map((item, i) => ({ ...item, index: i }));
@@ -106,7 +146,7 @@ export function deleteIngredients(chosenIngredients: IChosenIngredient[] , index
   };
 }
 
-export function replaceIngredients(chosenIngredients: IChosenIngredient[] , start: number , end: number ): any  {
+export const replaceIngredients = (chosenIngredients: IChosenIngredient[] , start: number , end: number ) =>  {
   let arr = [...chosenIngredients];
   if (start === end) return;
   if (start < end) {
@@ -125,7 +165,7 @@ export function replaceIngredients(chosenIngredients: IChosenIngredient[] , star
   };
 }
 
-export function addBun(chosenIngredients: IChosenIngredient[], bun: any) {
+export const addBun = (chosenIngredients: IChosenIngredient[], bun: IBurgerData) => {
   chosenIngredients.splice(0, 1, { element: bun, index: 0, uuid: uuidv4() });
   return {
     type: UPGRADE_ORDER_LIST,

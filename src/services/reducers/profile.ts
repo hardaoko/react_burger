@@ -1,3 +1,4 @@
+import { IProfileState, TAppActions } from "../../utils/types";
 import {
   EMAIL_CODE_FAILED,
   EMAIL_CODE_REQUEST,
@@ -25,7 +26,7 @@ import {
   SET_USER_DATA_SUCCESS,
 } from "../actions/profile";
 
-const initialProfile = {
+const initialProfile: IProfileState = {
   emailCodeRequest: false,
   emailCodeSuccess: false,
   emailCodeFailed: false,
@@ -67,7 +68,7 @@ const initialProfile = {
   accessToken: "",
 };
 
-export const profileReducer = (state = initialProfile, action) => {
+export const profileReducer = (state = initialProfile, action: TAppActions): IProfileState => {
   switch (action.type) {
     case EMAIL_CODE_REQUEST: {
       return {
@@ -75,7 +76,7 @@ export const profileReducer = (state = initialProfile, action) => {
         emailCodeRequest: true,
         emailCodeSuccess: false,
         emailCodeFailed: false,
-        resetPasswordSuccess: false,
+        passwordResetSuccess: false,
       };
     }
     case EMAIL_CODE_SUCCESS: {
@@ -189,7 +190,7 @@ export const profileReducer = (state = initialProfile, action) => {
         getUserDataFailed: false,
         userName: action.name,
         userEmail: action.email,
-        userPassword: action.password,
+        userPassword: action.password || '',
         isAuth: true,
       };
     }
