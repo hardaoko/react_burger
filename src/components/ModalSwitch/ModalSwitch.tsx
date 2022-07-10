@@ -92,6 +92,11 @@ function ModalSwitch() {
               <OrderInfo />
             </Modal>
           </Route>
+          <Route path="/profile/orders/:id">
+            <Modal onClose={handleCloseOrderInfo} >
+              <OrderInfo />
+            </Modal>
+          </Route>
         </Switch>
         )
       }

@@ -16,7 +16,7 @@ export const socketMiddleware = (wsUrl: string, wsActions: IWebsocketActions): M
       if (type === onInit) {
         // объект класса WebSocket
         if (type === WS_CONNECTION_START)
-          socket = new WebSocket('wss:/norma.nomoreparties.space/orders/all')
+          socket = new WebSocket(`${wsUrl}`)
         else
           socket = new WebSocket(`${wsUrl}?token=${profile.accessToken.replace('Bearer ', '')}`);
 
@@ -32,12 +32,8 @@ export const socketMiddleware = (wsUrl: string, wsActions: IWebsocketActions): M
 
         // функция, которая вызывается при получения события от сервера
         socket.onmessage = event => {
-
           const data = JSON.parse(event.data);
-          console.log(data)
           const {success, ...payload} = data;
-          console.log(success)
-          console.log(payload)
           dispatch({type: onMessage, payload: payload});
         };
         // функция, которая вызывается при закрытии соединения

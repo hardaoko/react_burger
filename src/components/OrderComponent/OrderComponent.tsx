@@ -1,6 +1,6 @@
 import styles from "./OrderComponent.module.css";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link} from 'react-router-dom';
+import {Link, useRouteMatch} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { IBurgerData, IOrderComponentProps, RootState } from "../../utils/types";
 import { useLocation } from "react-router-dom";
@@ -15,10 +15,10 @@ const OrderComponent: FC<IOrderComponentProps> = ({order, onOpen, isStatus}) => 
     updatedAt,
     _id} = order
   const location = useLocation();
+  const {url} = useRouteMatch();
+
 
   const ingredientsMenu = useSelector((store: RootState) => store.ingredients.ingredients)
-
-  const summ: number = 480
 
   const findIngredient = (ingredient: string, ingredients: IBurgerData[]) => {
     return ingredients.find((item:IBurgerData) => item._id === ingredient)
@@ -46,7 +46,7 @@ const OrderComponent: FC<IOrderComponentProps> = ({order, onOpen, isStatus}) => 
   return (
     <li>
       <Link className={styles.link} onClick={onOpen} to={{
-          pathname: `/orders-feed/${_id}`,
+          pathname: `${url}/${_id}`,
           state: { background: location },
       }}>
         <div className={styles.header}>
