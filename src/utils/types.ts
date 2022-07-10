@@ -1,10 +1,12 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { TypedUseSelectorHook } from "react-redux";
 import { ActionCreator } from "redux";
-import { ThunkAction } from "redux-thunk";
-import { IUpgradeOrderList, TIngredientsActions } from "../services/actions/ingredients";
+import { ThunkAction, ThunkDispatch } from "redux-thunk";
+import { TIngredientsActions } from "../services/actions/ingredients";
 import { TOrdersActions } from "../services/actions/orders";
+import { TProfileActions } from "../services/actions/profile";
 import { store } from "../services/store";
 
 
@@ -71,15 +73,6 @@ export interface IOrderComponentProps {
   isStatus?: boolean
 }
 
-export interface IWebsocketActions {
-  onInit: string,
-  onOpen: string,
-  onClose: string,
-  onError: string,
-  onMessage: string
-}
-
-
 
 export interface IIngredientsState {
   ingredients: IBurgerData[],
@@ -144,10 +137,20 @@ export interface IOrdersState  {
   historyOrdersError: undefined | Event
 };
 
-export type TAppActions = IUpgradeOrderList | TOrdersActions | TIngredientsActions
+// const status = createAction<string, "status">(`status`)
+
+// type TActionCreator<T extends (...args:any[]) => any> = ReturnType<T>
+
+// type aaa = TActionCreator<typeof status>
+
+// export type TAppActions = TActionCreator<TOrdersActions | TIngredientsActions | TProfileActions>
+export type TAppActions = TOrdersActions | TIngredientsActions | TProfileActions
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk<TReturn = void> = ActionCreator<ThunkAction<TReturn, RootState, any, TAppActions>>;
-export type AppDispatch = typeof store.dispatch;
+// export type AppDispatch = typeof store.dispatch;
+export type AppDispatch = ThunkDispatch<RootState, any, TAppActions>;
+
 
 export const useMySelector: TypedUseSelectorHook<RootState> = useSelector
+export const useMyDispatch = () => useDispatch<AppDispatch>()

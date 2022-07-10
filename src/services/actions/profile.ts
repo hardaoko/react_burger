@@ -1,4 +1,4 @@
-import { AppDispatch, AppThunk } from "../../utils/types";
+import { AppDispatch } from "../../utils/types";
 import {
   emailCodeRequest,
   getUserDataRequest,
@@ -71,7 +71,82 @@ function logoutFailed() {
   return { type: LOGOUT_FAILED };
 }
 
-export const getRegistration: AppThunk = (email: string, password: string, name: string) => {
+export interface IChangeName  {type: typeof CHANGE_NAME;}
+export interface IGetIngredientsFailed  {type: typeof CHANGE_PASSWORD;}
+export interface IGetOrderRequest  {type: typeof CHANGE_EMAIL;}
+export interface IEmailCodeRequest  {type: typeof EMAIL_CODE_REQUEST;}
+export interface IEmailCodeSuccess  {type: typeof EMAIL_CODE_SUCCESS;}
+export interface IEmailCodeFailed  {type: typeof EMAIL_CODE_FAILED;}
+export interface IRegistrationRequest  {type: typeof REGISTRATION_REQUEST;}
+export interface IRegistrationSuccess  {
+  type: typeof REGISTRATION_SUCCESS,
+  accessToken: string,
+  password: string
+}
+export interface IRegistrationFailed  {type: typeof REGISTRATION_FAILED;}
+export interface ILoginRequest  {type: typeof LOGIN_REQUEST;}
+export interface ILoginSuccess  {
+  type: typeof LOGIN_SUCCESS,
+  accessToken: string,
+  password: string
+}
+export interface ILoginFailed  {type: typeof LOGIN_FAILED;}
+export interface ILogoutRequest  {type: typeof LOGOUT_REQUEST;}
+export interface ILogoutSuccess  {type: typeof LOGOUT_SUCCESS;}
+export interface ILogoutFailed  {type: typeof LOGOUT_FAILED;}
+export interface IPasswordResetRequest  {type: typeof PASSWORD_RESET_REQUEST;}
+export interface IPasswordResetSuccess  {
+  type: typeof PASSWORD_RESET_SUCCESS,
+  password: string;
+}
+export interface IPasswordResetFailed  {type: typeof PASSWORD_RESET_FAILED;}
+export interface IGetUserDataRequest  {type: typeof GET_USER_DATA_REQUEST;}
+export interface IGetUserDataSuccess  {
+  type: typeof GET_USER_DATA_SUCCESS,
+  name: string,
+  email: string,
+  password?: string
+}
+export interface IGetUserDataFailed  {type: typeof GET_USER_DATA_FAILED;}
+export interface ISetUserDataRequest  {type: typeof SET_USER_DATA_REQUEST;}
+export interface ISetUserDataSuccess  {type: typeof SET_USER_DATA_SUCCESS;}
+export interface ISetUserDataFailed  {type: typeof SET_USER_DATA_FAILED;}
+export interface IRefreshTokenRequest  {type: typeof REFRESH_TOKEN_REQUEST}
+export interface IRefreshTokenSuccess  {
+  type: typeof REFRESH_TOKEN_SUCCESS,
+  accessToken: string
+}
+export interface IRefreshTokenFailed  {type: typeof REFRESH_TOKEN_FAILED;}
+
+export type TProfileActions = IChangeName |
+ IGetIngredientsFailed  |
+ IGetOrderRequest  |
+ IEmailCodeRequest  |
+ IEmailCodeSuccess  |
+ IEmailCodeFailed  |
+ IRegistrationRequest  |
+ IRegistrationSuccess  |
+ IRegistrationFailed  |
+ ILoginRequest  |
+ ILoginSuccess  |
+ ILoginFailed  |
+ ILogoutRequest  |
+ ILogoutSuccess  |
+ ILogoutFailed  |
+ IPasswordResetRequest  |
+ IPasswordResetSuccess  |
+ IPasswordResetFailed  |
+ IGetUserDataRequest  |
+ IGetUserDataSuccess  |
+ IGetUserDataFailed  |
+ ISetUserDataRequest  |
+ ISetUserDataSuccess  |
+ ISetUserDataFailed  |
+ IRefreshTokenRequest |
+ IRefreshTokenSuccess  |
+ IRefreshTokenFailed
+
+export const getRegistration = (email: string, password: string, name: string) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: REGISTRATION_REQUEST,
@@ -97,7 +172,7 @@ export const getRegistration: AppThunk = (email: string, password: string, name:
   };
 }
 
-export const getLogin: AppThunk = (email: string, password: string) => {
+export const getLogin = (email: string, password: string) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: LOGIN_REQUEST,
@@ -122,7 +197,7 @@ export const getLogin: AppThunk = (email: string, password: string) => {
   };
 }
 
-export const getUserData: AppThunk = (token: string) => {
+export const getUserData = (token: string) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_DATA_REQUEST,
@@ -147,7 +222,7 @@ export const getUserData: AppThunk = (token: string) => {
   };
 }
 
-export const setUserData: AppThunk = (token: string, name: string, email: string, password: string) => {
+export const setUserData = (token: string, name: string, email: string, password: string) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: SET_USER_DATA_REQUEST,
@@ -170,7 +245,7 @@ export const setUserData: AppThunk = (token: string, name: string, email: string
   };
 }
 
-export const refreshToken: AppThunk = (refreshToken: string | null) => {
+export const refreshToken = (refreshToken: string | null) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: REFRESH_TOKEN_REQUEST,
@@ -194,7 +269,7 @@ export const refreshToken: AppThunk = (refreshToken: string | null) => {
   };
 }
 
-export const logout: AppThunk = (refreshToken: string | null) => {
+export const logout = (refreshToken: string | null) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: LOGOUT_REQUEST,
@@ -217,7 +292,7 @@ export const logout: AppThunk = (refreshToken: string | null) => {
   };
 }
 
-export const getEmailCode: AppThunk = (email: string) => {
+export const getEmailCode = (email: string) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: EMAIL_CODE_REQUEST,
@@ -239,7 +314,7 @@ export const getEmailCode: AppThunk = (email: string) => {
   };
 }
 
-export const getPasswordReset: AppThunk = (password: string, token: string) => {
+export const getPasswordReset = (password: string, token: string) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: PASSWORD_RESET_REQUEST,
@@ -249,6 +324,7 @@ export const getPasswordReset: AppThunk = (password: string, token: string) => {
         if (data) {
           dispatch({
             type: PASSWORD_RESET_SUCCESS,
+            password: data.user.password
           });
         } else {
           dispatch(getPasswordResetFailed());

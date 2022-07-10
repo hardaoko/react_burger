@@ -1,4 +1,3 @@
-import { AnyAction } from "redux";
 import { IChosenIngredient, IIngredientsState, TAppActions } from "../../utils/types";
 import {
   DELETE_ORDER_LIST,
@@ -11,7 +10,6 @@ import {
   MODAL_CLOSE,
   MODAL_DETAILS_OPEN,
   MODAL_ORDER_OPEN,
-  TIngredientsActions,
   UPGRADE_ORDER_LIST,
 } from "../actions/ingredients";
 
@@ -32,7 +30,7 @@ const initialIngredients: IIngredientsState = {
   finalCost: 0,
 };
 
-export const ingredientsReducer = (state = initialIngredients, action: TIngredientsActions): IIngredientsState => {
+export const ingredientsReducer = (state = initialIngredients, action: TAppActions): IIngredientsState => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return { ...state, ingredientsRequest: true };

@@ -3,7 +3,7 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { IBurgerData, IChosenIngredient, RootState, useMySelector } from "../../utils/types";
+import { IBurgerData, IChosenIngredient, useMySelector } from "../../utils/types";
 import { useDrag } from "react-dnd";
 import { Link, useLocation } from "react-router-dom";
 import { FC } from "react";

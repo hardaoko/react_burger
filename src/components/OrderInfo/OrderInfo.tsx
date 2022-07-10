@@ -15,7 +15,7 @@ const OrderInfo = () => {
   }
 
   const uniqueIngredients = findOrder?.ingredients.filter(function(item, pos) {
-    return findOrder?.ingredients.indexOf(item) == pos;
+    return findOrder?.ingredients.indexOf(item) === pos;
   })
 
   const findIngredient = (ingredient: string, ingredients: IBurgerData[]) => {
@@ -29,6 +29,7 @@ const OrderInfo = () => {
       if (find?.price) {
         totalCost += find.price
       }
+      return totalCost
     })
     return totalCost
   }

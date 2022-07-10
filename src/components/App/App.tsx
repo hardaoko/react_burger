@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { getIngredients } from "../../services/actions/ingredients";
 import { BrowserRouter as Router } from "react-router-dom";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -8,10 +7,10 @@ import "./App.module.css";
 import AppHeader from "../AppHeader/AppHeader";
 import { getUserData } from "../../services/actions/profile";
 import ModalSwitch from "../ModalSwitch/ModalSwitch";
-import { AppDispatch, RootState, useMySelector } from "../../utils/types";
+import { AppDispatch, useMyDispatch, useMySelector } from "../../utils/types";
 
 const App = () => {
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch: AppDispatch = useMyDispatch();
   const { accessToken } = useMySelector((store) => store.profile);
 
   useEffect(() => {

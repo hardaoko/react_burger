@@ -1,7 +1,5 @@
-
-import { AnyAction } from 'redux';
-import { IOrdersState } from '../../utils/types';
-import { MODAL_ORDER_INFO_OPEN, TOrdersActions, WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_SUCCESS, WS_GET_HISTORY_ORDERS, WS_GET_ORDERS, WS_HISTORY_CONNECTION_CLOSED, WS_HISTORY_CONNECTION_ERROR, WS_HISTORY_CONNECTION_SUCCESS } from '../actions/orders';
+import { IOrdersState, TAppActions } from '../../utils/types';
+import { MODAL_ORDER_INFO_OPEN, WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR, WS_CONNECTION_SUCCESS, WS_GET_HISTORY_ORDERS, WS_GET_ORDERS, WS_HISTORY_CONNECTION_CLOSED, WS_HISTORY_CONNECTION_ERROR, WS_HISTORY_CONNECTION_SUCCESS } from '../actions/orders';
 
 const initialState: IOrdersState = {
   wsOrders: false,
@@ -17,7 +15,7 @@ const initialState: IOrdersState = {
   historyOrdersError: undefined
 };
 
-export const ordersReducer = (state = initialState, action: any): IOrdersState => {
+export const ordersReducer = (state = initialState, action: TAppActions): IOrdersState => {
   switch (action.type) {
     case WS_CONNECTION_SUCCESS:
       return {

@@ -20,7 +20,7 @@ import {
 } from "../../services/actions/ingredients";
 import { useDrag, useDrop } from "react-dnd";
 import { useHistory } from "react-router-dom";
-import { AppDispatch, IBurgerData, IChosenIngredient, RootState, useMySelector } from "../../utils/types";
+import { AppDispatch, IBurgerData, IChosenIngredient, useMySelector } from "../../utils/types";
 import Loading from "../Loading/Loading";
 
 
@@ -104,9 +104,8 @@ const BurgerConstructor = () => {
     const [, dropRef] = useDrop({
       accept: "orderList",
       drop() {
-        dispatch(
-          replaceIngredients(chosenIngredients, startIndex, targetIndex)
-        );
+        const replaceAction = replaceIngredients(chosenIngredients, startIndex, targetIndex)
+        replaceAction && dispatch(replaceAction);
       },
       hover(dragItem: TDraggableIngredient) {
         targetIndex = item.index;
@@ -143,13 +142,14 @@ const BurgerConstructor = () => {
   const IngredientSection = useCallback(() => {
     return (
       <ul className={`${styles.list} pr-4 pl-4  `}>
-        {ingredients.map((item: IChosenIngredient) => {
+        {ingredients.map((item) => {
           return (
             <DraggableItem item={item} key={item.uuid} />
           );
         })}
       </ul>
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ingredients]);
 
   type TBunCallback = (side: "top" | "bottom" | undefined) => React.ReactNode;

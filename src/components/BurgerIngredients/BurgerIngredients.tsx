@@ -4,7 +4,7 @@ import styles from "./BurgerIngredients.module.css";
 import Ingredient from "../Ingredient/Ingredient";
 import { useDispatch } from "react-redux";
 import { MODAL_DETAILS_OPEN } from "../../services/actions/ingredients";
-import { IBurgerData, RootState, useMySelector } from "../../utils/types";
+import { IBurgerData, useMySelector } from "../../utils/types";
 
 
 const BurgerIngredients = () => {

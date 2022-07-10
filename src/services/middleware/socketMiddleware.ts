@@ -1,6 +1,6 @@
 import type { Middleware, MiddlewareAPI } from 'redux';
-import { TAppActions, AppDispatch, RootState, IWebsocketActions } from '../../utils/types';
-import { WS_CONNECTION_START } from '../actions/orders';
+import { TAppActions, AppDispatch, RootState } from '../../utils/types';
+import { IWebsocketActions, WS_CONNECTION_START } from '../actions/orders';
 
 
 export const socketMiddleware = (wsUrl: string, wsActions: IWebsocketActions): Middleware => {

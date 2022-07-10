@@ -11,7 +11,6 @@ const OrderComponent: FC<IOrderComponentProps> = ({order, onOpen, isStatus}) => 
     name,
     number,
     status,
-    updatedAt,
     _id} = order
   const location = useLocation();
   const {url} = useRouteMatch();
@@ -29,6 +28,7 @@ const OrderComponent: FC<IOrderComponentProps> = ({order, onOpen, isStatus}) => 
       if (find?.price) {
         totalCost += find.price
       }
+      return totalCost
     })
     return totalCost
   }

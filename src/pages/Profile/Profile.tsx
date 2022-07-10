@@ -1,5 +1,5 @@
 import styles from "./Profile.module.css";
-import { NavLink, Route, Router, Switch, useRouteMatch } from "react-router-dom";
+import { NavLink, Route, Switch, useRouteMatch } from "react-router-dom";
 import ProfileData from "../../components/ProfileData/ProfileData";
 import { logout } from "../../services/actions/profile";
 import { useDispatch } from "react-redux";

@@ -1,4 +1,4 @@
-import { IOrderResponse } from "../../utils/types";
+import { IOrder, IOrderResponse } from "../../utils/types";
 
 
 export const WS_CONNECTION_START = 'WS_CONNECTION_START' as const;
@@ -20,20 +20,60 @@ interface IWsConnectionStart {
 }
 
 interface IWsConnectionSuccess {
-  type: typeof WS_CONNECTION_SUCCESS
+  type: typeof WS_CONNECTION_SUCCESS,
+  payload: Event
 }
 
 interface IWsConnectionError {
   type: typeof WS_CONNECTION_ERROR
+  payload: Event
 }
 
 interface IWsConnectionClosed {
   type: typeof WS_CONNECTION_CLOSED
+  payload?: CloseEvent
 }
 
 interface IWsGetOrders {
   type: typeof WS_GET_ORDERS
   payload: IOrderResponse
+}
+
+interface IWsHistoryConnectionStart {
+  type: typeof WS_HISTORY_CONNECTION_START
+}
+
+interface IWsHistoryConnectionSuccess {
+  type: typeof WS_HISTORY_CONNECTION_SUCCESS
+  payload: Event
+}
+
+interface IWsHistoryConnectionError {
+  type: typeof WS_HISTORY_CONNECTION_ERROR
+  payload: Event
+}
+
+interface IWsHistoryConnectionClosed {
+  type: typeof WS_HISTORY_CONNECTION_CLOSED
+  payload?: CloseEvent
+}
+
+interface IWsGetHistoryOrders {
+  type: typeof WS_GET_HISTORY_ORDERS
+  payload: IOrderResponse
+}
+
+interface IModalOrderInfoOpen {
+  type: typeof MODAL_ORDER_INFO_OPEN
+  payload: IOrder
+}
+
+export interface IWebsocketActions {
+  onInit: typeof WS_CONNECTION_START | typeof WS_HISTORY_CONNECTION_START,
+  onOpen: typeof WS_CONNECTION_SUCCESS | typeof WS_HISTORY_CONNECTION_SUCCESS,
+  onClose: typeof WS_CONNECTION_CLOSED | typeof WS_HISTORY_CONNECTION_CLOSED,
+  onError: typeof WS_CONNECTION_ERROR | typeof WS_HISTORY_CONNECTION_ERROR,
+  onMessage: typeof WS_GET_ORDERS | typeof WS_GET_HISTORY_ORDERS
 }
 
 export const wsOrdersConnectionStart = () => {
@@ -81,4 +121,10 @@ export type TOrdersActions =
   IWsConnectionSuccess |
   IWsConnectionError |
   IWsConnectionClosed |
-  IWsGetOrders
+  IWsGetOrders |
+  IWsHistoryConnectionStart |
+  IWsHistoryConnectionSuccess |
+  IWsHistoryConnectionError |
+  IWsHistoryConnectionClosed |
+  IWsGetHistoryOrders |
+  IModalOrderInfoOpen

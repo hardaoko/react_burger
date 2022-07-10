@@ -2,7 +2,7 @@ import { IOrder, useMySelector } from '../../utils/types';
 import styles from './OrdersMonitor.module.css';
 
 const OrdersMonitor = () => {
-  const { orders, wsOrders, total, totalToday } = useMySelector((store) => store.orders)
+  const { orders, total, totalToday } = useMySelector((store) => store.orders)
   const ready = orders.filter((order: IOrder) => order.status === "done")
   const pending = orders.filter((order: IOrder) => order.status === "pending")
 

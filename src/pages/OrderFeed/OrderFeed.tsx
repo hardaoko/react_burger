@@ -9,7 +9,7 @@ import styles from "./OrderFeed.module.css";
 
 const OrderFeed = () => {
   const dispatch: AppDispatch = useDispatch()
-  const { orders, wsOrders } = useMySelector((store) => store.orders)
+  const { orders } = useMySelector((store) => store.orders)
 
   useEffect(() => {
     dispatch(wsOrdersConnectionStart());
