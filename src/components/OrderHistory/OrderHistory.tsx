@@ -1,14 +1,13 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { MODAL_ORDER_INFO_OPEN, wsHistoryConnectionClose, wsHistoryConnectionStart } from '../../services/actions/orders';
-import { IOrder, useMySelector } from '../../utils/types';
+import { useMyDispatch, useMySelector } from '../../utils/types';
 import Loading from '../Loading/Loading';
 import OrderComponent from '../OrderComponent/OrderComponent';
 import styles from './OrderHistory.module.css';
 
 const OrderHistory = () => {
   const { historyOrders } = useMySelector((store) => store.orders)
-  const dispatch = useDispatch()
+  const dispatch = useMyDispatch();
 
   useEffect(() => {
     dispatch(wsHistoryConnectionStart());
@@ -23,7 +22,7 @@ const OrderHistory = () => {
           historyOrders.length > 0 ? (
             <ul className={styles.list}>
               {
-                historyOrders.map((order: IOrder, index: number) => (
+                historyOrders.map((order, index) => (
                   <OrderComponent order={order} key={index} isStatus={true} onOpen={() => {
                     dispatch({ type: MODAL_ORDER_INFO_OPEN, payload: order });
                   }}/>

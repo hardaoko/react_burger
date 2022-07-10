@@ -11,9 +11,9 @@ import {ProtectedRoute} from "../ProtectedRoute/ProtectedRoute";
 import Modal from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { MODAL_CLOSE } from "../../services/actions/ingredients";
-import { useDispatch } from "react-redux";
 import OrderFeed from "../../pages/OrderFeed/OrderFeed";
 import OrderInfo from "../OrderInfo/OrderInfo";
+import { useMyDispatch } from "../../utils/types";
 
 function ModalSwitch() {
   type ExtendedLocation = Location & {
@@ -33,7 +33,7 @@ function ModalSwitch() {
 
   let background = isLocationWithState(location) ? location.state.background : null;
 
-  const dispatch = useDispatch();
+  const dispatch = useMyDispatch();
   const history = useHistory();
   const handleClose = () => {
     dispatch({ type: MODAL_CLOSE });

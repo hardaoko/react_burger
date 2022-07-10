@@ -2,9 +2,8 @@ import { useRef, useState } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredients.module.css";
 import Ingredient from "../Ingredient/Ingredient";
-import { useDispatch } from "react-redux";
 import { MODAL_DETAILS_OPEN } from "../../services/actions/ingredients";
-import { IBurgerData, useMySelector } from "../../utils/types";
+import { useMyDispatch, useMySelector } from "../../utils/types";
 
 
 const BurgerIngredients = () => {
@@ -16,7 +15,7 @@ const BurgerIngredients = () => {
   const refMain = useRef<HTMLHeadingElement>(null);
   const refDiv = useRef<HTMLDivElement>(null);
 
-  const dispatch = useDispatch();
+  const dispatch = useMyDispatch();
 
   const scrollPosition = () => {
     if(refBun.current && refSauce.current && refMain.current && refDiv.current) {
@@ -79,13 +78,13 @@ const BurgerIngredients = () => {
         </h2>
         <ul className={styles.list}>
           {ingredients.map(
-            (item: IBurgerData) =>
+            (item) =>
               item.type === "bun" && (
                 <Ingredient
                   key={item._id}
                   item={item}
                   onOpen={() => {
-                    dispatch({ type: MODAL_DETAILS_OPEN, item: item });
+                    dispatch({ type: MODAL_DETAILS_OPEN, payload: item });
                   }}
                 />
               )
@@ -100,13 +99,13 @@ const BurgerIngredients = () => {
         </h2>
         <ul className={styles.list}>
           {ingredients.map(
-            (item: IBurgerData) =>
+            (item) =>
               item.type === "sauce" && (
                 <Ingredient
                   key={item._id}
                   item={item}
                   onOpen={() => {
-                    dispatch({ type: MODAL_DETAILS_OPEN, item: item });
+                    dispatch({ type: MODAL_DETAILS_OPEN, payload: item });
                   }}
                 />
               )
@@ -121,13 +120,13 @@ const BurgerIngredients = () => {
         </h2>
         <ul className={styles.list}>
           {ingredients.map(
-            (item: IBurgerData) =>
+            (item) =>
               item.type === "main" && (
                 <Ingredient
                   key={item._id}
                   item={item}
                   onOpen={() => {
-                    dispatch({ type: MODAL_DETAILS_OPEN, item: item });
+                    dispatch({ type: MODAL_DETAILS_OPEN, payload: item });
                   }}
                 />
               )

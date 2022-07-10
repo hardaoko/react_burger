@@ -1,10 +1,10 @@
-import { IOrder, useMySelector } from '../../utils/types';
+import { useMySelector } from '../../utils/types';
 import styles from './OrdersMonitor.module.css';
 
 const OrdersMonitor = () => {
   const { orders, total, totalToday } = useMySelector((store) => store.orders)
-  const ready = orders.filter((order: IOrder) => order.status === "done")
-  const pending = orders.filter((order: IOrder) => order.status === "pending")
+  const ready = orders.filter((order) => order.status === "done")
+  const pending = orders.filter((order) => order.status === "pending")
 
   return (
     <div className={styles.container}>
@@ -16,7 +16,7 @@ const OrdersMonitor = () => {
           <div className={styles.numbers_container}>
             <ul className={styles.list_ready}>
               {
-                ready.map((order: IOrder, index: number) => {
+                ready.map((order, index) => {
                   if (index < 10) {
                     return (<li key={order._id} className="text text_type_digits-default pb-2">
                       {order.number}
@@ -28,7 +28,7 @@ const OrdersMonitor = () => {
             </ul>
             <ul className={styles.list_ready}>
               {
-                ready.map((order: IOrder, index: number) => {
+                ready.map((order, index) => {
                   if (index >= 10 && index < 20) {
                     return (<li key={order._id} className="text text_type_digits-default pb-2">
                       {order.number}
@@ -48,7 +48,7 @@ const OrdersMonitor = () => {
           <div className={styles.numbers_container}>
             <ul className={styles.list}>
               {
-                pending.map((order: IOrder, index: number) => {
+                pending.map((order, index) => {
                   if (index < 10) {
                     return (<li key={order._id} className="text text_type_digits-default pb-2">
                       {order.number}
@@ -60,7 +60,7 @@ const OrdersMonitor = () => {
             </ul>
             <ul className={styles.list}>
               {
-                pending.map((order: IOrder, index: number) => {
+                pending.map((order, index) => {
                   if (index >= 10 && index < 20) {
                     return (<li key={order._id} className="text text_type_digits-default pb-2">
                       {order.number}

@@ -8,7 +8,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
-import { useDispatch } from "react-redux";
 import {
   addBun,
   addIngredients,
@@ -20,7 +19,7 @@ import {
 } from "../../services/actions/ingredients";
 import { useDrag, useDrop } from "react-dnd";
 import { useHistory } from "react-router-dom";
-import { AppDispatch, IBurgerData, IChosenIngredient, useMySelector } from "../../utils/types";
+import { IBurgerData, IChosenIngredient, useMyDispatch, useMySelector } from "../../utils/types";
 import Loading from "../Loading/Loading";
 
 
@@ -46,7 +45,7 @@ const BurgerConstructor = () => {
     item: IChosenIngredient
   }
 
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useMyDispatch();
 
   //  Формирование номера заказа
   const createOrder = () => {
@@ -93,7 +92,7 @@ const BurgerConstructor = () => {
   let startIndex: number;
 
   const DraggableItem:FC<TDraggableIngredient> = ({ item }) => {
-    const dispatch: AppDispatch = useDispatch();
+    const dispatch = useMyDispatch();
     const { chosenIngredients } = useMySelector((store) => store.ingredients);
     const [, dragRef] = useDrag({
       type: "orderList",

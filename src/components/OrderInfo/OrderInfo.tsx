@@ -1,6 +1,6 @@
 import styles from './OrderInfo.module.css';
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { IBurgerData, IOrder, useMySelector } from '../../utils/types';
+import { IBurgerData, useMySelector } from '../../utils/types';
 import { useParams } from 'react-router-dom';
 import Loading from '../Loading/Loading';
 
@@ -9,9 +9,9 @@ const OrderInfo = () => {
   const {orderInfo, orders, historyOrders} = useMySelector((store) => store.orders)
   const ingredientsMenu = useMySelector((store) => store.ingredients.ingredients)
 
-  let findOrder = orders.find((order: IOrder) => order._id === id)
+  let findOrder = orders.find((order) => order._id === id)
   if(!findOrder) {
-    findOrder = historyOrders.find((order: IOrder) => order._id === id)
+    findOrder = historyOrders.find((order) => order._id === id)
   }
 
   const uniqueIngredients = findOrder?.ingredients.filter(function(item, pos) {
@@ -19,13 +19,13 @@ const OrderInfo = () => {
   })
 
   const findIngredient = (ingredient: string, ingredients: IBurgerData[]) => {
-    return ingredients.find((item:IBurgerData) => item._id === ingredient)
+    return ingredients.find((item) => item._id === ingredient)
   }
 
   const calculateTotalCost = () => {
     let totalCost = 0;
-    findOrder?.ingredients.map((itemId: string)=>{
-      const find = ingredientsMenu.find((item: IBurgerData) => item._id === itemId)
+    findOrder?.ingredients.map((itemId)=>{
+      const find = ingredientsMenu.find((item) => item._id === itemId)
       if (find?.price) {
         totalCost += find.price
       }
@@ -50,7 +50,7 @@ const OrderInfo = () => {
         <p className="text text_type_main-medium mb-6">Состав:</p>
         <ul className={styles.list}>
           {
-            uniqueIngredients?.map((ingredientId: string, index: number) => {
+            uniqueIngredients?.map((ingredientId, index) => {
               const ingredient = findIngredient(ingredientId, ingredientsMenu)
               return (
                 <li key={index} className={`${styles.list_item} mb-4 `}>
@@ -60,7 +60,7 @@ const OrderInfo = () => {
                   <div className={`text text_type_digits-default ${styles.item_currency}`}>
                     <span>
                       {
-                        orderInfo?.ingredients.filter((item: string) => item === ingredient?._id).length
+                        orderInfo?.ingredients.filter((item) => item === ingredient?._id).length
                       }
                     </span>
                     x

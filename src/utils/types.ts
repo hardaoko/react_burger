@@ -137,20 +137,11 @@ export interface IOrdersState  {
   historyOrdersError: undefined | Event
 };
 
-// const status = createAction<string, "status">(`status`)
-
-// type TActionCreator<T extends (...args:any[]) => any> = ReturnType<T>
-
-// type aaa = TActionCreator<typeof status>
-
-// export type TAppActions = TActionCreator<TOrdersActions | TIngredientsActions | TProfileActions>
 export type TAppActions = TOrdersActions | TIngredientsActions | TProfileActions
 
 export type RootState = ReturnType<typeof store.getState>;
-export type AppThunk<TReturn = void> = ActionCreator<ThunkAction<TReturn, RootState, any, TAppActions>>;
-// export type AppDispatch = typeof store.dispatch;
-export type AppDispatch = ThunkDispatch<RootState, any, TAppActions>;
 
+export type AppDispatch = ThunkDispatch<RootState, any, TAppActions>;
 
 export const useMySelector: TypedUseSelectorHook<RootState> = useSelector
 export const useMyDispatch = () => useDispatch<AppDispatch>()

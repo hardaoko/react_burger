@@ -5,9 +5,8 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from "react-redux";
 import { getPasswordReset } from "../../services/actions/profile";
-import { AppDispatch, useMySelector } from "../../utils/types";
+import { useMyDispatch, useMySelector } from "../../utils/types";
 
 const ResetPassword = () => {
   const [password, setPassword] = useState("");
@@ -16,7 +15,7 @@ const ResetPassword = () => {
   const [error, setError] = useState(false);
   const { emailCodeSuccess, passwordResetSuccess } = useMySelector((store) => store.profile
   );
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useMyDispatch();
   const history = useHistory();
 
   const inputRef = useRef<HTMLInputElement>(null);

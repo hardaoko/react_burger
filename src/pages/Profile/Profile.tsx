@@ -2,13 +2,12 @@ import styles from "./Profile.module.css";
 import { NavLink, Route, Switch, useRouteMatch } from "react-router-dom";
 import ProfileData from "../../components/ProfileData/ProfileData";
 import { logout } from "../../services/actions/profile";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../utils/types";
+import { useMyDispatch } from "../../utils/types";
 import OrderHistory from "../../components/OrderHistory/OrderHistory";
 
 const Profile = () => {
   const { path, url } = useRouteMatch();
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useMyDispatch();
 
   const handleLogout = () => {
     const refreshToken = localStorage.getItem("refreshToken");

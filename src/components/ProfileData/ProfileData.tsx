@@ -5,9 +5,8 @@ import {
   Button,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from "react-redux";
 import { getUserData, setUserData } from "../../services/actions/profile";
-import { AppDispatch, useMySelector } from "../../utils/types";
+import { useMyDispatch, useMySelector } from "../../utils/types";
 
 const ProfileData = () => {
   const [isDataChanged, setIsDataChanged] = useState(false);
@@ -17,7 +16,7 @@ const ProfileData = () => {
 
   const { userName, userEmail, userPassword, accessToken } = useMySelector((store) => store.profile
   );
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useMyDispatch();
 
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);

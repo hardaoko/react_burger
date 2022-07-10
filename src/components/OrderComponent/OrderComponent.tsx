@@ -18,13 +18,13 @@ const OrderComponent: FC<IOrderComponentProps> = ({order, onOpen, isStatus}) => 
   const ingredientsMenu = useMySelector((store) => store.ingredients.ingredients)
 
   const findIngredient = (ingredient: string, ingredients: IBurgerData[]) => {
-    return ingredients.find((item:IBurgerData) => item._id === ingredient)
+    return ingredients.find((item) => item._id === ingredient)
   }
 
   const calculateTotalCost = () => {
     let totalCost = 0;
-    ingredients.map((itemId: string)=>{
-      const find = ingredientsMenu.find((item: IBurgerData) => item._id === itemId)
+    ingredients.map((itemId)=>{
+      const find = ingredientsMenu.find((item) => item._id === itemId)
       if (find?.price) {
         totalCost += find.price
       }
@@ -58,7 +58,7 @@ const OrderComponent: FC<IOrderComponentProps> = ({order, onOpen, isStatus}) => 
         <div className={styles.footer}>
           <ul className={styles.ingredients_list}>
             {
-              ingredients.map((value: string, index: number) => {
+              ingredients.map((value, index) => {
                   const ingredient = findIngredient(value, ingredientsMenu)
                   if (index < 5) {
                     return (

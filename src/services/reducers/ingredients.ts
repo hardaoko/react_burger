@@ -1,4 +1,4 @@
-import { IChosenIngredient, IIngredientsState, TAppActions } from "../../utils/types";
+import { IIngredientsState, TAppActions } from "../../utils/types";
 import {
   DELETE_ORDER_LIST,
   GET_INGREDIENTS_FAILED,
@@ -66,10 +66,10 @@ export const ingredientsReducer = (state = initialIngredients, action: TAppActio
         ...state,
         chosenIngredients: action.payload,
         ingredientsList: action.payload.filter(
-          (item: IChosenIngredient) => item.element.type !== "bun"
+          (item) => item.element.type !== "bun"
         ),
         bun: action.payload[0],
-        finalCost: action.payload.reduce((prev: number, next: IChosenIngredient) => {
+        finalCost: action.payload.reduce((prev, next) => {
           return prev + next.element.price;
         }, action.payload[0].element.price),
       };

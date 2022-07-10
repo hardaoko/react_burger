@@ -2,7 +2,7 @@ import styles from "./IngredientDetails.module.css";
 import { useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { FC } from "react";
-import { IBurgerData, IIngredientDetailsProps, useMySelector } from "../../utils/types";
+import { IIngredientDetailsProps, useMySelector } from "../../utils/types";
 
 const IngredientDetails:FC<IIngredientDetailsProps> = ({ title }) => {
   const { id } = useParams();
@@ -14,7 +14,7 @@ const IngredientDetails:FC<IIngredientDetailsProps> = ({ title }) => {
   }
 
   const selectedIngredient = ingredients.find(
-    (ingredient: IBurgerData) => ingredient._id === id
+    (ingredient) => ingredient._id === id
   );
 
   return (
