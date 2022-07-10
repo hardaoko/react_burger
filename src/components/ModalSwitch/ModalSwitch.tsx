@@ -65,12 +65,14 @@ function ModalSwitch() {
           <IngredientDetails title="Детали ингредиента" />
         </Route>
         <Route path="/orders-feed/:id">
-          <OrderInfo />
+          <OrderInfo isFullPage={true}/>
         </Route>
         <Route path="/orders-feed">
           <OrderFeed />
         </Route>
-
+        <Route path="/profile/orders/:id">
+          <OrderInfo isFullPage={true}/>
+        </Route>
         <ProtectedRoute path="/profile">
           <Profile />
         </ProtectedRoute>

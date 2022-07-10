@@ -73,6 +73,9 @@ export interface IOrderComponentProps {
   isStatus?: boolean
 }
 
+export interface IOrderInfoProps {
+  isFullPage?: boolean
+}
 
 export interface IIngredientsState {
   ingredients: IBurgerData[],
@@ -140,7 +143,7 @@ export interface IOrdersState  {
 export type TAppActions = TOrdersActions | TIngredientsActions | TProfileActions
 
 export type RootState = ReturnType<typeof store.getState>;
-
+export type AppThunk<TReturn = void> = ActionCreator<ThunkAction<TReturn, RootState, any, TAppActions>>;
 export type AppDispatch = ThunkDispatch<RootState, any, TAppActions>;
 
 export const useMySelector: TypedUseSelectorHook<RootState> = useSelector

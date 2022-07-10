@@ -1,13 +1,25 @@
 import styles from './OrderInfo.module.css';
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { IBurgerData, useMySelector } from '../../utils/types';
+import { IBurgerData, IOrderInfoProps, useMyDispatch, useMySelector } from '../../utils/types';
 import { useParams } from 'react-router-dom';
 import Loading from '../Loading/Loading';
+import { FC, useEffect } from 'react';
+import { wsOrdersClose, wsOrdersConnectionStart } from '../../services/actions/orders';
 
-const OrderInfo = () => {
+const OrderInfo: FC<IOrderInfoProps> = ({isFullPage}) => {
   const {id} = useParams();
   const {orderInfo, orders, historyOrders} = useMySelector((store) => store.orders)
   const ingredientsMenu = useMySelector((store) => store.ingredients.ingredients)
+  const dispatch = useMyDispatch()
+
+  useEffect(() => {
+    if(isFullPage) {
+      dispatch(wsOrdersConnectionStart())
+      return (()=> {
+        dispatch(wsOrdersClose())
+      })
+    }
+  },[dispatch, isFullPage])
 
   let findOrder = orders.find((order) => order._id === id)
   if(!findOrder) {
