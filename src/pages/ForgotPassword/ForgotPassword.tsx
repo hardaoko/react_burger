@@ -5,13 +5,13 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getEmailCode } from "../../services/actions/profile";
-import { AppDispatch, RootState } from "../../utils/types";
+import { AppDispatch, useMySelector } from "../../utils/types";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
-  const { emailCodeSuccess } = useSelector((store: RootState) => store.profile);
+  const { emailCodeSuccess } = useMySelector((store) => store.profile);
   const dispatch: AppDispatch = useDispatch();
   const history = useHistory();
 

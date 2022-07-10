@@ -5,17 +5,16 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getPasswordReset } from "../../services/actions/profile";
-import { AppDispatch, RootState } from "../../utils/types";
+import { AppDispatch, useMySelector } from "../../utils/types";
 
 const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [token, setToken] = useState("");
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState(false);
-  const { emailCodeSuccess, passwordResetSuccess } = useSelector(
-    (store: RootState) => store.profile
+  const { emailCodeSuccess, passwordResetSuccess } = useMySelector((store) => store.profile
   );
   const dispatch: AppDispatch = useDispatch();
   const history = useHistory();

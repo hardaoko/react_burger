@@ -8,7 +8,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   addBun,
   addIngredients,
@@ -20,7 +20,7 @@ import {
 } from "../../services/actions/ingredients";
 import { useDrag, useDrop } from "react-dnd";
 import { useHistory } from "react-router-dom";
-import { AppDispatch, IBurgerData, IChosenIngredient, RootState } from "../../utils/types";
+import { AppDispatch, IBurgerData, IChosenIngredient, RootState, useMySelector } from "../../utils/types";
 import Loading from "../Loading/Loading";
 
 
@@ -37,9 +37,9 @@ const BurgerConstructor = () => {
     bun,
     finalCost,
     orderRequest,
-  } = useSelector((store: RootState) => store.ingredients);
-  const ingredients = useSelector((store: RootState) => store.ingredients.ingredientsList);
-  const { isAuth, accessToken } = useSelector((store: RootState) => store.profile);
+  } = useMySelector((store) => store.ingredients);
+  const ingredients = useMySelector((store) => store.ingredients.ingredientsList);
+  const { isAuth, accessToken } = useMySelector((store) => store.profile);
   const history = useHistory();
 
   type TDraggableIngredient = {
@@ -94,7 +94,7 @@ const BurgerConstructor = () => {
 
   const DraggableItem:FC<TDraggableIngredient> = ({ item }) => {
     const dispatch: AppDispatch = useDispatch();
-    const { chosenIngredients } = useSelector((store: RootState) => store.ingredients);
+    const { chosenIngredients } = useMySelector((store) => store.ingredients);
     const [, dragRef] = useDrag({
       type: "orderList",
       item: { item },

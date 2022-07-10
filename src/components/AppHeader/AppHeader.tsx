@@ -6,11 +6,10 @@ import {
   Logo,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from "../../utils/types";
+import { useMySelector } from "../../utils/types";
 
 const AppHeader = () => {
-  const { isAuth, userName } = useSelector((store: RootState) => store.profile);
+  const { isAuth, userName } = useMySelector((store) => store.profile);
   return (
     <header className={styles.header}>
       <div className={styles.container}>

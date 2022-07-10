@@ -1,15 +1,13 @@
-import React, {FC, useEffect} from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-
 import { MODAL_ORDER_INFO_OPEN, wsHistoryConnectionClose, wsHistoryConnectionStart } from '../../services/actions/orders';
-import { IOrder, RootState } from '../../utils/types';
+import { IOrder, useMySelector } from '../../utils/types';
 import Loading from '../Loading/Loading';
 import OrderComponent from '../OrderComponent/OrderComponent';
 import styles from './OrderHistory.module.css';
 
 const OrderHistory = () => {
-  const { historyOrders, wsHistoryOrders } = useSelector((store: RootState) => store.orders)
+  const { historyOrders } = useMySelector((store) => store.orders)
   const dispatch = useDispatch()
 
   useEffect(() => {

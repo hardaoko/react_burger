@@ -1,14 +1,12 @@
 import styles from "./IngredientDetails.module.css";
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { FC } from "react";
-import { IBurgerData, IIngredientDetailsProps, RootState } from "../../utils/types";
+import { IBurgerData, IIngredientDetailsProps, useMySelector } from "../../utils/types";
 
 const IngredientDetails:FC<IIngredientDetailsProps> = ({ title }) => {
   const { id } = useParams();
-  const { ingredients, ingredientsFailed, ingredientsRequest } = useSelector(
-    (store: RootState) => store.ingredients
+  const { ingredients, ingredientsFailed, ingredientsRequest } = useMySelector((store) => store.ingredients
   );
 
   if (ingredientsFailed || ingredientsRequest || ingredients.length === 0) {

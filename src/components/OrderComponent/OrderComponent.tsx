@@ -1,8 +1,7 @@
 import styles from "./OrderComponent.module.css";
-import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link, useRouteMatch} from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { IBurgerData, IOrderComponentProps, RootState } from "../../utils/types";
+import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link, useRouteMatch } from 'react-router-dom';
+import { IBurgerData, IOrderComponentProps, useMySelector } from "../../utils/types";
 import { useLocation } from "react-router-dom";
 import { FC } from "react";
 
@@ -17,8 +16,7 @@ const OrderComponent: FC<IOrderComponentProps> = ({order, onOpen, isStatus}) => 
   const location = useLocation();
   const {url} = useRouteMatch();
 
-
-  const ingredientsMenu = useSelector((store: RootState) => store.ingredients.ingredients)
+  const ingredientsMenu = useMySelector((store) => store.ingredients.ingredients)
 
   const findIngredient = (ingredient: string, ingredients: IBurgerData[]) => {
     return ingredients.find((item:IBurgerData) => item._id === ingredient)

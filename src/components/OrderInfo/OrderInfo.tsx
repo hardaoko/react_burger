@@ -1,14 +1,13 @@
 import styles from './OrderInfo.module.css';
-import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from 'react-redux';
-import { IBurgerData, IOrder, RootState } from '../../utils/types';
+import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { IBurgerData, IOrder, useMySelector } from '../../utils/types';
 import { useParams } from 'react-router-dom';
 import Loading from '../Loading/Loading';
 
 const OrderInfo = () => {
   const {id} = useParams();
-  const {orderInfo, orders, historyOrders, wsHistoryOrders, wsOrders} = useSelector((state: RootState) => state.orders)
-  const ingredientsMenu = useSelector((state: RootState) => state.ingredients.ingredients)
+  const {orderInfo, orders, historyOrders} = useMySelector((store) => store.orders)
+  const ingredientsMenu = useMySelector((store) => store.ingredients.ingredients)
 
   let findOrder = orders.find((order: IOrder) => order._id === id)
   if(!findOrder) {

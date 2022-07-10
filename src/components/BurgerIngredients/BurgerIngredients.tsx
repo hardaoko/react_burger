@@ -2,14 +2,14 @@ import { useRef, useState } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredients.module.css";
 import Ingredient from "../Ingredient/Ingredient";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { MODAL_DETAILS_OPEN } from "../../services/actions/ingredients";
-import { IBurgerData, RootState } from "../../utils/types";
+import { IBurgerData, RootState, useMySelector } from "../../utils/types";
 
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState("bun");
-  const { ingredients } = useSelector((state: RootState) => state.ingredients);
+  const { ingredients } = useMySelector((store) => store.ingredients);
 
   const refBun = useRef<HTMLHeadingElement>(null);
   const refSauce = useRef<HTMLHeadingElement>(null);

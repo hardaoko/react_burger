@@ -1,5 +1,7 @@
 import React from "react";
-import { Action, ActionCreator } from "redux";
+import { useSelector } from "react-redux";
+import { TypedUseSelectorHook } from "react-redux";
+import { ActionCreator } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { IUpgradeOrderList, TIngredientsActions } from "../services/actions/ingredients";
 import { TOrdersActions } from "../services/actions/orders";
@@ -147,3 +149,5 @@ export type TAppActions = IUpgradeOrderList | TOrdersActions | TIngredientsActio
 export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk<TReturn = void> = ActionCreator<ThunkAction<TReturn, RootState, any, TAppActions>>;
 export type AppDispatch = typeof store.dispatch;
+
+export const useMySelector: TypedUseSelectorHook<RootState> = useSelector

@@ -7,14 +7,14 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getLogin } from "../../services/actions/profile";
-import { AppDispatch, RootState } from "../../utils/types";
+import { AppDispatch, useMySelector } from "../../utils/types";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { isAuth } = useSelector((store: RootState) => store.profile);
+  const { isAuth } = useMySelector((store) => store.profile);
   const dispatch: AppDispatch = useDispatch();
   const location = useLocation();
 

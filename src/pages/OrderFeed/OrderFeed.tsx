@@ -1,16 +1,15 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Loading from "../../components/Loading/Loading";
 import OrderComponent from "../../components/OrderComponent/OrderComponent";
 import OrdersMonitor from "../../components/OrdersMonitor/OrdersMonitor";
-
-import { MODAL_ORDER_INFO_OPEN, wsOrdersClose, wsOrdersConnectionStart, WS_CONNECTION_START } from "../../services/actions/orders";
-import { AppDispatch, IOrder, RootState } from "../../utils/types";
+import { MODAL_ORDER_INFO_OPEN, wsOrdersClose, wsOrdersConnectionStart } from "../../services/actions/orders";
+import { AppDispatch, IOrder, useMySelector } from "../../utils/types";
 import styles from "./OrderFeed.module.css";
 
 const OrderFeed = () => {
   const dispatch: AppDispatch = useDispatch()
-  const { orders, wsOrders } = useSelector((store: RootState) => store.orders)
+  const { orders, wsOrders } = useMySelector((store) => store.orders)
 
   useEffect(() => {
     dispatch(wsOrdersConnectionStart());

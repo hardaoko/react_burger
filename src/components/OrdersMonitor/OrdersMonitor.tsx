@@ -1,10 +1,8 @@
-import {FC} from 'react';
-import { useSelector } from 'react-redux';
-import { IOrder, RootState } from '../../utils/types';
+import { IOrder, useMySelector } from '../../utils/types';
 import styles from './OrdersMonitor.module.css';
 
 const OrdersMonitor = () => {
-  const { orders, wsOrders, total, totalToday } = useSelector((store: RootState) => store.orders)
+  const { orders, wsOrders, total, totalToday } = useMySelector((store) => store.orders)
   const ready = orders.filter((order: IOrder) => order.status === "done")
   const pending = orders.filter((order: IOrder) => order.status === "pending")
 

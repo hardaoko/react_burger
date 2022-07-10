@@ -3,9 +3,8 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { IBurgerData, IChosenIngredient, RootState } from "../../utils/types";
+import { IBurgerData, IChosenIngredient, RootState, useMySelector } from "../../utils/types";
 import { useDrag } from "react-dnd";
-import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { FC } from "react";
 
@@ -17,7 +16,7 @@ interface IIngredient {
 const Ingredient:FC<IIngredient> = ({ item, onOpen }) => {
   const { image, price, name, _id, type } = item;
   const location = useLocation();
-  const { chosenIngredients } = useSelector((store: RootState) => store.ingredients);
+  const { chosenIngredients } = useMySelector((store) => store.ingredients);
   const number =
     chosenIngredients.filter((item: IChosenIngredient) => item.element._id === _id).length *
     (type === "bun" ? 2 : 1);
