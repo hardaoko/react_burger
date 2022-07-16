@@ -71,7 +71,7 @@ const Login = () => {
               name={"password"}
             />
           </div>
-          <Button type="primary" size="medium">
+          <Button type="primary" size="medium" data-at="submit" name="button">
             Войти
           </Button>
         </form>

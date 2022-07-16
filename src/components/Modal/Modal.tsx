@@ -30,7 +30,7 @@ const Modal:FC<IModalProps> = ({ title, onClose, children }) => {
               {title}
             </h2>
           )}
-          <button onClick={onClose} className={styles.closeButton}>
+          <button onClick={onClose} className={styles.closeButton} data-at="close-button">
             <CloseIcon type="primary" />
           </button>
         </div>
