@@ -109,7 +109,6 @@ export const profileReducer = (state = initialProfile, action: TAppActions): IPr
         passwordResetRequest: false,
         passwordResetSuccess: true,
         passwordResetFailed: false,
-        emailCodeSuccess: false,
         userPassword: action.password,
       };
     }
