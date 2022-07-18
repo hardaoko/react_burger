@@ -52,7 +52,7 @@ const BurgerIngredients = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className="mt-10 mb-5 text text_type_main-large">Соберите бургер</h1>
+      <h1  className="mt-10 mb-5 text text_type_main-large" data-at="main-title">Соберите бургер</h1>
       <div className={styles.tab_container}>
         <Tab value="bun" active={current === "bun"} onClick={scrollToBun}>
           Булки
@@ -76,7 +76,7 @@ const BurgerIngredients = () => {
         >
           Булки
         </h2>
-        <ul className={styles.list}>
+        <ul className={styles.list} >
           {ingredients.map(
             (item) =>
               item.type === "bun" && (

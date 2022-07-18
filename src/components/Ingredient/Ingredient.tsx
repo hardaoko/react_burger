@@ -27,7 +27,7 @@ const Ingredient:FC<IIngredient> = ({ item, onOpen }) => {
   });
 
   return (
-    <li className={styles.item} ref={dragRef}>
+    <li className={styles.item} ref={dragRef} data-at="ingredients">
       <Link
         to={{
           pathname: `/ingredients/${_id}`,

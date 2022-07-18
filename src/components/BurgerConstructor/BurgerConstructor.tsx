@@ -177,7 +177,7 @@ const BurgerConstructor = () => {
   return (
     <div
       className={`${styles.container} ${highlightTarget} mt-20 p-1`}
-      ref={dropTarget}
+      ref={dropTarget} data-at="constructor"
     >
       {modalOrderVisible && !orderRequest && modal}
 
